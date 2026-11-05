@@ -59,8 +59,8 @@ The headers are `content-type: application/json`, `user-agent: Hillclimb-Trigger
 
 What else to know:
 - A new trigger starts from now. It doesn't replay history.
-- A response that isn't 2xx, a redirect included, or one that takes more than 10 seconds, counts as a failure. Failed deliveries retry on the tree's next change.
-- After 50 failures in a row the trigger turns itself off. `list_triggers` shows it as disabled. Once the receiver works again, `enable_trigger` turns it back on with the same URL and secret and sends the events it missed.
+- A response that isn't 2xx, a redirect included, or one that takes more than 10 seconds, counts as a failure. Failed deliveries retry on their own, whether or not the tree changes: after 1 minute, then 2, 4 and so on, up to once an hour. `list_triggers` shows the failures so far and `nextAttemptAt`.
+- After 3 days of failing, the trigger turns itself off. `list_triggers` shows it as disabled. Once the receiver works again, `enable_trigger` turns it back on with the same URL and secret and sends the events it missed. It also retries a failing trigger straight away instead of waiting out the backoff.
 - `list_triggers` shows every trigger and how its last delivery went. Secrets are never shown again.
 
 ## Turn other systems' signals into evidence (inbound triggers)
