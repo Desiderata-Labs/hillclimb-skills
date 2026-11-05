@@ -85,5 +85,5 @@ Every write lands in the change log (`list_changes`) and goes to outbound trigge
 - 200 revisions per plan, and at most 50 edits per revision. After that, write a new plan and mark the old one superseded.
 - 20 plans that aren't superseded per outcome or goal.
 - Comments: 10,000 characters each, 2,000 per item.
-- 300 plan and comment writes per person per hour (the error is `rate_limited` and says when to retry), on top of the organization's hourly call limit.
+- Plan and comment writes count against the organization's hourly call limit like every other call (the error is `rate_limited` and says when to retry). There's no separate limit for plans, so a bulk import of design docs runs at the organization's rate.
 - Share links don't show plans or comments.
