@@ -75,7 +75,7 @@ When you take review comments on your plan: address each thread with `revise_pla
 
 ## Watching for changes
 
-Every write lands in the change log (`list_changes`) and goes to outbound triggers: `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved` and `comment.reopened`. The event's subject is the outcome or goal, and its data names the `planId` or `commentId`. MCP clients subscribed to the tree are notified too.
+Every write lands in the change log (`list_changes`) and goes to outbound triggers: `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved` and `comment.reopened`. The event's subject is the outcome or goal, and its data names the `planId` or `commentId`. MCP clients subscribed to the tree are notified too, and the console's "Since your last visit" lists those items under "Plans and comments".
 
 ## Limits
 
