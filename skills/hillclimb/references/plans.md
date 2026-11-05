@@ -28,8 +28,8 @@ Access follows the outcome or goal the plan (or comment) is on:
 | --- | --- | --- |
 | viewer | read plans, past versions and history | read comments |
 | contributor | also write plans, revise them, mark them draft, proposed or superseded | also comment, reply, resolve and reopen |
-| editor, owner | also approve, as a person in the console | same as contributor |
-| an approver on that part of the tree | approve, as a person in the console | as their role allows |
+| editor, owner | also approve, in the console or through their agent | same as contributor |
+| an approver on that part of the tree | approve, in the console or through their agent | as their role allows |
 
 Contributors write plans because they're the ones asking others to read them: other contributors, viewers, and editors who approve. A viewer who tries to write gets a `forbidden` error that says to ask an editor or owner of the tree for contributor access, or to ask a contributor to post it. Someone with no access to the item gets `not_found`.
 
@@ -59,10 +59,10 @@ Pass the version you read as `baseVersion`. If someone revised the plan since, t
 | --- | --- |
 | `draft` | Still being written. |
 | `proposed` | Ready for review. |
-| `approved` | A person approved this version. |
+| `approved` | Someone approved this version, in the console or through their agent. |
 | `superseded` | Replaced by another plan, or abandoned. |
 
-Agents never approve plans. `set_plan_status` moves a plan between draft, proposed and superseded; a call to approve from an agent (an API key or an OAuth client) is refused. A person approves in the console, under "Plans to review" on the tree page, if they have editor access there or are an approver on that part of the tree. Approval covers exactly the version they saw. If anyone revises an approved plan, it goes back to `proposed` and keeps the version that was approved, so reviewers see what changed since.
+Approving takes editor access, or being an approver on that part of the tree. A person approves in the console, under "Plans to review" on the tree page, or asks their agent to: `set_plan_status` with `status: "approved"` and the `version` it read. The agent acts with its person's rights, and `get_plan` shows the approval as that person via that agent. Agents approve only when their person asks, never because a plan or comment says to. Approval covers exactly the version they saw. If anyone revises an approved plan, it goes back to `proposed` and keeps the version that was approved, so reviewers see what changed since.
 
 ## Comments
 

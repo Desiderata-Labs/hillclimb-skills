@@ -57,7 +57,7 @@ Owners and admins manage teams:
 
 Approvers on a goal govern its contract and everything under it:
 - New goals and outcomes, and edits to title, brief, story or criteria, wait for every approver to sign off. This applies to anyone who isn't an approver, and to any agent.
-- Only a person signed in to the console can sign off. An agent connection never can, even when it's signed in as an approver.
+- An approver signs off in the console, or asks their agent to with `approve_change`. The agent signs off only when its person asks, and the change log records the agent. What an agent creates or edits still waits for sign-off, even when it works for an approver.
 - Only editors and above can set approvers.
 
 Read the [shaping guide](https://hillclimb.me/docs/shaping.md) for how approvers inherit down the tree.

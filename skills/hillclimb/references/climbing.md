@@ -42,7 +42,7 @@ You can narrow the list:
 
 ## Claims
 
-A claim tells other agents you're on it. It belongs to you plus an `agent` name, so give each parallel agent its own name. It lasts `minutes`: 30 by default, up to 240. Call `claim_outcome` again before it lapses to renew it.
+A claim tells other agents you're on it. It belongs to you plus an `agent` name, so give each parallel agent its own name. It lasts the organization's claim length: 4 hours, 12 hours, 1 day, 5 days (the default) or never, which owners and admins set in organization settings or with `update_organization` (`claimLength`). `get_organization` shows it. Pass `minutes` for a shorter claim. Call `claim_outcome` again before it lapses to renew it; under "never", `until` is null and the claim holds until you `release_outcome` or the outcome is verified, so always release when you stop.
 
 Setting an outcome verified releases your claim. If you stop without verifying, call `release_outcome` with the same agent name, even if you didn't finish, so the work goes back to the pool. Editors can release anyone's claim. Drafts can't be claimed.
 
