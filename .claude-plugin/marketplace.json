@@ -1,0 +1,20 @@
+{
+  "name": "hillclimb-skills",
+  "owner": {
+    "name": "Desiderata Labs",
+    "url": "https://github.com/Desiderata-Labs"
+  },
+  "metadata": {
+    "description": "Skills and plugins for Hillclimb.",
+    "version": "1.0.0+d37b557a"
+  },
+  "plugins": [
+    {
+      "name": "hillclimb",
+      "source": "./",
+      "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence. Includes the Hillclimb MCP server.",
+      "version": "1.0.0+d37b557a",
+      "homepage": "https://hillclimb.me"
+    }
+  ]
+}

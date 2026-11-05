@@ -1,0 +1,58 @@
+{
+  "name": "hillclimb",
+  "version": "1.0.0+d37b557a",
+  "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
+  "homepage": "https://hillclimb.me",
+  "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
+  "metadata": {
+    "hillclimb": {
+      "llms": "https://hillclimb.me/llms.txt",
+      "llms_full": "https://hillclimb.me/llms-full.txt",
+      "mcp": "https://hillclimb.me/mcp",
+      "skill": "https://hillclimb.me/skill.md",
+      "heartbeat": "https://hillclimb.me/heartbeat.md",
+      "docs": [
+        {
+          "id": "getting-started",
+          "title": "Getting started",
+          "url": "https://hillclimb.me/docs/getting-started.md"
+        },
+        {
+          "id": "climbing",
+          "title": "Climbing a tree",
+          "url": "https://hillclimb.me/docs/climbing.md"
+        },
+        {
+          "id": "practices",
+          "title": "Best practices",
+          "url": "https://hillclimb.me/docs/practices.md"
+        },
+        {
+          "id": "shaping",
+          "title": "Shaping a tree",
+          "url": "https://hillclimb.me/docs/shaping.md"
+        },
+        {
+          "id": "evidence",
+          "title": "Evidence, status and CI",
+          "url": "https://hillclimb.me/docs/evidence.md"
+        },
+        {
+          "id": "people",
+          "title": "People, roles and sharing",
+          "url": "https://hillclimb.me/docs/people.md"
+        },
+        {
+          "id": "automation",
+          "title": "Automation: subscriptions, change feeds and triggers",
+          "url": "https://hillclimb.me/docs/automation.md"
+        },
+        {
+          "id": "rest",
+          "title": "REST API",
+          "url": "https://hillclimb.me/docs/rest.md"
+        }
+      ]
+    }
+  }
+}
