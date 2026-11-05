@@ -46,8 +46,10 @@ Pass the version you read as `baseVersion`. If someone revised the plan since, t
 ## Reading and history
 
 - `get_plan` with `plan` (an id), or with `outcome` or `goal` for the plan in play there: the latest one that isn't superseded. Others are listed in `otherPlans`.
-- It returns the current `text`, `status`, `version`, which version a person `approved`, and every revision oldest first: version, `full` or `patch` (with its edits), summary, who, via which agent, and when.
-- `version` returns the full text as it stood then, for example the version that was approved.
+- It returns `status`, `version`, which version a person `approved`, and every revision oldest first: version, `full` or `patch`, summary, who, via which agent, and when. A patch's edits show inline when they're small (up to 2,000 characters); larger ones show `editCount`, and `revision: N` returns that revision's edits in full.
+- The text comes a page at a time, so a long plan never floods your context: up to 800 lines (or about 40,000 characters), with `lines` (`from`, `to`, `total`) and `nextOffset`. A plan that doesn't fit in one page also returns an `outline`: each heading with its line number. Pass `offset` (and `limit`, up to 5,000 lines) to read on, or to jump straight to the section you need. A plan that fits in one page comes back whole, exactly as written.
+- `version` returns the text as it stood then, for example the version that was approved, paged the same way.
+- Line numbers make `edits` easy: read the lines you want to change, then copy the text you `find` exactly from them.
 - `list_plans` lists the plans on an outcome, a goal, or a whole tree, with open comment threads. Superseded plans are left out unless you pass `includeSuperseded`.
 - `get_outcome` also lists the outcome's plans.
 
@@ -79,7 +81,7 @@ Every write lands in the change log (`list_changes`) and goes to outbound trigge
 
 ## Limits
 
-- Plan text: 100,000 characters. Link to long material instead of pasting it.
+- Plan text: 300,000 characters. Read long plans by page (above); link to long material such as logs instead of pasting it.
 - 200 revisions per plan, and at most 50 edits per revision. After that, write a new plan and mark the old one superseded.
 - 20 plans that aren't superseded per outcome or goal.
 - Comments: 10,000 characters each, 2,000 per item.
