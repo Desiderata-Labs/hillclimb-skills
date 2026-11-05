@@ -94,6 +94,7 @@ Name the outcome each test covers in the test's title, for example `it('HC-12: m
         if: always() # report failures too
         env:
           HILLCLIMB_HOOK_URL: ${{ secrets.HILLCLIMB_HOOK_URL }}
+          HILLCLIMB_KEY_PREFIXES: HC # your tree's outcome key prefixes
         run: |
           curl -fsSL https://raw.githubusercontent.com/Desiderata-Labs/hillclimb-skills/main/ci/post-test-evidence.mjs -o post-test-evidence.mjs
           node post-test-evidence.mjs test-results.json "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
@@ -101,7 +102,7 @@ Name the outcome each test covers in the test's title, for example `it('HC-12: m
 
 `post-test-evidence.mjs` reads Jest-style JSON, which both vitest and jest write. It groups tests by the outcome keys in their names and posts one event per outcome per run, so 200 tests across 5 outcomes become 5 pieces of evidence. It sends the counts and up to 20 failing test names, never passing ones. The full log stays in CI behind the run link.
 
-Anything in a test name shaped like a key counts as one, so a name containing `UTF-8` makes the script post to an outcome called `UTF-8`. That post fails and so does the step. Keep stray key-shaped strings out of test names, or copy the script into your repository and adjust its pattern.
+Set `HILLCLIMB_KEY_PREFIXES` to your tree's key prefixes (for example `HC,HI`) so only those count as outcome keys. Otherwise a word like `UTF-8` or `SHA-256` in a test name is taken for a key. The script reports a key that names no outcome as skipped and doesn't fail the step. Other failures, such as a bad URL or being over the rate limit, still fail it.
 
 To report a whole job that proves one outcome, post one event:
 

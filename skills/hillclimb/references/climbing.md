@@ -83,9 +83,9 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 
 ## Staying in sync
 
-- Subscribe to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next`, e.g. `hillclimb://trees/acme/acme/next`. Your client is notified whenever the tree's next work changes. Use the full `org-slug/tree-key` form: notifications are sent only to that exact URI. Reading the resource returns what `list_next_outcomes` would. Subscribing beats polling, and polling counts against the organization's hourly call limit.
+- Subscribe to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next`, e.g. `hillclimb://trees/acme/acme/next`. Your client is notified whenever the tree's next work changes. Use the full `org-slug/tree-key` form: notifications are sent only to that exact URI, so any other spelling is refused with the URI to use. Reading the resource returns what `list_next_outcomes` would. Subscribing beats polling, and polling counts against the organization's hourly call limit.
 - `list_changes` with the `after` cursor shows what changed since you last looked: statuses, evidence, edits, moves and approvals.
-- `list_pending_changes` shows drafts and edits waiting for approval, and who they're waiting on.
+- `list_pending_changes` shows drafts and edits waiting for approval and who they're waiting on. For an edit, it also shows what each field would change from and to.
 
 ## When you're blocked
 

@@ -12,7 +12,7 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 
 - Reading it returns what `list_next_outcomes` would.
 - Subscribe to it and your client gets `notifications/resources/updated` whenever the tree changes: evidence, statuses, claims, edits, moves and approvals. Then read it again.
-- Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/acme/next`. Notifications are sent only to that exact URI.
+- Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/acme/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
 - Streams last about 13 minutes, and clients reopen them.
 - After a deploy, new streams get `tools/list_changed`, so clients re-read the tools.
 
@@ -60,7 +60,7 @@ The headers are `content-type: application/json`, `user-agent: Hillclimb-Trigger
 What else to know:
 - A new trigger starts from now. It doesn't replay history.
 - A response that isn't 2xx, a redirect included, or one that takes more than 10 seconds, counts as a failure. Failed deliveries retry on the tree's next change.
-- After 50 failures in a row the trigger turns itself off. `list_triggers` shows it as disabled. To bring it back, delete it and create it again.
+- After 50 failures in a row the trigger turns itself off. `list_triggers` shows it as disabled. Once the receiver works again, `enable_trigger` turns it back on with the same URL and secret and sends the events it missed.
 - `list_triggers` shows every trigger and how its last delivery went. Secrets are never shown again.
 
 ## Turn other systems' signals into evidence (inbound triggers)
