@@ -20,7 +20,7 @@ When the same tree key exists in more than one of your organizations, name the t
 | owner | everything, including deleting it | owner |
 | admin | invites people; manages roles, teams, triggers, share links and usage | owner |
 | editor | reads it | editor: shapes the trees (adds, edits, moves, archives, starts trees, sets approvers) |
-| contributor | reads it | contributor: claims, adds evidence, sets status; what they create under approvers waits as a draft |
+| contributor | reads it | contributor: claims, adds evidence, sets status, writes plans and comments; what they create under approvers waits as a draft |
 
 The owner role has some fixed rules:
 - Only owners can make someone an owner, change an owner's role or remove an owner.
@@ -36,8 +36,8 @@ Inviting someone:
 ## Access to part of a tree
 
 `share_goal` gives one person (by email) or one team access to a goal and everything under it. It adds to what their organization role already gives:
-- **viewer**: read.
-- **contributor**: claim, evidence, status, drafts.
+- **viewer**: read, including plans, their history and comments. Viewers can't write plans or comments.
+- **contributor**: claim, evidence, status, drafts, plans and comments.
 - **editor**: also move and archive.
 
 Role `none` removes it. Owning a tree comes only from being an organization owner or admin, and sharing takes the same. Someone outside the organization becomes a guest who sees only what was shared.

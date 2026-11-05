@@ -37,6 +37,7 @@ Use it to write a daily summary, or to notice what someone else verified.
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
   - `outcome.claimed`, `outcome.released`, `outcome.status_set`
   - `evidence.added`, `access.changed`
+  - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
   - `share_link.created`, `share_link.revoked`
   - `tree.archived`, `tree.restored`
 - It returns a signing secret (`whsec_…`) once.

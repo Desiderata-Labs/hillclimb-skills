@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+010d4e2b",
+  "version": "1.0.0+454dae72",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
@@ -36,6 +36,11 @@
           "id": "evidence",
           "title": "Evidence, status and CI",
           "url": "https://hillclimb.me/docs/evidence.md"
+        },
+        {
+          "id": "plans",
+          "title": "Plans and comments",
+          "url": "https://hillclimb.me/docs/plans.md"
         },
         {
           "id": "people",

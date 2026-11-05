@@ -7,10 +7,11 @@
 1. **Pick.** Call `list_next_outcomes` and take the top item.
 2. **Claim.** Call `claim_outcome` with an `agent` name so other agents skip it.
 3. **Read.** Call `get_outcome` and read the story, every criterion, the recent evidence, and the brief of every goal above the outcome. The root brief carries the non-negotiables.
-4. **Work.** Do the work wherever it lives: code, docs, infrastructure, a vendor's settings, a conversation with a person.
-5. **Check every criterion for real.** Run the tests, use the app, look at production. Reading the code isn't checking.
-6. **Record.** Use `add_evidence` for what you observed, then `set_outcome_status`. You can also pass `evidence` to `set_outcome_status` to do both in one call.
-7. **Repeat**, or call `release_outcome` if you stop early or get blocked.
+4. **Plan, when it's more than a small change.** Call `write_plan` on the outcome with how you'll do it, and take review comments with `list_comments` and `revise_plan`. See [plans and comments](https://hillclimb.me/docs/plans.md).
+5. **Work.** Do the work wherever it lives: code, docs, infrastructure, a vendor's settings, a conversation with a person.
+6. **Check every criterion for real.** Run the tests, use the app, look at production. Reading the code isn't checking.
+7. **Record.** Use `add_evidence` for what you observed, then `set_outcome_status`. You can also pass `evidence` to `set_outcome_status` to do both in one call.
+8. **Repeat**, or call `release_outcome` if you stop early or get blocked.
 
 ## What list_next_outcomes returns
 
@@ -53,6 +54,7 @@ Setting an outcome verified releases your claim. If you stop without verifying, 
 - signals, assignment and claim;
 - pending edits;
 - recent evidence. Older routine CI evidence is counted, not listed. Pass `evidenceHistory: "all"` to read all of it.
+- its plans, if anyone wrote one. Read the plan in play with `get_plan` before you start, and check what was approved.
 - the briefs of every goal above the outcome.
 
 Briefs say what matters and what to avoid, so respect them even when the criteria don't repeat them.
