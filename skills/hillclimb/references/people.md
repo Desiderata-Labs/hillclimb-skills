@@ -15,9 +15,10 @@ Every tree belongs to an organization, and a person can belong to many organizat
 
 Only the person can delete their own account, in the console: https://hillclimb.me/t, Settings → General → Danger zone. They type a confirmation phrase and enter a fresh code emailed to them. No tool, API key or OAuth token can delete an account, so if someone asks you to, point them there.
 
+- While they belong to any organization that has other members, deletion is blocked, so nobody on a team deletes themselves by accident. They leave each one first (`leave_organization`, or Leave under Settings → Organization → Overview), or an owner or admin removes them (`remove_member`). An only owner makes someone else an owner before leaving.
+- Nobody can delete another person's account, not even an organization's owners: an account can span several organizations. Owners and admins remove members instead.
 - Organizations where they're the only member are deleted with all their trees and files.
-- If they're the only owner of an organization other people belong to, deletion waits until they make someone else an owner (or remove the other members).
-- In organizations that stay, everything they wrote (goals, outcomes, evidence, files, plans, comments, history) stays with the organization and still names them: their name and email as they were when they deleted the account, shown as "Name (deleted account)", and person references carry `deleted: true`. Deleting that content is up to the organization's owners. Their claims are released, and they're taken off assignments, approver lists and teams. An approver list they were alone on passes to the organization's owners.
+- In organizations they've left, and trees shared with them, everything they wrote (goals, outcomes, evidence, files, plans, comments, history) stays with the organization and still names them: their name and email as they were when they deleted the account, shown as "Name (deleted account)", and person references carry `deleted: true`. Deleting that content is up to the organization's owners. Their claims are released, and they're taken off assignments, approver lists and teams. An approver list they were alone on passes to the organization's owners.
 
 When the same tree key exists in more than one of your organizations, name the tree as `org-slug/tree-key`.
 
