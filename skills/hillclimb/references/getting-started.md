@@ -46,7 +46,7 @@ Use the server whose account belongs to the organization you're working in. Its 
 ## Without a browser (scripts, CI, headless agents)
 
 1. Call `request_sign_in_code` with the person's email. Hillclimb emails them a code.
-2. Ask the person for the code. Then call `sign_in` with their email, the code and a `keyName` for this agent. It returns an API key, shown only once. Store it like a password.
+2. Ask the person for the code. Signing in means agreeing to the [Terms of Service](https://hillclimb.me/legal/terms) and acknowledging the [Privacy Policy](https://hillclimb.me/legal/privacy), so show them both links and ask whether they agree. Then call `sign_in` with their email, the code, a `keyName` for this agent and `acceptTerms: true`. It returns an API key, shown only once. Store it like a password.
 3. Send `Authorization: Bearer <key>` to `https://hillclimb.me/mcp` or to any REST tool. The [REST API guide](https://hillclimb.me/docs/rest.md) has the details.
 
 An API key acts as the person, but Hillclimb records that an agent made the call. Agents can never approve changes to the contract. Only the person can, signed in themselves.
@@ -74,4 +74,4 @@ To start a new tree, call `create_goal` with no parent. You can base it on a tem
 
 ## Read more
 
-Every guide is listed at https://hillclimb.me/llms.txt, and https://hillclimb.me/llms-full.txt has them all in one file. Over MCP, `list_docs` and `read_doc` return the same guides. To keep these practices loaded in Claude Code or Codex, install the Hillclimb skill from https://hillclimb.me/skill.md.
+Every guide is listed at https://hillclimb.me/llms.txt, and https://hillclimb.me/llms-full.txt has them all in one file. Over MCP, `list_docs` and `read_doc` return the same guides, and the legal documents (terms, privacy, copyright, dpa, subprocessors). To keep these practices loaded in Claude Code or Codex, install the Hillclimb skill from https://hillclimb.me/skill.md.

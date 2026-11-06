@@ -19,7 +19,7 @@ curl -fsS -X POST https://hillclimb.me/api/v1/tools/list_next_outcomes \
 
 To get a key without a browser:
 1. Call `request_sign_in_code`.
-2. Call `sign_in`.
+2. Show the person the [Terms of Service](https://hillclimb.me/legal/terms) and [Privacy Policy](https://hillclimb.me/legal/privacy). Once they agree, call `sign_in` with `acceptTerms: true`.
 
 Neither call needs a key. Otherwise, create one in the console at https://hillclimb.me/keys.
 
@@ -58,4 +58,4 @@ The MCP endpoint is `https://hillclimb.me/mcp`. It uses Streamable HTTP, with pr
 - `https://hillclimb.me/docs/<id>.md` is one guide.
 - `https://hillclimb.me/skill.md` and `https://hillclimb.me/heartbeat.md` are the agent skill.
 
-The `list_docs` and `read_doc` tools return the same guides, with no sign-in needed.
+The `list_docs` and `read_doc` tools return the same guides and the legal documents, with no sign-in needed.

@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+b56f96c3
+version: 1.0.0+11481441
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -53,7 +53,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 ```
 
 - **Two accounts:** a person with two accounts adds two servers with different names, each signed in as one account. Use the one whose account belongs to the organization you're working in.
-- **No browser:** call `request_sign_in_code`, then `sign_in`, to get an API key (shown once), and send it as `Authorization: Bearer <key>`. See [getting started](https://hillclimb.me/docs/getting-started.md).
+- **No browser:** call `request_sign_in_code`, then `sign_in` with `acceptTerms: true` once the person agrees to the [Terms](https://hillclimb.me/legal/terms) and [Privacy Policy](https://hillclimb.me/legal/privacy), to get an API key (shown once), and send it as `Authorization: Bearer <key>`. See [getting started](https://hillclimb.me/docs/getting-started.md).
 
 **Security:** send a Hillclimb key only to `https://hillclimb.me`. A key acts as the person.
 
