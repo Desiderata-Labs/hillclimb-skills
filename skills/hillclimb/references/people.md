@@ -11,6 +11,14 @@ Every tree belongs to an organization, and a person can belong to many organizat
 - `update_organization` renames it or changes its slug. A slug uses lowercase letters, digits and dashes, and changing it changes every `org-slug/tree-key` reference.
 - `delete_organization` works only when the organization owns no trees, archived ones included. Delete those first with `delete_tree`.
 
+## Deleting your account
+
+Only the person can delete their own account, in the console: https://hillclimb.me/t, Settings → General → Danger zone. They type a confirmation phrase and enter a fresh code emailed to them. No tool, API key or OAuth token can delete an account, so if someone asks you to, point them there.
+
+- Organizations where they're the only member are deleted with all their trees and files.
+- If they're the only owner of an organization other people belong to, deletion waits until they make someone else an owner (or remove the other members).
+- In organizations that stay, everything they wrote (goals, outcomes, evidence, files, plans, comments, history) stays with the organization and still names them: their name and email as they were when they deleted the account, shown as "Name (deleted account)", and person references carry `deleted: true`. Deleting that content is up to the organization's owners. Their claims are released, and they're taken off assignments, approver lists and teams. An approver list they were alone on passes to the organization's owners.
+
 When the same tree key exists in more than one of your organizations, name the tree as `org-slug/tree-key`.
 
 ## Organization roles

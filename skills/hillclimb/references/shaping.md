@@ -91,7 +91,7 @@ Use `edit_outcome` to change title, story, actors or criteria. You must say whet
 
 - `move_goal` and `move_outcome` change where something sits. Status and evidence come along. Moving a tree's root under another tree's goal mounts it into the bigger tree. Both trees must be in the same organization, and you need to be an organization owner or admin.
 - `archive_goal` and `archive_outcome` remove something and keep its history. No tool brings it back, so archive deliberately.
-- `archive_tree`, `restore_tree` and `delete_tree` act on a whole tree. Confirm with the person first.
+- `archive_tree`, `restore_tree` and `delete_tree` act on a whole tree. `delete_tree` also removes the tree's evidence files from storage. Confirm with the person first.
 - Moving and archiving need editor access. Agents can't move or archive anything under approvers. Ask a person to.
 
 ## Bringing existing work in
