@@ -38,6 +38,7 @@ Use it to write a daily summary, or to notice what someone else verified.
   - `outcome.claimed`, `outcome.released`, `outcome.status_set`
   - `evidence.added`, `access.changed`
   - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
+  - a `comment.added` event names who to tell in `notify` (user ids) and its `thread`; for a question also `needsReply`, `waitingOn`, `options`, `header`, and `answers` (the thread) once it's answered: enough for a chat bridge to reach the right people
   - `share_link.created`, `share_link.revoked`
   - `tree.archived`, `tree.restored`
 - It returns a signing secret (`whsec_…`) once.

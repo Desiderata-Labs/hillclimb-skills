@@ -92,6 +92,7 @@ These tools change access or are hard to undo:
 - `create_trigger`
 - `archive_tree` and `delete_tree`
 - `delete_organization`
+- `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's
 
 Before calling any of them:
 1. Tell the person exactly what will happen.

@@ -91,6 +91,6 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 
 ## When you're blocked
 
-- If you need a person's decision, release the claim. Then add `note` evidence that says what's blocking and what you need, and ask the person.
+- If you need a person's decision, ask them in a comment on the outcome: a question (`add_comment` with `to` and `options`) waits on them, and their reply reaches you in the `inbox` field of your tool results. Keep working on what doesn't depend on it; release the claim if nothing does. If your work overlaps another outcome, ask the agent working on it (`to: ["agent"]`) before changing what they depend on.
 - If the outcome depends on another outcome, work on that one if you can.
 - If it can't be done as written, propose an edit. Don't mark it verified with caveats.
