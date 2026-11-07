@@ -71,6 +71,7 @@ What else to know:
 
 - It acts as the person who created it, recorded as `via "trigger:<name>"`.
 - It only adds evidence, unless you set `canSetStatus: true`. Then a confirms sets verified and a denies sets failing.
+- For a replacement being proved on a track (see the [tracks guide](https://hillclimb.me/docs/tracks.md)), set `rules.track` to record there instead of live, or `rules.trackField` to read the track from each event. The new system's CI then never touches what's live.
 - `delete_trigger` stops the URL at once.
 
 The [evidence guide](https://hillclimb.me/docs/evidence.md) covers the rules, responses and a CI example.

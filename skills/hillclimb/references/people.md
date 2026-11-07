@@ -91,6 +91,7 @@ These tools change access or are hard to undo:
 - `create_api_key` and `create_share_link`
 - `create_trigger`
 - `archive_tree` and `delete_tree`
+- `promote_track` with `apply`, and `archive_track`
 - `delete_organization`
 - `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's
 
