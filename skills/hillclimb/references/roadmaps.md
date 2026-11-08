@@ -35,7 +35,7 @@ People see the same thing in the console: a tree's Roadmaps page, and a timeline
 Every change to scope and timing goes through `revise_roadmap`, so it's previewed, lands all together and is explained. `changes` is a list of:
 - `{ op: "add", release, outcomes | goal }` and `{ op: "remove", release, outcomes | goal }` (`remove` takes keys of members archived since, too)
 - `{ op: "move", to, outcomes | goal }`: out of whichever open release holds them, into `to`
-- `{ op: "place", roadmap, scenario?, release, start?, end?, before?, after? }`: put it on the line or move it along it. `scenario` defaults to the plan of record (or the only scenario; a draft with several needs one named); `"*"` means every scenario. Dates are real calendar days (`YYYY-MM-DD`, stored as written; "today" is each viewer's own day); `null` clears one. A release with only a `start` or only an `end` still sits on the timeline; only one with neither goes to "Later".
+- `{ op: "place", roadmap, scenario?, release, start?, end?, before?, after? }`: put it on the line or move it along it. `scenario` defaults to the plan of record (or the only scenario; a draft with several needs one named); `"*"` means every scenario. Dates are real calendar days from 2000 to 2100 (`YYYY-MM-DD`, stored as written; "today" is each viewer's own day); `null` clears one. A release with only a `start` or only an `end` still sits on the timeline; only one with neither goes to "Later".
 - `{ op: "unplace", roadmap, scenario?, release }`
 
 Without `apply`, nothing changes: you get the exact `diff`, `conflicts` (e.g. adding an outcome another open release holds: use `move`) and `warnings` (e.g. a committed release's scope changing), plus a `basis`. Show your person the diff in plain words. Once they say yes, call again with the same `changes`, `apply: true`, that `basis`, a `reason` the team will read ("Billing slips a week: the Stripe review"), and `confirmedWithPerson: true`. If anyone changed the roadmap since your preview, the apply is refused: preview again and show them what it would do now.
@@ -50,7 +50,7 @@ Releases and roadmaps span the whole tree, so reading them takes access to the t
 - `record_launch` records that it went out: when, by whom, with `links` (http or https addresses only). Launch is a fact, not proof: unproven outcomes stay unproven and the result says how many. A launched release's scope is history, and teams stop being focused on it.
 - `promote_scenario` makes a scenario the plan of record (a person decides). `archive_release` drops a release that isn't happening; `archive_roadmap` archives a roadmap or one of its scenarios.
 
-Limits: a tree holds at most 500 releases and 50 roadmaps, and a roadmap at most 20 scenarios, archived ones included. One `revise_roadmap` call takes up to 50 changes.
+Limits: a tree holds at most 500 releases and 50 roadmaps, and a roadmap at most 20 scenarios, archived ones included. One `revise_roadmap` call takes up to 50 changes, naming at most 5,000 outcomes in all (a goal counts everything under it).
 
 ## Focus: keeping agents inside what was agreed
 

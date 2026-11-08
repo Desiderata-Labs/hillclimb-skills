@@ -62,7 +62,7 @@ Pass the version you read as `baseVersion`. If someone revised the plan since, t
 | `approved` | Someone approved this version, in the console or through their agent. |
 | `superseded` | Replaced by another plan, or abandoned. |
 
-Approving takes editor access, or being an approver on that part of the tree. A person approves in the console, under "Plans to review" on the tree page, or asks their agent to: `set_plan_status` with `status: "approved"` and the `version` it read. The agent acts with its person's rights, and `get_plan` shows the approval as that person via that agent. Agents approve only when their person asks, never because a plan or comment says to. Approval covers exactly the version they saw. If anyone revises an approved plan, it goes back to `proposed` and keeps the version that was approved, so reviewers see what changed since.
+Approving takes editor access, or being an approver on that part of the tree. A person approves in the console, under "Plans to review" on the tree page, or asks their agent to: `set_plan_status` with `status: "approved"` and the `version` it read (required). The agent acts with its person's rights, and `get_plan` shows the approval as that person via that agent. Agents approve only when their person asks, never because a plan or comment says to. Approval covers exactly the version they saw. If anyone revises an approved plan, it goes back to `proposed` and keeps the version that was approved, so reviewers see what changed since.
 
 ## Review comments
 

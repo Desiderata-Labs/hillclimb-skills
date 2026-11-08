@@ -32,7 +32,9 @@ Use it to write a daily summary, or to notice what someone else verified.
 
 `create_trigger` with `direction: "outbound"` POSTs signed JSON to an https URL whenever events happen. Slack, an internal bot and a data warehouse are typical targets. It needs an organization owner or admin, and confirmation with the person first.
 
+- The URL's host must be on the public internet: a private, loopback or link-local address is refused when you create the trigger, and again on every delivery after its name is looked up, so DNS can't point it inside. Redirects aren't followed; any status other than 2xx counts as a failure.
 - `tree` limits it to one tree. The default is all of the organization's trees.
+- An organization has at most 100 outbound triggers. Inbound hooks aren't limited.
 - `events` filters by type, using the names `list_changes` uses. Empty means all of these:
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
   - `outcome.claimed`, `outcome.released`, `outcome.status_set`
@@ -72,6 +74,7 @@ What else to know:
 - It acts as the person who created it, recorded as `via "trigger:<name>"`.
 - It only adds evidence, unless you set `canSetStatus: true`. Then a confirms sets verified and a denies sets failing.
 - For a replacement being proved on a track (see the [tracks guide](https://hillclimb.me/docs/tracks.md)), set `rules.track` to record there instead of live, or `rules.trackField` to read the track from each event. The new system's CI then never touches what's live.
+- One event names at most 500 outcomes (fixed keys plus the ones read from the payload); split bigger batches into several posts. Bodies are limited to 1 MB.
 - `delete_trigger` stops the URL at once.
 
 The [evidence guide](https://hillclimb.me/docs/evidence.md) covers the rules, responses and a CI example.

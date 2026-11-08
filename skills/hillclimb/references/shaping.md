@@ -75,7 +75,7 @@ Under approvers, the following wait for every approver to sign off:
 - new goals and outcomes, and edits to their contract (title, brief, story, criteria), from anyone who isn't an approver;
 - the same changes from any agent, even one signed in as an approver. Any MCP or API-key connection counts as an agent.
 
-A new goal or outcome waits as a draft. An edit waits as a pending change. Drafts have no status and aren't next work, and a goal under a draft is a draft too. `list_pending_changes` shows what's waiting and on whom, and what each edit would change, field by field. Approvers sign off themselves in the Hillclimb console (https://hillclimb.me/t). That sign-off is `approve_change`, which refuses any agent connection. They can also send a change back, and so can you with `reject_change` if the person asks.
+A new goal or outcome waits as a draft. An edit waits as a pending change. Drafts have no status and aren't next work, and a goal under a draft is a draft too. `list_pending_changes` shows what's waiting and on whom, and what each edit would change, field by field. Approvers sign off themselves in the Hillclimb console (https://hillclimb.me/t). That sign-off is `approve_change`, which takes the `proposedAt` that `list_pending_changes` showed, so it covers exactly the draft or edit that was read; anything changed since is refused. They can also send a change back, and so can you with `reject_change` if the person asks.
 
 As an agent, you can always propose. Never ask the person to approve something they haven't read.
 
