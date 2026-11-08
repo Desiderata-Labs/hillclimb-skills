@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+8916e95b",
+  "version": "1.0.0+14c0c42e",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
