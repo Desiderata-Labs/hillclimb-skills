@@ -38,7 +38,7 @@ Every member of the organization sees it unless you publish with `visibility: "p
 
 ## Slide decks
 
-A deck is data, not a page: `publish_artifact` with format "slides" and `slides`: [{ `body`, `notes`, `layout` }], plus a `theme`: hillclimb (Hillclimb's look and the default), midnight (dark) or paper (warm, editorial). A deck keeps its theme whatever the viewer's light or dark setting, so it looks the same on every screen and projector; pick midnight when you want a dark deck. Bodies are markdown, or HTML with `format`: "html" for charts and custom layouts; an h4 above a heading is a small kicker, and HTML slides can use the report kit's classes (kpis, chip, grid and card, bar). One idea per slide, big type, the detail in notes. Hillclimb renders the deck into one page that presents on its own: arrow keys and swipes, F for full screen, N for speaker notes, and it prints one slide per page and stacks the slides on a phone. Layouts: "title" (the first slide's default), "section", "content" (the default), "split" (two columns; a line with only `+++` divides them), "center", "full" (one image edge to edge). `get_artifact` gives the slides back as data: change the ones that need it and publish the whole deck again.
+A deck is data, not a page: `publish_artifact` with format "slides" and `slides`: [{ `body`, `notes`, `layout` }], plus a `theme`: hillclimb (Hillclimb's look and the default), midnight (dark) or paper (warm, editorial). A deck keeps its theme whatever the viewer's light or dark setting, so it looks the same on every screen and projector; pick midnight when you want a dark deck. Bodies are markdown, or HTML with `format`: "html" for charts and custom layouts; an h4 above a heading is a small kicker, and HTML slides can use the report kit's classes (kpis, chip, grid and card, bar). One idea per slide, big type, the detail in notes. Hillclimb renders the deck into one page that presents on its own: arrow keys and swipes, F for full screen, N for speaker notes, and it prints one slide per page and stacks the slides on a phone. Layouts: "title" (the first slide's default), "section", "content" (the default), "split" (two columns; a line with only `+++` divides them, and a heading that opens the left column spans both unless the right column opens with one too), "center", "full" (one image edge to edge). `get_artifact` gives the slides back as data: change the ones that need it and publish the whole deck again.
 
 ## Templates
 
@@ -52,7 +52,7 @@ People save their own formats with `save_artifact_template`: a recipe, a starter
 
 ## Limits
 
-Up to 10 MB a file, 50 MB and 200 files a version, 5 MB inline, and a storage limit per organization that `get_usage` reports (`artifacts`), counting each file once however many versions share it. Archived artifacts are deleted for good 30 days after archiving.
+Up to 10 MB a file, 50 MB and 200 files a version, 150 slides a deck, 5 MB inline, and a storage limit per organization that `get_usage` reports (`artifacts`), counting each file once however many versions share it. Archived artifacts are deleted for good 30 days after archiving. A publish over a limit is refused with the limit and what to do: compress or split a large file, combine small ones, or publish parts as separate artifacts.
 
 ## Releases and the tree
 
