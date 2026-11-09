@@ -62,4 +62,4 @@ An artifact about a release, with `subjects` [{ tree, release }], shows on that 
 
 ## Linking
 
-`url` opens the artifact and `versionUrl` that exact version. Give people the link. Inside a report, link goals, outcomes, plans, releases and roadmaps with the `url` their tool results carry (see the climbing guide). `subjects` records what it's about, e.g. `[{ "tree": "acme/acme", "release": "beta" }]`.
+`url` opens the artifact and `versionUrl` that exact version. Give people the link. Inside a report, link goals, outcomes, plans, releases and roadmaps with the `url` their tool results carry (see the climbing guide). `subjects` records what it's about, e.g. `[{ "tree": "acme/7f3k2m9q", "release": "c5j8u2fd" }]` (keys, or `slug~key` from a url).

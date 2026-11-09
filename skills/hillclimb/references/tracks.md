@@ -4,7 +4,7 @@
 
 ## When to use a track
 
-A track is a replacement being proved against the outcomes the tree already has, while what's live keeps running. It suits any team: a service rewritten in another language, a move to a new datastore, a new billing provider, a new support process. The examples below use a track keyed `next`; yours gets whatever key you choose. The promises stay the same, so the same outcomes, keys, criteria and priority serve both. The new implementation earns its own green without touching what's live.
+A track is a replacement being proved against the outcomes the tree already has, while what's live keeps running. It suits any team: a service rewritten in another language, a move to a new datastore, a new billing provider, a new support process. The examples below call the track's key `p0s6e3ly`; `create_track` returns yours. The promises stay the same, so the same outcomes, keys, criteria and priority serve both. The new implementation earns its own green without touching what's live.
 
 Don't copy the tree or make a parallel goal of "rewrite" outcomes for this. Copies drift: fixes, priorities and approvals land in one and not the other, and nothing says when the rewrite really does everything the old system did. Tracks converge: when a component cuts over, its outcomes are simply live again.
 
@@ -12,7 +12,7 @@ For one-off migration tasks (stand up the new cluster, port the schema), ordinar
 
 ## Starting a track
 
-An editor starts one with `create_track`: `{ tree, key: "next", title: "New billing system" }`. Every outcome starts unverified on it, and live status, evidence and coverage don't change. `get_tree` then lists the tree's `tracks` and, on each goal, `onTracks`: readiness there (`{ next: { total, verified } }`) beside its live coverage. `get_outcome` adds `tracks`: the outcome's status, signals, scope and claim on each one.
+An editor starts one with `create_track`: `{ tree, title: "New billing system" }` (Hillclimb gives it a key, returned as `track`). Every outcome starts unverified on it, and live status, evidence and coverage don't change. `get_tree` then lists the tree's `tracks` and, on each goal, `onTracks`: readiness there (`{ p0s6e3ly: { total, verified } }`, by track key) beside its live coverage. `get_outcome` adds `tracks`: the outcome's status, signals, scope and claim on each one.
 
 ## Scope
 
@@ -26,7 +26,7 @@ A new requirement that matters to both belongs in both. Scoping is for what hone
 ## Climbing a track
 
 The loop is the same, with `track` on each call:
-1. `list_next_outcomes` with `track: "next"` (and `tags` or `goal` for your component): what isn't proven there yet, in tree order, with the track's claims. Each item's `status` is its status on the track; `liveStatus` is production's.
+1. `list_next_outcomes` with `track: "p0s6e3ly"` (and `tags` or `goal` for your component): what isn't proven there yet, in tree order, with the track's claims. Each item's `status` is its status on the track; `liveStatus` is production's.
 2. `claim_outcome` with `track`. Track claims are separate from live claims, so someone can still fix production while you rebuild it.
 3. `add_evidence` with `track` for what you observed on the new implementation. Name the build and environment in it.
 4. `set_outcome_status` with `track`. Verified needs "confirms" evidence on that track against the current version; live evidence doesn't count there, and track evidence doesn't count live.

@@ -41,7 +41,7 @@ Create outcomes with `create_outcome`. Write each one as a user story with crite
 - **tags**: where the work happens. For example `app-repo`, `infra` or `docs`. Agents filter next work by tag.
 - **assignees**: people, or a team through `assign_team`.
 
-Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or digits. If you leave the key out, it's generated from the tree's initials. Goal keys are lowercase slugs like `connect-node`. Keys are unique within a tree and stay taken after archiving.
+Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or digits. If you leave the key out, it's numbered from the tree's outcome prefix: its title's initials by default, which an editor can change with `edit_goal` (`outcomePrefix`) on the root. Every other key (trees, goals, releases, roadmaps, scenarios, tracks, views) is 8 random lowercase letters and digits that Hillclimb assigns, like `q8d2x0ra`: you never choose one, and a title can repeat without taking anything from anyone. URLs and results show `slug~key` (`onboarding~q8d2x0ra`); the slug is the title made readable, and only the key finds anything, so renaming never breaks a link.
 
 Avoid outcomes that only say "build X". Say what's true when X works, and how someone could tell.
 

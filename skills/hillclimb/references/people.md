@@ -20,7 +20,7 @@ Only the person can delete their own account, in the console: https://hillclimb.
 - Organizations where they're the only member are deleted with all their trees and files.
 - In organizations they've left, and trees shared with them, everything they wrote (goals, outcomes, evidence, files, plans, comments, history) stays with the organization and still names them: their name and email as they were when they deleted the account, shown as "Name (deleted account)", and person references carry `deleted: true`. Deleting that content is up to the organization's owners. Their claims are released, and they're taken off assignments, approver lists and teams. An approver list they were alone on passes to the organization's owners.
 
-When the same tree key exists in more than one of your organizations, name the tree as `org-slug/tree-key`.
+Tree keys are random, so a key names one tree wherever it is; `org-slug/` in front is optional.
 
 ## Organization roles
 

@@ -12,7 +12,7 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 
 - Reading it returns what `list_next_outcomes` would.
 - Subscribe to it and your client gets `notifications/resources/updated` whenever the tree changes: evidence, statuses, claims, edits, moves and approvals. Then read it again.
-- Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/acme/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
+- Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/7f3k2m9q/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
 - Streams last about 13 minutes, and clients reopen them.
 - After a deploy, new streams get `tools/list_changed`, so clients re-read the tools.
 
@@ -49,7 +49,7 @@ Each delivery is one POST, batching up to 100 events:
 
 ```json
 { "trigger": { "id": "…", "name": "Slack" },
-  "events": [{ "cursor": "…", "at": "…", "tree": "acme/acme", "type": "outcome.status_set",
+  "events": [{ "cursor": "…", "at": "…", "tree": "acme/7f3k2m9q", "type": "outcome.status_set",
                "subject": { "type": "outcome", "key": "AC-12" }, "actor": "…", "via": "Claude Code",
                "data": { "from": "unverified", "to": "verified", "note": "…", "evidenceIds": ["…"] } }] }
 ```
@@ -73,7 +73,7 @@ What else to know:
 
 - It acts as the person who created it, recorded as `via "trigger:<name>"`.
 - It only adds evidence, unless you set `canSetStatus: true`. Then a confirms sets verified and a denies sets failing.
-- For a replacement being proved on a track (see the [tracks guide](https://hillclimb.me/docs/tracks.md)), set `rules.track` to record there instead of live, or `rules.trackField` to read the track from each event. The new system's CI then never touches what's live.
+- For a replacement being proved on a track (see the [tracks guide](https://hillclimb.me/docs/tracks.md)), set `rules.track` to the track's key to record there instead of live, or `rules.trackField` to read the track's key from each event. The new system's CI then never touches what's live.
 - One event names at most 500 outcomes (fixed keys plus the ones read from the payload); split bigger batches into several posts. Bodies are limited to 1 MB.
 - `delete_trigger` stops the URL at once.
 

@@ -10,7 +10,7 @@ Every MCP tool is also a REST endpoint. It takes the same JSON arguments and ret
 curl -fsS -X POST https://hillclimb.me/api/v1/tools/list_next_outcomes \
   -H "authorization: Bearer $HILLCLIMB_API_KEY" \
   -H 'content-type: application/json' \
-  -d '{"tree": "acme", "limit": 5}'
+  -d '{"tree": "7f3k2m9q", "limit": 5}'
 ```
 
 - `GET https://hillclimb.me/api/v1/tools` lists every tool with its description and JSON Schema. It also includes the server instructions.

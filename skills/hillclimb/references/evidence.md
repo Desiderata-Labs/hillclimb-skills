@@ -69,7 +69,7 @@ create_trigger {
   "organization": "acme",
   "name": "GitHub CI",
   "direction": "inbound",
-  "tree": "acme",
+  "tree": "7f3k2m9q",
   "source": "github-actions",
   "rules": {
     "outcomesField": "outcomes",
@@ -134,7 +134,7 @@ Use this when CI needs to call any tool. Create a key named after the job, such 
 ```bash
 curl -fsS -X POST https://hillclimb.me/api/v1/tools/add_evidence \
   -H "authorization: Bearer $HILLCLIMB_API_KEY" -H 'content-type: application/json' \
-  -d '{"tree": "acme", "outcome": "HC-16", "verdict": "confirms", "kind": "ci",
+  -d '{"tree": "7f3k2m9q", "outcome": "HC-16", "verdict": "confirms", "kind": "ci",
        "summary": "Deploy smoke test passed",
        "source": {"type": "system", "name": "github-actions"},
        "links": ["https://…/runs/123"]}'
