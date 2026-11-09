@@ -89,6 +89,10 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 - `list_changes` with the `after` cursor shows what changed since you last looked: statuses, evidence, edits, moves and approvals.
 - `list_pending_changes` shows drafts and edits waiting for approval and who they're waiting on. For an edit, it also shows what each field would change from and to.
 
+## Linking people to the work
+
+Tool results give the console link for what they name: `url` on trees, goals, outcomes, plans, releases and roadmaps (`list_next_outcomes` items, `get_outcome`, `get_plan`, `get_release`, `get_roadmap`, `list_changes` subjects, and what you create or edit). `get_tree` lists many items, so it gives `links.goal` and `links.outcome` instead: replace `{key}` with the item's key. When you mention one of these to a person, in chat, a comment, a pull request or a report, link it. Don't build these URLs yourself. They open for members of the organization; anyone else is asked to sign in.
+
 ## When you're blocked
 
 - If you need a person's decision, ask them in a comment on the outcome: a question (`add_comment` with `to` and `options`) waits on them, and their reply reaches you in the `inbox` field of your tool results. Keep working on what doesn't depend on it; release the claim if nothing does. If your work overlaps another outcome, ask the agent working on it (`to: ["agent"]`) before changing what they depend on.

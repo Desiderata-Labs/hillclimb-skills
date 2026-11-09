@@ -88,7 +88,7 @@ Read the [shaping guide](https://hillclimb.me/docs/shaping.md) for how approvers
 These tools change access or are hard to undo:
 - `share_goal` and `add_team_member`
 - `invite_to_organization`, `update_member_role` and `accept_invitation`
-- `create_api_key` and `create_share_link`
+- `create_api_key`, `create_share_link` and `share_artifact`
 - `create_trigger`
 - `archive_tree` and `delete_tree`
 - `promote_track` with `apply`, and `archive_track`
