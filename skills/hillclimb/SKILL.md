@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+5bb00244
+version: 1.0.0+4ee3bf47
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -80,7 +80,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 
 Is your team focused on a release? `list_next_outcomes` with `assignedTo: "team:<key>"` (or `release`) then lists only what was agreed to ship; `scopeComplete: true` means stop and ask, not widen. Product people lay out releases and roadmaps with your help: preview every `revise_roadmap`, apply only after they say yes. Read the roadmaps guide first.
 
-Asked for a report, spec, deck or page? Publish it with `publish_artifact` (markdown first; a stable `key` per thing, a `folder` and an `asOf` date) and give the person its `url`. Read the artifacts guide first.
+Asked for a report, spec, deck or page? Publish it with `publish_artifact` (markdown first, with a `folder` and an `asOf` date; keep the `key` it returns, which adds versions) and give the person its `url`. Read the artifacts guide first.
 
 Working on a rewrite? If the tree has **tracks** (`get_tree` lists them), pass `track` to `list_next_outcomes`, `claim_outcome`, `add_evidence`, `set_outcome_status` and `release_outcome`: the new implementation is proved on its track without touching what's live. Read the tracks guide first.
 

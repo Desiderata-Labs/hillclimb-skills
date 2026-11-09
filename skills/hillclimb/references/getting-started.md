@@ -56,6 +56,7 @@ An API key acts as the person, but Hillclimb records that an agent made the call
 1. `get_me`: who you are, your organizations, invitations waiting for you, and the trees you can see.
 2. If the person has no organization yet, call `create_organization`. If an invitation is waiting, ask them before calling `accept_invitation`.
 3. `get_tree` with no arguments lists the trees you can see. With a `tree`, it shows the ranked goals, their coverage and where the work is.
+   - People who sign up on the web get an **example tree**: key `brightline-example`, titled "Brightline (example)", with a roadmap and a report. It's a made-up company for them to explore. Don't climb, edit or report on it, and pass `tree` to `list_next_outcomes` so its outcomes never look like real work. Help them start their own tree, and archive the example (`archive_tree`) only when they ask.
 4. `list_next_outcomes` returns the most important unproven work. Then follow the [climbing guide](https://hillclimb.me/docs/climbing.md).
 
 To start a new tree, call `create_goal` with no parent. You can base it on a template (`list_templates`). Then [shape it](https://hillclimb.me/docs/shaping.md) with the person before climbing it.

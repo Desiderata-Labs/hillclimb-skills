@@ -1,6 +1,6 @@
 # Artifacts: reports, specs and pages
 
-> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, stable keys and versions, folders and dates, images, and who sees what.
+> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, keys and versions, folders and dates, images, and who sees what.
 
 An artifact is a page you publish for people in your organization: a weekly update, a launch update, a spec, a mock, a deck, a small site. Hillclimb keeps every version, files it in a folder, orders it by the day it covers, and shows it in the console under Artifacts (`/artifacts`), across all your organization's trees. Artifacts never change any outcome's status. They aren't evidence.
 
@@ -8,7 +8,7 @@ Hillclimb doesn't write or schedule reports. You do, when your person asks or on
 
 ## Publishing
 
-`publish_artifact` with a `key`, `title`, `format` and the content:
+`publish_artifact` with a `title`, `format` and the content:
 
 - **markdown**: send it as `content`. Hillclimb renders it in the console's own style. Raw HTML in markdown is shown as text, never run. This is the default for reports.
 - **html**: one self-contained page as `content` (inline CSS and JS are fine).
@@ -18,9 +18,11 @@ HTML and bundles run in a sandbox on a separate origin. They can run scripts and
 
 ## Keys and versions
 
-The `key` is the artifact. Publishing the same key again adds a version, so pick keys that say what the thing is and when: `weekly-2026-w45`, `launch-beta`, `spec-checkout`. A scheduled run that retries then adds a version instead of a duplicate. Say what changed in `note`.
+Hillclimb gives each artifact a `key`: 8 random lowercase letters and digits, like `k3x9q2ma`. The key is the artifact. Its url reads `/artifacts/<org>/<slug>~<key>`, where the slug is the title made readable (lowercase words and dashes, at most 60 characters). The slug is only for people: it isn't unique, it follows the title, and only the key finds the artifact, so two people can both publish "Weekly update" and nobody owns a name. Tools take the key or the whole `slug~key` from a url.
 
-A new week is a new artifact, not a new version: `weekly-2026-w46` sits beside `weekly-2026-w45` in the same folder. A version is a correction to the same thing.
+Publishing without `key` makes a new artifact and returns its key. Keep it: publishing again with that `key` adds a version. To revise something you didn't just publish, find it with `list_artifacts` (its folder narrows it) and pass its key. A publish that failed before it returned made nothing, so retry it as is; one that returned a key made the artifact, so retry with that key. Say what changed in `note`.
+
+A new week is a new artifact, not a new version: next week's update sits beside this week's in the same folder. A version is a correction to the same thing, or the next run of one living page (a daily readiness report, a changelog).
 
 `get_artifact` returns every version and the markdown or HTML of the one shown, so you can revise it and publish the next version.
 
@@ -42,7 +44,7 @@ A deck is data, not a page: `publish_artifact` with format "slides" and `slides`
 
 ## Templates
 
-`list_artifact_templates` lists the built-in templates (weekly update, what I got done, launch update, release readiness, roadmap review, tree health, spec, changelog, deck, blank page, and more), your organization's, and your own. `get_artifact_template` gives one: the recipe (which tools to call, in order, and what to leave out), the starter to fill in, the folder and key pattern to publish under, and a `templateRef` to pass as `template` when you publish, so the report records which version of the template it followed. When a person asks for "our weekly update", follow the template rather than inventing a format. The built-in internal reports (stand-up, weekly, retro, postmortem, launch and investor updates, and the like) share one design system, Hillclimb's report kit: keep the starter's `<head>` and `<style>` exactly, write only the body with the kit's components (masthead, KPI tiles, outcome rows with status chips, decision callouts, tables, timeline), and use color only for status. Docs like a spec or decision record stay plain markdown; customer- and investor-facing pages carry the company's own look.
+`list_artifact_templates` lists the built-in templates (weekly update, what I got done, launch update, release readiness, roadmap review, tree health, spec, changelog, deck, blank page, and more), your organization's, and your own. `get_artifact_template` gives one: the recipe (which tools to call, in order, and what to leave out), the starter to fill in, the folder to publish in, and a `templateRef` to pass as `template` when you publish, so the report records which version of the template it followed. When a person asks for "our weekly update", follow the template rather than inventing a format. The built-in internal reports (stand-up, weekly, retro, postmortem, launch and investor updates, and the like) share one design system, Hillclimb's report kit: keep the starter's `<head>` and `<style>` exactly, write only the body with the kit's components (masthead, KPI tiles, outcome rows with status chips, decision callouts, tables, timeline), and use color only for status. Docs like a spec or decision record stay plain markdown; customer- and investor-facing pages carry the company's own look.
 
 People save their own formats with `save_artifact_template`: a recipe, a starter and where reports go. A new template is private to whoever saved it; saving it again with `visibility` "organization" shares it with everyone there, and only its owner can change that.
 
