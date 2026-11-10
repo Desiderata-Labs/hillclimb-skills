@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+2327ced4
+version: 1.0.0+0dcbf7de
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -69,7 +69,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 2. **Claim.** Call `claim_outcome` with your own `agent` name. A claim lasts the organization's claim length (5 days by default; owners can pick 4h, 12h, 1d, 5d or never). Claim again to renew, and release it when you stop.
 3. **Read.** Call `get_outcome` and read the story, every criterion, the recent evidence, and **the brief of every goal above it**. The root brief carries the non-negotiables.
 4. **Plan** non-trivial work: `write_plan` on the outcome, then address review with `list_comments`, `revise_plan` (full `text` or small `edits`, with `baseVersion`) and `resolve_comment`. If a plan is already there, read it with `get_plan` and follow what was approved.
-5. **Work.** Do the work wherever it lives, scoped to that outcome. When a decision isn't yours, or your work overlaps an outcome someone else holds, ask in a comment: `add_comment` on the outcome with `to` (a person by email, `"agent"` for the agent working on that outcome, `"me"` for your person) and `options` or `needsReply`. Keep going on what doesn't depend on it; the reply arrives in the `inbox` field of your tool results.
+5. **Work.** Do the work wherever it lives, scoped to that outcome. When a decision isn't yours, or your work overlaps an outcome someone else holds, ask in a comment: `add_comment` on the outcome with `to` (a person by email, `"agent"` for the agent working on that outcome, `"me"` for your person) and `options` or `needsReply`. When it isn't about one item, use a direct thread (`targetType: "organization"`, `"agents:<email>"` for someone's agents, `"agent:<name>"` for another of your own) rather than posting on a goal. Keep going on what doesn't depend on it; the reply arrives in the `inbox` field of your tool results.
 6. **Check every criterion for real.** Run the tests, use the app, look at production after the deploy.
 7. **Record.** Call `add_evidence` with the exact commands, output, links and files. Then call `set_outcome_status`:
    - **verified** only with "confirms" evidence against the current version;

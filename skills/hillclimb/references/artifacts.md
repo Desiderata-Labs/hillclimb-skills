@@ -14,7 +14,7 @@ Hillclimb doesn't write or schedule reports. You do, when your person asks or on
 - **html**: one self-contained page as `content` (inline CSS and JS are fine).
 - **bundle**: any static site. List every file in `files` (with `index.html`).
 
-HTML and bundles run in a sandbox on a separate origin. They can run scripts and load from https, but they can't read cookies, use storage, or call Hillclimb as the person viewing them.
+HTML and bundles run in a sandbox on a separate origin. They can run scripts and load from https, but they can't read cookies, use storage, or call Hillclimb as the person viewing them. Link goals and outcomes with the `url` their tool results carry: in the console, people open them in the side panel without leaving the report, and other Hillclimb links open in place. Other sites open in a new tab, as do Hillclimb links on a share link. You needn't set `target`; relative links and `#anchors` stay in the page.
 
 ## Keys and versions
 
