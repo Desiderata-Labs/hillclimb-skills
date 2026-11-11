@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+21140b4e
+version: 1.0.0+292654e1
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -80,7 +80,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 
 Blocked or deferred? Blocked means wanted now but stopped; anyone can block or clear. Deferred means a person chose not to do it now; you defer or reopen one only after your person says yes (`confirmedWithPerson: true`). Neither changes status. `list_blocked_and_deferred` shows both, with reasons.
 
-Needs another outcome first? Add it to `dependsOn` (`edit_outcome`): the outcome waits, blocked, until it's verified, and `list_next_outcomes` serves the dependency at its priority (`pulledUpBy`). Work the dependency if you can.
+Needs another outcome first? Add it to `dependsOn` (`edit_outcome`): the outcome waits, blocked, until it's verified, and `list_next_outcomes` lists the dependency at its rank (`effectiveRank`, `neededBy`). Work the dependency if you can.
 
 Is your team focused on a release? `list_next_outcomes` with `assignedTo: "team:<key>"` (or `release`) then lists only what was agreed to ship; `scopeComplete: true` means stop and ask, not widen. Product people lay out releases and roadmaps with your help: preview every `revise_roadmap`, apply only after they say yes. Read the roadmaps guide first.
 
