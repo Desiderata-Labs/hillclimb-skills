@@ -40,7 +40,7 @@ Create outcomes with `create_outcome`. Write each one as a user story with crite
 - **story**: "As a …, I want …, so that …".
 - **actors**: who's involved.
 - **criteria**: Given/When/Then, each with a stable key such as `ac1`. One behavior per criterion. Make them concrete enough that two people would agree on pass or fail.
-- **tags**: where the work happens: a service, a repository or an area, such as `console`, `api`, `app-repo` or `infra`. People and agents filter next work by tag to climb the areas they know or are focused on. Tags are compared ignoring case and stored lowercase (spaces become dashes).
+- **tags**: where the work happens: a service, a repository or an area, such as `console`, `api`, `app-repo` or `infra`. People and agents filter next work by tag to climb the areas they know or are focused on. Tags are kebab-case (`App repo` is `app-repo`): call `list_tags` first and use the organization's names.
 - **assignees**: people, or a team through `assign_team`.
 
 Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or digits. If you leave the key out, it's numbered from the tree's outcome prefix: its title's initials by default, which an editor can change with `edit_goal` (`outcomePrefix`) on the root. Every other key (trees, goals, releases, roadmaps, scenarios, tracks, views) is 8 random lowercase letters and digits that Hillclimb assigns, like `q8d2x0ra`: you never choose one, and a title can repeat without taking anything from anyone. URLs and results show `slug~key` (`onboarding~q8d2x0ra`); the slug is the title made readable, and only the key finds anything, so renaming never breaks a link.
@@ -91,11 +91,25 @@ Use `edit_outcome` to change title, story, actors or criteria. You must say whet
 
 ## Tagging by area
 
-Tag each outcome with where its work happens, such as the service it lives in (`console`, `api`, `billing`), so people can climb the areas they know.
+Tags are optional. Use them for where or what the work is, such as the service it lives in (`console`, `api`, `billing`), so people can climb the areas they know.
 
 - `get_tree` returns `tags`: every tag in use under that goal, with how many outcomes carry it and how many need work. Pass `tags` (and `tagMatch: "all"` or `excludeTags`) to see only that area: goals with nothing in it drop out, and coverage counts only the matching outcomes. `coverageByLevel` still describes the whole tree; read `filteredCoverageByLevel` for the area's progress by level.
-- `tag_outcomes` adds or removes tags on many outcomes at once, by `outcomes` keys or by `goal` (everything under it) narrowed with tag filters. Tag a whole area with `goal` and `add: ["console"]`; rename a tag across the tree with `tags: ["web"]`, `add: ["console"]`, `remove: ["web"]`.
+- `tag_outcomes` adds or removes tags on many outcomes at once, by `outcomes` keys or by `goal` (everything under it) narrowed with tag filters. Tag a whole area with `goal` and `add: ["console"]`; rename a tag in one tree with `tags: ["web"]`, `add: ["console"]`, `remove: ["web"]`. To rename one across the whole organization, use `rename_tag` or `merge_tag` below.
 - A filter naming a tag no outcome carries comes back with a `tagNote` saying so, which usually means a typo.
+- `untagged: true` (on `get_tree`, `list_next_outcomes` and `tag_outcomes`) finds outcomes with no tags at all, the easy way to see what still needs tagging. Use it instead of `tags`. `list_tags` counts them as `untaggedOutcomes`.
+
+### The tag vocabulary
+
+An organization keeps one shared vocabulary of tags, so every tree and agent tags the same way. Tags are optional: nothing requires an outcome to have one, and nothing requires a tag to be in a group.
+
+- `list_tags` returns the groups, each tag's description and aliases, how many outcomes use it, tags with no group under `uncategorized`, and names in use that nobody has added yet under `unmanaged`. Read it before tagging, and use a name from it when one fits. Tags say where or what the work is, such as the system, a subsystem or an area. Don't use them for status (that's the outcome's status) or where an outcome came from.
+- Tags are kebab-case: `App repo` and `app-repo` are one tag.
+- Tagging with a name that isn't in the vocabulary still works and the name is kept. The result's `tagNotes.unmanaged` names the nearest vocabulary tags, so a typo is easy to catch.
+- Organization owners, admins and editors shape the vocabulary: `create_tag` adds a tag (or adopts a name already in use) with a description and optionally a group, `edit_tag` changes its description or group, and `save_tag_group` and `delete_tag_group` manage groups, which are only a way to sort tags and carry no rules. Deleting a group keeps its tags as uncategorized.
+- `rename_tag` and `merge_tag` change the tag on every outcome in the organization's trees at once, and never change an outcome's version or status. By default the old name stays as an alias: an agent that still says the old name tags and filters as the new tag, and the result's `tagNotes.redirected` says which name to use next time. Pass `alias: false` to leave no alias, so the old name is free again. `remove_tag_alias` frees a name later; outcomes already moved stay moved. A new tag can't take a name that is currently an alias.
+- `retire_tag` stops a tag being used: tagging with it is refused with the tag to use instead. Outcomes keep it as history, or lose it with `outcomes: "remove"`. `create_tag` on the name brings it back.
+- `rename_tag` keeps a retired tag retired, and `merge_tag` refuses a retired target. Renames and merges rewrite archived trees too, so a restored tree comes back with current names; `list_tags` counts only live trees and leaves out the example tree.
+- `rename_tag`, `merge_tag`, `retire_tag` and `remove_tag_alias` rewrite many outcomes or can't be undone, so ask the person first.
 
 ## Reshaping
 
@@ -116,7 +130,7 @@ Tag each outcome with where its work happens, such as the service it lives in (`
       "validation_evidence": [] }] }] }
 ```
 
-- Each file becomes a goal, each section a goal under it, and each story an outcome with the same key, tagged `imported`.
+- Each file becomes a goal, each section a goal under it, and each story an outcome with the same key, tagged `imported` (unless the organization has retired that tag).
 - Validation evidence comes in as notes, and every status starts unverified.
 - Story ids must be valid outcome keys.
 - Running it again skips keys that already exist.

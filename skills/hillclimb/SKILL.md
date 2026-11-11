@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+10c190ae
+version: 1.0.0+c87bb544
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -109,7 +109,7 @@ Working on a rewrite? If the tree has **tracks** (`get_tree` lists them), pass `
 - **The root brief is the charter:** purpose and audience, five to eight non-negotiables, and "this tree decides what's next".
 - **Five to seven objectives,** phrased as what will be true ("Customers are billed exactly for what they use"), never as system names. Rank the one that protects your invariants first.
 - **Two to five key results per objective.** Systems nest under the objectives they serve. Outcomes hang off key results, with three to fifteen each.
-- **Each outcome is one behavior,** with Given/When/Then criteria a stranger could check, tagged with where the work happens.
+- **Each outcome is one behavior,** with Given/When/Then criteria a stranger could check. Tag it with where or what the work is, using the organization's names from `list_tags`; tags are optional.
 - **Put imported or unsorted work under a Triage goal ranked last,** and review it regularly.
 
 Read [best practices](https://hillclimb.me/docs/practices.md) and [shaping](https://hillclimb.me/docs/shaping.md) before proposing a tree. You can show the person a draft with `POST https://hillclimb.me/api/v1/visualize` before creating anything.

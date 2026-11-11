@@ -92,6 +92,7 @@ These tools change access or are hard to undo:
 - `create_trigger`
 - `archive_tree` and `delete_tree`
 - `promote_track` with `apply`, and `archive_track`
+- `rename_tag`, `merge_tag` and `retire_tag`, which change tags on every outcome in the organization, and `remove_tag_alias`
 - `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
 - `delete_organization`
 - `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's

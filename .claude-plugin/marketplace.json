@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Skills and plugins for Hillclimb.",
-    "version": "1.0.0+10c190ae"
+    "version": "1.0.0+c87bb544"
   },
   "plugins": [
     {
       "name": "hillclimb",
       "source": "./",
       "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence. Includes the Hillclimb MCP server.",
-      "version": "1.0.0+10c190ae",
+      "version": "1.0.0+c87bb544",
       "homepage": "https://hillclimb.me"
     }
   ]

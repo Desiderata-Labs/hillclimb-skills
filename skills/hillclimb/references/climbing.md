@@ -35,7 +35,7 @@ The result also lists goals that have nothing to check yet, up to 20. People def
 
 You can narrow the list:
 - `goal`: only one part of the tree.
-- `tags`: e.g. `["console"]` for one service or `["app-repo"]` for one repository. Several tags match any of them; `tagMatch: "all"` needs every one. `excludeTags` leaves an area out. `get_tree` lists the tags in use, and a `tagNote` flags a tag nothing carries.
+- `tags`: e.g. `["console"]` for one service or `["app-repo"]` for one repository. Several tags match any of them; `tagMatch: "all"` needs every one. `excludeTags` leaves an area out. `get_tree` lists the tags in use, and a `tagNote` flags a tag nothing carries. `list_tags` is the organization's vocabulary; an old name that was renamed or merged still works, and the result says which tag it became.
 - `assignedTo`: `"me"` (including your teams' work), an email, `"team:<key>"`, or `"none"` for unowned work.
 - `createdBy`: who created the outcomes.
 - `includeClaimed`: also show outcomes other agents have claimed.
