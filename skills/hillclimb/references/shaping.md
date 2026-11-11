@@ -93,7 +93,7 @@ Use `edit_outcome` to change title, story, actors or criteria. You must say whet
 
 Tag each outcome with where its work happens, such as the service it lives in (`console`, `api`, `billing`), so people can climb the areas they know.
 
-- `get_tree` returns `tags`: every tag in use under that goal, with how many outcomes carry it and how many need work. Pass `tags` (and `tagMatch: "all"` or `excludeTags`) to see only that area: goals with nothing in it drop out, and coverage counts only the matching outcomes.
+- `get_tree` returns `tags`: every tag in use under that goal, with how many outcomes carry it and how many need work. Pass `tags` (and `tagMatch: "all"` or `excludeTags`) to see only that area: goals with nothing in it drop out, and coverage counts only the matching outcomes. `coverageByLevel` still describes the whole tree; read `filteredCoverageByLevel` for the area's progress by level.
 - `tag_outcomes` adds or removes tags on many outcomes at once, by `outcomes` keys or by `goal` (everything under it) narrowed with tag filters. Tag a whole area with `goal` and `add: ["console"]`; rename a tag across the tree with `tags: ["web"]`, `add: ["console"]`, `remove: ["web"]`.
 - A filter naming a tag no outcome carries comes back with a `tagNote` saying so, which usually means a typo.
 
