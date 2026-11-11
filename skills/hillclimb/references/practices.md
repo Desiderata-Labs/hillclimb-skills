@@ -68,7 +68,7 @@ Short briefs get read. Long ones get skimmed.
 
 - **One behavior per outcome.** Usually one to four criteria, each checkable on its own.
 - **Write criteria a stranger could check.** Name the actor, the starting state, the action and the observable result.
-- **Tag where the work happens**, e.g. `app-repo` or `infra`, so agents in one repository can filter next work to it.
+- **Tag where the work happens**, e.g. the service (`console`, `api`) or repository (`app-repo`), so people and agents can filter next work to the areas they own. `tag_outcomes` tags a whole goal at once.
 
 ## KPIs and forward-looking outcomes
 

@@ -10,7 +10,7 @@ Hillclimb doesn't write or schedule reports. You do, when your person asks or on
 
 `publish_artifact` with a `title`, `format` and the content:
 
-- **markdown**: send it as `content`. Hillclimb renders it in the console's own style. Raw HTML in markdown is shown as text, never run. This is the default for reports.
+- **markdown**: send it as `content`. Hillclimb renders it in the console's own style, GitHub-flavored like all markdown in Hillclimb (tables, task lists, images, inline video). Raw HTML in markdown is dropped, never run. This is the default for reports.
 - **html**: one self-contained page as `content` (inline CSS and JS are fine).
 - **bundle**: any static site. List every file in `files` (with `index.html`).
 

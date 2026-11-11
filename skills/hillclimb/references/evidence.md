@@ -13,7 +13,7 @@ To add it, call `add_evidence` with:
 | `verdict` | `confirms` (it holds), `denies` (it doesn't), or `note` (context, a blocker, a decision) |
 | `summary` | One line on what you observed |
 | `kind` | `test`, `ci`, `manual`, `review`, `customer-report`, `alert`, `metric` or `artifact`. Defaults to `manual`. |
-| `body` | Markdown details: the exact commands, the relevant output, and steps to reproduce. Up to 50,000 characters. |
+| `body` | Markdown details: the exact commands, the relevant output (in a fenced code block), and steps to reproduce. Tables and images render. Up to 50,000 characters. |
 | `links` | Up to 20: the PR, CI run, deploy, dashboard or ticket |
 | `criterion` | The criterion key it covers, if it covers one |
 | `files` | Up to 10 uploaded files. See below. |

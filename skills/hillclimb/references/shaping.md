@@ -30,6 +30,8 @@ Every goal can have a brief, written in markdown. Use it for:
 
 Agents read the briefs of every goal above an outcome before they work on it, so a brief steers all the work beneath it. Keep briefs short, specific and true.
 
+Hillclimb renders markdown the same way wherever people read it: briefs, plans, comments, evidence, release non-goals and artifacts. It's GitHub-flavored, so tables, task lists, fenced code, images and links work, and a video file (.mp4, .webm, .mov) written as an image or as a link alone on its line plays inline. Raw HTML is dropped, never run. In comments and evidence a single line break is kept; elsewhere, leave a blank line between paragraphs.
+
 ## Outcomes
 
 Create outcomes with `create_outcome`. Write each one as a user story with criteria someone could actually check:
@@ -38,7 +40,7 @@ Create outcomes with `create_outcome`. Write each one as a user story with crite
 - **story**: "As a …, I want …, so that …".
 - **actors**: who's involved.
 - **criteria**: Given/When/Then, each with a stable key such as `ac1`. One behavior per criterion. Make them concrete enough that two people would agree on pass or fail.
-- **tags**: where the work happens. For example `app-repo`, `infra` or `docs`. Agents filter next work by tag.
+- **tags**: where the work happens: a service, a repository or an area, such as `console`, `api`, `app-repo` or `infra`. People and agents filter next work by tag to climb the areas they know or are focused on. Tags are compared ignoring case and stored lowercase (spaces become dashes).
 - **assignees**: people, or a team through `assign_team`.
 
 Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or digits. If you leave the key out, it's numbered from the tree's outcome prefix: its title's initials by default, which an editor can change with `edit_goal` (`outcomePrefix`) on the root. Every other key (trees, goals, releases, roadmaps, scenarios, tracks, views) is 8 random lowercase letters and digits that Hillclimb assigns, like `q8d2x0ra`: you never choose one, and a title can repeat without taking anything from anyone. URLs and results show `slug~key` (`onboarding~q8d2x0ra`); the slug is the title made readable, and only the key finds anything, so renaming never breaks a link.
@@ -85,7 +87,15 @@ Use `edit_outcome` to change title, story, actors or criteria. You must say whet
 - **`changesMeaning: true`** bumps the version. A verified outcome then becomes stale and needs re-checking. When an agent changes the criteria, it always counts as true.
 - **`changesMeaning: false`** is a wording fix. The status stands.
 
-`tags`, `assignees` and `criteria` each take the full new list. Never change an outcome so your work passes. If it's wrong, propose the change and say why.
+`assignees` and `criteria` each take the full new list. For tags, `addTags` and `removeTags` change one or two and keep the rest (`tags` still replaces them all); rename one with the old name in `removeTags` and the new one in `addTags`. Tag changes apply at once, without sign-off. Never change an outcome so your work passes. If it's wrong, propose the change and say why.
+
+## Tagging by area
+
+Tag each outcome with where its work happens, such as the service it lives in (`console`, `api`, `billing`), so people can climb the areas they know.
+
+- `get_tree` returns `tags`: every tag in use under that goal, with how many outcomes carry it and how many need work. Pass `tags` (and `tagMatch: "all"` or `excludeTags`) to see only that area: goals with nothing in it drop out, and coverage counts only the matching outcomes.
+- `tag_outcomes` adds or removes tags on many outcomes at once, by `outcomes` keys or by `goal` (everything under it) narrowed with tag filters. Tag a whole area with `goal` and `add: ["console"]`; rename a tag across the tree with `tags: ["web"]`, `add: ["console"]`, `remove: ["web"]`.
+- A filter naming a tag no outcome carries comes back with a `tagNote` saying so, which usually means a typo.
 
 ## Reshaping
 

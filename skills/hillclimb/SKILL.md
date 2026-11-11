@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+0dcbf7de
+version: 1.0.0+8b280c7b
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -65,7 +65,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 
 ## The loop (always follow it)
 
-1. **Pick.** Call `list_next_outcomes`, filtered with `tags`, `goal` or `assignedTo: "me"` where it helps. Take the top item. The `reason` tells you why it's there: failing, broken, stale or unverified.
+1. **Pick.** Call `list_next_outcomes`, filtered with `tags` (e.g. the service you're in, like `["console"]`), `goal` or `assignedTo: "me"` where it helps. Take the top item. The `reason` tells you why it's there: failing, broken, stale or unverified.
 2. **Claim.** Call `claim_outcome` with your own `agent` name. A claim lasts the organization's claim length (5 days by default; owners can pick 4h, 12h, 1d, 5d or never). Claim again to renew, and release it when you stop.
 3. **Read.** Call `get_outcome` and read the story, every criterion, the recent evidence, and **the brief of every goal above it**. The root brief carries the non-negotiables.
 4. **Plan** non-trivial work: `write_plan` on the outcome, then address review with `list_comments`, `revise_plan` (full `text` or small `edits`, with `baseVersion`) and `resolve_comment`. If a plan is already there, read it with `get_plan` and follow what was approved.
