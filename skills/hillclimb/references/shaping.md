@@ -40,12 +40,23 @@ Create outcomes with `create_outcome`. Write each one as a user story with crite
 - **story**: "As a …, I want …, so that …".
 - **actors**: who's involved.
 - **criteria**: Given/When/Then, each with a stable key such as `ac1`. One behavior per criterion. Make them concrete enough that two people would agree on pass or fail.
-- **tags**: where the work happens: a service, a repository or an area, such as `console`, `api`, `app-repo` or `infra`. People and agents filter next work by tag to climb the areas they know or are focused on. Tags are kebab-case (`App repo` is `app-repo`): call `list_tags` first and use the organization's names.
+- **tags**: where the work happens: a service, a repository or an area, such as `console`, `api`, `code-repo` or `infra`. People and agents filter next work by tag to climb the areas they know or are focused on. Tags are kebab-case (`Code repo` is `code-repo`): call `list_tags` first and use the organization's names.
 - **assignees**: people, or a team through `assign_team`.
+- **dependsOn**: keys of outcomes in the same tree it can't be done without. Rank still says what matters most; a dependency only means "this first". The outcome stays blocked until they're verified, and next work serves each dependency at its priority. See [Dependencies](https://hillclimb.me/docs/climbing.md#dependencies).
 
 Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or digits. If you leave the key out, it's numbered from the tree's outcome prefix: its title's initials by default, which an editor can change with `edit_goal` (`outcomePrefix`) on the root. Every other key (trees, goals, releases, roadmaps, scenarios, tracks, views) is 8 random lowercase letters and digits that Hillclimb assigns, like `q8d2x0ra`: you never choose one, and a title can repeat without taking anything from anyone. URLs and results show `slug~key` (`onboarding~q8d2x0ra`); the slug is the title made readable, and only the key finds anything, so renaming never breaks a link.
 
 Avoid outcomes that only say "build X". Say what's true when X works, and how someone could tell.
+
+## Research, someday and blocked work
+
+Keep the outcome in the tree even when it shouldn't be worked yet, so its thinking isn't lost, and set its availability with `set_outcome_availability` (the [climbing guide](https://hillclimb.me/docs/climbing.md#blocked-and-deferred) has the rules):
+- **Deferred** when you've chosen not to do it now: research that may not be worth it, an idea for later. It leaves next work and coverage until a person reopens it. Deferring is your person's call.
+- **Blocked** when it's wanted now but something is stopping it, like "Build a Windows app" with no Windows machine to test on. It stays in coverage, shown as stuck.
+
+"Blocked by another outcome" is better said with `dependsOn`: it opens on its own once that outcome is verified.
+
+For research, write the question as its own open outcome, such as "We know whether a Windows app is worth building", with criteria that say what an answer looks like. Its evidence decides whether the deferred outcome gets reopened or archived.
 
 ## Templates and levels
 
@@ -103,7 +114,7 @@ Tags are optional. Use them for where or what the work is, such as the service i
 An organization keeps one shared vocabulary of tags, so every tree and agent tags the same way. Tags are optional: nothing requires an outcome to have one, and nothing requires a tag to be in a group.
 
 - `list_tags` returns the groups, each tag's description and aliases, how many outcomes use it, tags with no group under `uncategorized`, and names in use that nobody has added yet under `unmanaged`. Read it before tagging, and use a name from it when one fits. Tags say where or what the work is, such as the system, a subsystem or an area. Don't use them for status (that's the outcome's status) or where an outcome came from.
-- Tags are kebab-case: `App repo` and `app-repo` are one tag.
+- Tags are kebab-case: `Code repo` and `code-repo` are one tag.
 - Tagging with a name that isn't in the vocabulary still works and the name is kept. The result's `tagNotes.unmanaged` names the nearest vocabulary tags, so a typo is easy to catch.
 - Organization owners, admins and editors shape the vocabulary: `create_tag` adds a tag (or adopts a name already in use) with a description and optionally a group, `edit_tag` changes its description or group, and `save_tag_group` and `delete_tag_group` manage groups, which are only a way to sort tags and carry no rules. Deleting a group keeps its tags as uncategorized.
 - `rename_tag` and `merge_tag` change the tag on every outcome in the organization's trees at once, and never change an outcome's version or status. By default the old name stays as an alias: an agent that still says the old name tags and filters as the new tag, and the result's `tagNotes.redirected` says which name to use next time. Pass `alias: false` to leave no alias, so the old name is free again. `remove_tag_alias` frees a name later; outcomes already moved stay moved. A new tag can't take a name that is currently an alias.

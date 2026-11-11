@@ -68,7 +68,7 @@ Short briefs get read. Long ones get skimmed.
 
 - **One behavior per outcome.** Usually one to four criteria, each checkable on its own.
 - **Write criteria a stranger could check.** Name the actor, the starting state, the action and the observable result.
-- **Tag where the work happens**, e.g. the service (`console`, `api`) or repository (`app-repo`), so people and agents can filter next work to the areas they own. Call `list_tags` first and use the organization's names; tags are optional. `tag_outcomes` tags a whole goal at once.
+- **Tag where the work happens**, e.g. the service (`console`, `api`) or repository (`code-repo`), so people and agents can filter next work to the areas they own. Call `list_tags` first and use the organization's names; tags are optional. `tag_outcomes` tags a whole goal at once.
 
 ## KPIs and forward-looking outcomes
 
@@ -103,7 +103,7 @@ Put the loop in the repository's `AGENTS.md` (or `CLAUDE.md`) so every agent ses
 
 ```markdown
 ## Working on this repo
-1. list_next_outcomes with tree: "<org>/<tree>" and tags: ["app-repo"].
+1. list_next_outcomes with tree: "<org>/<tree>" and tags: ["code-repo"].
 2. claim_outcome the top item, then get_outcome and read every brief above it.
 3. Work on a branch, scoped to that outcome.
 4. Check each criterion for real (tests, the running app), add_evidence with the

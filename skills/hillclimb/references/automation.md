@@ -38,6 +38,8 @@ Use it to write a daily summary, or to notice what someone else verified.
 - `events` filters by type, using the names `list_changes` uses. Empty means all of these:
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
   - `outcome.claimed`, `outcome.released`, `outcome.status_set`
+  - `outcome.availability_set` (data: `from` and `to`, each `open`, `blocked` or `deferred`, plus `note` and `until` when set). A block lapsing at its `until` writes no event.
+  - `outcome.dependencies_met` (data: `dependency`, the last one it waited on, now verified) and `outcome.dependency_unproven` (data: `dependency` and `to`, on a verified outcome whose dependency stopped being verified), both on the dependent outcome
   - `evidence.added`, `access.changed`
   - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
   - a `comment.added` event names who to tell in `notify` (user ids) and its `thread`; for a question also `needsReply`, `waitingOn`, `options`, `header`, and `answers` (the thread) once it's answered: enough for a chat bridge to reach the right people

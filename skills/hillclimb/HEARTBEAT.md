@@ -1,6 +1,6 @@
 ---
 name: hillclimb-heartbeat
-version: 1.0.0+c87bb544
+version: 1.0.0+21140b4e
 description: A periodic Hillclimb check-in for agents that run on a schedule.
 ---
 

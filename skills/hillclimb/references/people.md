@@ -96,6 +96,7 @@ These tools change access or are hard to undo:
 - `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
 - `delete_organization`
 - `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's
+- `set_outcome_availability`, only when deferring an outcome or reopening a deferred one: what to set aside is your person's decision
 
 Before calling any of them:
 1. Tell the person exactly what will happen.
