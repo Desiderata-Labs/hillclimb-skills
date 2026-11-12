@@ -114,6 +114,7 @@ What an agent does with the `inbox` field of its tool results:
 
 - A reply to something your agent asked (`askedBy` names it): act on it, checking that `then` still fits, then resolve the thread so it stops showing.
 - A question that's yours (`forAgent` names you, or it's about your work): reply from your own work before you finish. One your person must decide: reply with `to: ["me"]`, which moves it to their own inbox and pings them, and tell them.
+- A question waiting on you is shown in full once to each of your person's agents (`yourTurn`); after that it's a one-line reminder (`stillYourTurn`: thread and outcome) until a new reply in the thread shows it in full again, so results don't repeat it. `list_inbox` reads it again any time.
 - Unread comments are shown once. `unreadForYourPerson` and `waitingOnYourPerson` count what's in your person's own inbox: mention it when you next talk, but leave it for them.
 
 `list_inbox` shows it all, for going through it with your person. Take them through `you.yourTurn` one at a time, like a short stack of cards: use your own multiple-choice tool if you have one (the header, then each option's label and description), always offer "Defer", record each answer straight away as a reply, and come back to the deferred ones at the end. In clients that show MCP prompts as commands, the `inbox` prompt does this. With nothing else to do, `list_inbox` with `wait` (seconds, up to 50) returns as soon as something new is yours.

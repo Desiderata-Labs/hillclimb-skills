@@ -42,8 +42,11 @@ Events for work on a track (`outcome.status_set`, `evidence.added`, claims) carr
 
 Components come online at different times, so cutover is per component, not all at once. `promote_track` takes a component (`goal`, `tags` or `outcomes`) and, without `apply`, previews:
 - `goesLive`: proven on the track; they go live verified, citing the track's decision.
-- `gaps`: not proven there; they go live as unverified, because the new implementation is what runs now and it hasn't proved them. Nothing is copied green.
+- `gaps`: worked on there but not proven; they go live as unverified, because the new implementation is what runs now and it hasn't proved them. Nothing is copied green. Each shows `live`, its status now, so a verified one about to turn unverified stands out.
 - `retiring`: scoped `old`; left as they are for a person to archive.
+- `untouched`: cutting over by `goal` or `tags`, the ones the track never touched (no status, evidence, claim or scope on it). They keep their live status and stay on the track for a later cutover, so promoting a narrow track by goal or tag doesn't turn the rest of the component unverified. When the new implementation now serves them too, pass `includeUntouched: true` and they become gaps. Outcomes you name in `outcomes` are always cut over.
+
+A component with more than 100 outcomes previews as a summary: `counts` and keys, with `verifiedGaps` listing the ones verified live now that would turn unverified. Pass `summary: false` for titles and reasons, or `summary: true` to get the short form for a small one. A cut-over is one transaction, all or nothing: a failed apply changes nothing, so it's safe to retry.
 
 Show your person the preview. Applying changes what's live, so an agent calls again with `apply: true` and `confirmedWithPerson: true` only after a clear yes. Promoted outcomes leave the track's next work; the rest of the track carries on.
 

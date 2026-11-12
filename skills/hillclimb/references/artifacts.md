@@ -1,6 +1,6 @@
 # Artifacts: reports, specs and pages
 
-> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, keys and versions, folders and dates, images, and who sees what.
+> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, keys and versions, folders and dates, images, revising an artifact someone else published, who sees what, and locking.
 
 An artifact is a page you publish for people in your organization: a weekly update, a launch update, a spec, a mock, a deck, a small site. Hillclimb keeps every version, files it in a folder, orders it by the day it covers, and shows it in the console under Artifacts (`/artifacts`), across all your organization's trees. Artifacts never change any outcome's status. They aren't evidence.
 
@@ -24,7 +24,7 @@ Publishing without `key` makes a new artifact and returns its key. Keep it: publ
 
 A new week is a new artifact, not a new version: next week's update sits beside this week's in the same folder. A version is a correction to the same thing, or the next run of one living page (a daily readiness report, a changelog).
 
-`get_artifact` returns every version and the markdown or HTML of the one shown, so you can revise it and publish the next version.
+`get_artifact` returns every version and the source of the one shown (the latest, or any earlier one by `version`): the markdown, the HTML page (a bundle's `index.html` too), or a deck's slides. Each of its `files` carries a `url` that returns that file's exact bytes for an hour (`filesExpireAt`): GET them for a bundle's stylesheets, scripts and images, or a page too large to come back inline. To revise someone's artifact, start from that source, change only what you were asked to, and publish with the same `key`, keeping the files you didn't change (the same `sha256` needs no upload), so the next version keeps their content and styling. Never rebuild a page you haven't read.
 
 ## Folders and dates
 
@@ -36,7 +36,9 @@ List images, CSS or scripts in `files` with their `path`, `type`, `size` and `sh
 
 ## Who sees it
 
-Every member of the organization sees it unless you publish with `visibility: "private"`, which keeps it to you. Only its publisher, or an owner, admin or editor, can add versions, move or archive it.
+Every member of the organization sees it unless you publish with `visibility: "private"`, which keeps it to you. Anyone who can see it can read its source. Only its publisher, or an owner, admin or editor, can add versions, move or archive it.
+
+`lock_artifact` locks a document under control, such as a policy or a compliance record: while it's locked nobody, its publisher included, can add versions, move, rename or archive it, and `get_artifact` shows `locked` with who locked it and when. Members still read it and its links keep working. Its publisher, an owner or an admin locks it, and unlocks it with `unlock: true`. Asked to change a locked artifact, tell the person it's locked and who can unlock it, or publish your changes as a new artifact without `key`.
 
 ## Slide decks
 
@@ -62,4 +64,4 @@ An artifact about a release, with `subjects` [{ tree, release }], shows on that 
 
 ## Linking
 
-`url` opens the artifact and `versionUrl` that exact version. Give people the link. Inside a report, link goals, outcomes, plans, releases and roadmaps with the `url` their tool results carry (see the climbing guide). `subjects` records what it's about, e.g. `[{ "tree": "acme/7f3k2m9q", "release": "c5j8u2fd" }]` (keys, or `slug~key` from a url).
+`url` opens the artifact and `versionUrl` that exact version. Give people the link. Add an `#anchor` to point at one place in it: `url` + "#pricing" opens the artifact scrolled to its pricing section, in the console and on a share link. Markdown headings get GitHub's anchors ("## Next steps" is #next-steps; a repeat gets -1), and an HTML page's anchors are its own `id`s, so give sections people will point at a short, stable `id`. When someone follows an anchor inside an artifact, the address bar shows it, so they can copy the link from where they are. Inside a report, link goals, outcomes, plans, releases and roadmaps with the `url` their tool results carry (see the climbing guide). `subjects` records what it's about, e.g. `[{ "tree": "acme/7f3k2m9q", "release": "c5j8u2fd" }]` (keys, or `slug~key` from a url).
