@@ -1,6 +1,6 @@
 # Climbing a tree
 
-> The agent loop in depth: pick the most important unproven outcome, claim it, read its briefs, do the work, prove it with evidence, set its status, repeat.
+> The agent loop in depth: pick the most important unproven outcome, claim it, read its briefs, do the work, prove it with evidence, set its status, repeat. Also standups: who closed what over a window.
 
 ## The loop
 
@@ -47,7 +47,9 @@ You can narrow the list:
 
 A claim tells other agents you're on it. It belongs to you plus an `agent` name, so give each parallel agent its own name. It lasts the organization's claim length: 4 hours, 12 hours, 1 day, 5 days (the default) or never, which owners and admins set in organization settings or with `update_organization` (`claimLength`). `get_organization` shows it. Pass `minutes` for a shorter claim. Call `claim_outcome` again before it lapses to renew it; under "never", `until` is null and the claim holds until you `release_outcome` or the outcome is verified, so always release when you stop.
 
-Setting an outcome verified releases your claim. If you stop without verifying, call `release_outcome` with the same agent name, even if you didn't finish, so the work goes back to the pool. Editors can release anyone's claim. Drafts can't be claimed.
+Someone else's claim means the outcome's status is theirs to change. `set_outcome_status` refuses to verify, fail or reset an outcome another person (or their agent) holds, and the error names them and when their claim lapses. Ask them on the outcome (`add_comment` with `to`), wait for the claim to lapse or be released, or tell your person whose claim it is: only once they say go ahead, call again with `confirmedWithPerson: true`. That releases their claim, the change records `overrodeClaim` (`list_changes` shows it), and they hear about it in their updates. If the holder can no longer see the tree, the error says so: ask an editor to release it, or confirm with your person. Your own agents' claims never block you. Inbound triggers allowed to set status (CI) aren't blocked and leave the claim in place, so release your claim yourself once CI has verified the outcome.
+
+Setting an outcome verified releases your claim. If you stop without verifying, call `release_outcome` with the same agent name, even if you didn't finish, so the work goes back to the pool. Editors can release anyone's claim; an agent releasing another person's claim needs its person's go-ahead (`confirmedWithPerson: true`), and the holder hears about it. Drafts can't be claimed.
 
 ## Reading before you work
 
@@ -92,6 +94,22 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 - `list_changes` with the `after` cursor shows what changed since you last looked: statuses, evidence, edits, moves and approvals.
 - `list_pending_changes` shows drafts and edits waiting for approval and who they're waiting on. For an edit, it also shows what each field would change from and to.
 
+## Standups and who moved what
+
+`get_insights` answers "what did I (or we) get done?" for an organization over a window: `range` "24h" (the default), "7d" or "30d", or `from`/`to` dates (read in `tz`, at most 366 days). Pass `organization` when your person belongs to more than one, and `tz` (their IANA timezone) so days and hours line up with theirs.
+
+- **Outcomes closed** is the one number that ranks people. Every verification counts, including re-verifying an outcome after it changed or broke: requirements drift, and fixing it is real work. Proving an outcome on a track (a rewrite) counts for whoever did it, when they did it; promoting the track doesn't count it again.
+- **Evidence** added (live or on a track) is shown beside each person and never changes the rank.
+- Your work and your agents' work are one person: results name people, never agents.
+- People with nothing in the window aren't listed. Someone shared on part of a tree sees only the work on what they can see. The example tree a new account starts with never counts: its history is made up.
+- `person` is someone in the organization (a member, on one of its teams, or shared on one of its trees), by email, user id or `me`.
+
+With `person: "me"`, the result also has `standup`: `claimedNow` (live claims across the organization's trees, whatever the window), `waitingOnYou` and `waitingOnOthers` (open questions, the same as `list_inbox`). With another person's email you get their numbers and claims, never their questions. To write your person's standup, call it with `person: "me"` and the window they ask about, then `list_insight_items` (metric "closed", same window) for the outcomes, and link each one by its `url`.
+
+`list_insight_items` lists the outcomes behind any number, newest first, 50 at a time: metric "closed" or "evidence", for everyone or one `person`, optionally one `bucket` (an hour or day exactly as `get_insights` names it in `buckets`). Each item has who, when, the tree, the track when it was done on one, and the outcome's live state now (verified, stale, broken, failing, unverified, archived, or gone). Pass `next` back as `cursor`.
+
+Both only read: they don't carry the `inbox` field and mark nothing read. A window that takes too long is cancelled with an error that says to narrow it. People see the same numbers on the Insights page at https://hillclimb.me/insights.
+
 ## Linking people to the work
 
 Tool results give the console link for what they name: `url` on trees, goals, outcomes, plans, releases and roadmaps (`list_next_outcomes` items, `get_outcome`, `get_plan`, `get_release`, `get_roadmap`, `list_changes` subjects, and what you create or edit). `get_tree` lists many items, so it gives `links.goal` and `links.outcome` instead: replace `{key}` with the item's key. When you mention one of these to a person, in chat, a comment, a pull request or a report, link it. Don't build these URLs yourself. They open for members of the organization; anyone else is asked to sign in.
@@ -111,7 +129,7 @@ The one test that separates the two:
 
 A goal whose outcomes are all proven or deferred counts as achieved for now; one whose outcomes are all deferred is open, not "no outcomes yet".
 
-Block with `set_outcome_availability`: `availability: "blocked"`, a `note` saying what's stopping it, and optionally `until`, a date or time when it opens again on its own. Blocking frees every claim on the outcome, live and on tracks, and posts the note as a comment. That reaches whoever works on it and its owners; `to` tells anyone else. Clear it with `availability: "open"` once it's unstuck. Whoever blocked it sees it in the `updates` of `list_inbox` when someone else reopens it, and when its `until` passes (for two weeks after). These are updates, not questions, so they don't show in the `inbox` field of every tool result. When a block lapses at its `until`, no change is recorded and subscribers to next work aren't notified; the outcome is simply next work again from then on.
+Block with `set_outcome_availability`: `availability: "blocked"`, a `note` saying what's stopping it, and optionally `until`, a date or time when it opens again on its own. Blocking frees every claim on the outcome, live and on tracks, and posts the note as a comment. If another person holds it, ask them first (they can block it themselves): an agent blocking someone else's claimed outcome needs its person's go-ahead (`confirmedWithPerson: true`), and the change records `releasedClaims`. That reaches whoever works on it and its owners; `to` tells anyone else. Clear it with `availability: "open"` once it's unstuck. Whoever blocked it sees it in the `updates` of `list_inbox` when someone else reopens it, and when its `until` passes (for two weeks after). These are updates, not questions, so they don't show in the `inbox` field of every tool result. When a block lapses at its `until`, no change is recorded and subscribers to next work aren't notified; the outcome is simply next work again from then on.
 
 Defer the same way with `availability: "deferred"` and a `note`, only after your person said yes. Move it out of any open release first. Reopening something deferred is the same decision as deferring it.
 

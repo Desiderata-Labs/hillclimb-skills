@@ -27,7 +27,7 @@ A new requirement that matters to both belongs in both. Scoping is for what hone
 
 The loop is the same, with `track` on each call:
 1. `list_next_outcomes` with `track: "p0s6e3ly"` (and `tags` or `goal` for your component): what isn't proven there yet, in tree order, with the track's claims. Each item's `status` is its status on the track; `liveStatus` is production's.
-2. `claim_outcome` with `track`. Track claims are separate from live claims, so someone can still fix production while you rebuild it.
+2. `claim_outcome` with `track`. Track claims are separate from live claims, so someone can still fix production while you rebuild it. When someone else holds the same outcome live, the listing says so in `liveClaim`, for information only: the legacy and the new system are worked in parallel. On the track, only a track claim stops you setting its status: `set_outcome_status` with `track` refuses an outcome another person holds there unless your person confirms (`confirmedWithPerson: true`).
 3. `add_evidence` with `track` for what you observed on the new implementation. Name the build and environment in it.
 4. `set_outcome_status` with `track`. Verified needs "confirms" evidence on that track against the current version; live evidence doesn't count there, and track evidence doesn't count live.
 5. `release_outcome` with `track` if you stop early.
