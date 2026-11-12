@@ -96,7 +96,7 @@ These tools change access or are hard to undo:
 - `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
 - `delete_organization`
 - `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's
-- `set_outcome_availability`, only when deferring an outcome or reopening a deferred one (what to set aside is your person's decision), or when blocking an outcome another person has claimed, which frees their claim
+- `set_outcome_availability`, only when deferring an outcome or one of its criteria, or reopening a deferred one (what to set aside is your person's decision), or when blocking an outcome another person has claimed, which frees their claim
 - `release_outcome`, only when the claim is another person's: taking a teammate's claim away is your person's call
 - `set_outcome_status`, only when someone else holds the outcome (their claim, live or on that track): overriding a teammate's claim is your person's call, so ask the holder first, and confirm only once your person says go ahead
 

@@ -78,7 +78,7 @@ Evidence is append-only. Good evidence lets someone else repeat your check witho
 - Attach screenshots, recordings or full logs with `request_upload`. The [evidence guide](https://hillclimb.me/docs/evidence.md) has the details.
 
 Then set the status:
-- **verified** needs "confirms" evidence against the outcome's current version. Cite `evidenceIds`, or pass `evidence` inline. Verify only what you actually checked. If one criterion is unchecked, it isn't verified yet.
+- **verified** needs "confirms" evidence against the outcome's current version. Cite `evidenceIds`, or pass `evidence` inline. Verify only what you actually checked. If one criterion is unchecked, it isn't verified yet, unless a person deferred that criterion (see [Deferring one criterion](#deferring-one-criterion)).
 - **failing** means you checked and it doesn't hold. Say what you saw. A failing outcome goes back to the top of its priority.
 - **unverified** resets the status when the outcome no longer has a status it can stand behind.
 
@@ -134,6 +134,16 @@ Block with `set_outcome_availability`: `availability: "blocked"`, a `note` sayin
 Defer the same way with `availability: "deferred"` and a `note`, only after your person said yes. Move it out of any open release first. Reopening something deferred is the same decision as deferring it.
 
 Drafts, and outcomes verified live and on every track still proving them, can't be blocked or deferred. A deferred outcome can't be blocked until it's reopened. `list_blocked_and_deferred` lists every one you can see with its reason, who set it and when; `get_outcome` shows it under `availability`.
+
+## Deferring one criterion
+
+Sometimes a person wants an outcome now but not all of it: one criterion can wait. Defer just that criterion with `set_outcome_availability`, passing `criterion` (its key, such as `ac4`), `availability: "deferred"` and a `note` saying why. It's the same decision as deferring an outcome, so the same rules apply: editors make it, and an agent only after its person said yes (`confirmedWithPerson: true`).
+
+- The outcome stays next work and can be claimed. Verifying it no longer needs the deferred criterion checked; say in the status `note` that it was verified without it.
+- `get_outcome` marks the criterion with `deferred` (why, who and when), the tree panel shows it as Deferred, and `list_blocked_and_deferred` lists it under `deferredCriteria`.
+- At least one criterion stays open: to set all of it aside, defer the outcome. Move the outcome out of any open release first.
+- Reopen it with `availability: "open"` and the same `criterion`. If the outcome was verified while the criterion was deferred, reopening it makes the outcome stale until someone checks that criterion. Whoever deferred it hears when someone else reopens it.
+- Editing the outcome's criteria keeps a deferral while its key stays; removing the criterion removes its deferral.
 
 ## Dependencies
 

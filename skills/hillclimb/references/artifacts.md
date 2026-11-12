@@ -1,6 +1,6 @@
 # Artifacts: reports, specs and pages
 
-> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, keys and versions, folders and dates, images, revising an artifact someone else published, who sees what, and locking.
+> Publish weekly updates, launch notes, specs, mocks and small sites to your organization: formats, keys and versions, spaces, folders, icons and dates, images, revising an artifact someone else published, who sees what, and locking.
 
 An artifact is a page you publish for people in your organization: a weekly update, a launch update, a spec, a mock, a deck, a small site. Hillclimb keeps every version, files it in a folder, orders it by the day it covers, and shows it in the console under Artifacts (`/artifacts`), across all your organization's trees. Artifacts never change any outcome's status. They aren't evidence.
 
@@ -26,9 +26,15 @@ A new week is a new artifact, not a new version: next week's update sits beside 
 
 `get_artifact` returns every version and the source of the one shown (the latest, or any earlier one by `version`): the markdown, the HTML page (a bundle's `index.html` too), or a deck's slides. Each of its `files` carries a `url` that returns that file's exact bytes for an hour (`filesExpireAt`): GET them for a bundle's stylesheets, scripts and images, or a page too large to come back inline. To revise someone's artifact, start from that source, change only what you were asked to, and publish with the same `key`, keeping the files you didn't change (the same `sha256` needs no upload), so the next version keeps their content and styling. Never rebuild a page you haven't read.
 
-## Folders and dates
+## Spaces, folders and dates
 
-`folder` files it, like `Reports/Weekly` or `Launches`. Folders exist while something is in them. `asOf` is the day (or the start of the period) the artifact covers, and `periodEnd` the end. Folders list newest `asOf` first, so set it even when you publish late. `list_artifacts` shows a folder's artifacts and subfolders; its `latestUrl` always opens the newest one. `move_artifact` changes the folder, title or date, and `archive_artifact` takes one out of listings.
+The console files artifacts in two places: **spaces**, the shared top-level folders everyone in the organization sees (like `Engineering` or `Sales`), and each person's **Private**, which holds their private artifacts in folders of their own. `folder` files an artifact: its first part is the space (`Engineering/Runbooks/GCP`), or the Private folder when it's private. Folders go three levels deep at most, a space, a folder and one below, so put finer detail in the title. Older, deeper folders still read and keep working when you add versions. File into the space that fits rather than starting a new one; `list_artifacts` shows the spaces and their folders.
+
+`set_folder` makes a folder before anything is in it (at the top level that's a new space), gives a folder an icon and tone, renames it, which moves everything inside (each artifact keeps its link; links to the folder itself follow the new name), or removes an empty one with `remove: true`. Any member can make and dress a shared folder; renaming a shared one moves other people's artifacts, so owners, admins and editors do that, and they or the folder's maker remove one. With `private: true` it works on your Private folders.
+
+Spaces, folders and artifacts each wear an `icon` and `tone` from Hillclimb's set. `list_artifact_icons` searches the icons by name or alias ("finance", "incident", "launch"); tones are gray, blue, teal, green, orange, red, purple and pink. Without one, an artifact's icon comes from its kind and a folder's from its name. Pick icons that say what's inside, and keep one tone per space so it reads as a set.
+
+`asOf` is the day (or the start of the period) the artifact covers, and `periodEnd` the end. Folders list newest `asOf` first, so set it even when you publish late. `list_artifacts` shows a folder's artifacts and subfolders (`visibility: "private"` for your Private), sorts by `asOf`, `updated` or `title`, and pages with `offset`; its `latestUrl` always opens the newest one. `move_artifact` changes the folder, title, date, icon or tone, and `archive_artifact` takes one out of listings.
 
 ## Images and other files
 
@@ -36,7 +42,7 @@ List images, CSS or scripts in `files` with their `path`, `type`, `size` and `sh
 
 ## Who sees it
 
-Every member of the organization sees it unless you publish with `visibility: "private"`, which keeps it to you. Anyone who can see it can read its source. Only its publisher, or an owner, admin or editor, can add versions, move or archive it.
+Every member of the organization sees it, in its space, unless you publish with `visibility: "private"`, which keeps it to you in your Private. Anyone who can see it can read its source. Only its publisher, or an owner, admin or editor, can add versions, move or archive it.
 
 `lock_artifact` locks a document under control, such as a policy or a compliance record: while it's locked nobody, its publisher included, can add versions, move, rename or archive it, and `get_artifact` shows `locked` with who locked it and when. Members still read it and its links keep working. Its publisher, an owner or an admin locks it, and unlocks it with `unlock: true`. Asked to change a locked artifact, tell the person it's locked and who can unlock it, or publish your changes as a new artifact without `key`.
 

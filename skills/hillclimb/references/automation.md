@@ -39,6 +39,7 @@ Use it to write a daily summary, or to notice what someone else verified.
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
   - `outcome.claimed`, `outcome.released`, `outcome.status_set`
   - `outcome.availability_set` (data: `from` and `to`, each `open`, `blocked` or `deferred`, plus `note` and `until` when set). A block lapsing at its `until` writes no event.
+  - `outcome.criterion_availability_set` (data: `criterion`, `from` and `to`, each `open` or `deferred`, plus `note` when deferred and `madeStale` when reopening it made a verified outcome stale).
   - `outcome.dependencies_met` (data: `dependency`, the last one it waited on, now verified) and `outcome.dependency_unproven` (data: `dependency` and `to`, on a verified outcome whose dependency stopped being verified), both on the dependent outcome
   - `evidence.added`, `access.changed`
   - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
