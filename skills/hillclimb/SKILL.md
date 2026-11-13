@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+cf8a1de4
+version: 1.0.0+89eda724
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -128,6 +128,18 @@ Read [best practices](https://hillclimb.me/docs/practices.md) and [shaping](http
 - **Catch up** with `list_changes` and its `after` cursor.
 - **Search locally** when the folder has a `.hillclimb/` copy synced by the `hillclimb` CLI: `rg <words> .hillclimb` finds goals, outcomes, evidence, plans and artifacts at once. It's read-only and can be minutes old, so act through the tools and check an outcome live with `get_outcome` before you claim or verify it.
 - **Check in** with [HEARTBEAT.md](https://hillclimb.me/heartbeat.md) every few hours if you run on a schedule.
+
+## Set up a local copy for your person
+
+When your person asks you to sync Hillclimb, or a repo you work in would be easier to search with Hillclimb beside the code, set up the `hillclimb` CLI (npm package `@hill-climb/cli`) for them. It keeps a read-only copy you search with `rg`; changes still go through the tools.
+
+1. **Install:** `npm i -g @hill-climb/cli`, then `hillclimb --version`. Without installing, put `npx @hill-climb/cli` in place of `hillclimb` in every command.
+2. **Sign in:** run `HILLCLIMB_NO_BROWSER=1 hillclimb login` in the background, and give your person the link and code it prints. They open the link, check the code, pick their account under "Connect as" and press Allow; the command then prints "Signed in as …". Codes last 10 minutes. The key goes straight into the OS keychain: you never see it, so never ask for one or paste it.
+3. **More accounts:** if they work in organizations under another email, run `hillclimb login` again and they pick that account. `hillclimb accounts` shows who is signed in and which organizations each one syncs.
+4. **Link the repo:** in the repo root, `hillclimb link <tree key> --org <slug>`. Name the trees (`get_tree` lists them); without a terminal it can't ask. It mirrors those trees into `.hillclimb/` and keeps them out of git. Add `--agents-line` (a short Hillclimb section in AGENTS.md) and `--claude-hook` (a Claude Code session-start hook that syncs when the copy is stale) only once your person agrees.
+5. **Sync:** `hillclimb sync`. In a linked folder it syncs that folder's trees, and anywhere else everything. The server sets a floor between scheduled syncs, so don't loop it; `hillclimb sync --if-stale` skips when the copy is fresh. It exits 1 and names any organization that didn't sync.
+
+In CI or a container, set `HILLCLIMB_API_KEY` instead of signing in. `hillclimb help` covers the rest.
 
 ## Guides
 

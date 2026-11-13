@@ -131,7 +131,14 @@ When the folder you work in has a `.hillclimb/` directory (or your person keeps 
 - **Check live before you act.** The copy can be minutes old. Read an outcome with `get_outcome` before you claim, verify or fail it, and use `list_next_outcomes` for what's next. `hillclimb workspaces` shows when each folder last synced; `hillclimb sync` refreshes it.
 - **Big evidence is a stub** that names its id: `hillclimb fetch <id>` saves the full text next to it. `hillclimb fetch <outcome>@<n>` saves an earlier plan version.
 
-People set it up with `npx @hill-climb/cli login` and `hillclimb link <tree key> --org <slug>` in a repo. `hillclimb help` explains the rest.
+You can set it up for your person when they ask you to sync Hillclimb, or for a repo you work in:
+
+1. `npm i -g @hill-climb/cli` (or `npx @hill-climb/cli` in place of `hillclimb` everywhere).
+2. `HILLCLIMB_NO_BROWSER=1 hillclimb login` in the background. Give your person the link and code it prints; they approve it in the browser, picking the account under "Connect as", and it prints "Signed in as …". The key goes into the OS keychain without passing through you. Running `login` again adds another of their accounts, and each organization syncs with an account that belongs to it (`hillclimb accounts` shows which).
+3. `hillclimb link <tree key> --org <slug>` in the repo root. Name the trees: without a terminal it can't ask. `--agents-line` and `--claude-hook` add an AGENTS.md section and a session-start sync hook; add them once your person agrees.
+4. `hillclimb sync`. Use `--if-stale` from hooks, and don't loop it: the server sets a floor between syncs.
+
+`hillclimb help` explains the rest.
 
 ## Linking people to the work
 
