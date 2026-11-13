@@ -25,6 +25,8 @@ Subscribing beats polling, and reads of the resource don't count against the hou
 - Pass the returned cursor as `after` to get only what's new since your last look.
 - It returns 100 events by default, up to 500.
 - It needs access at the root of the tree.
+- `access.changed` is recorded on a tree whenever who can see it may have changed: a goal shared or unshared (with `email` or `team` and `role`), and on every tree of the organization when someone joins, leaves or changes role, or a team's members change (`change` says which: "member_joined", "member_left", "role_changed", "team_member_added" or "team_member_removed").
+- Artifacts belong to the organization, not a tree, so their events (`artifact.published`, `artifact.versioned`, `artifact.moved`, `artifact.archived`, `artifact.restored`, `artifact.shared`, `artifact.unshared`) aren't in a tree's change log. The sync endpoint (see the REST guide) reads them.
 
 Use it to write a daily summary, or to notice what someone else verified.
 

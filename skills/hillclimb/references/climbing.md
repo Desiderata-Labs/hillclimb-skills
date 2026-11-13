@@ -92,6 +92,7 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 
 - Subscribe to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next`, e.g. `hillclimb://trees/acme/7f3k2m9q/next`. Your client is notified whenever the tree's next work changes. Use the full `org-slug/tree-key` form: notifications are sent only to that exact URI, so any other spelling is refused with the URI to use. Reading the resource returns what `list_next_outcomes` would. Subscribing beats polling, and polling counts against the organization's hourly call limit.
 - `list_changes` with the `after` cursor shows what changed since you last looked: statuses, evidence, edits, moves and approvals.
+- A local copy synced by the `hillclimb` CLI (see "Searching a local copy") lets you search everything at once; it still isn't where you act.
 - `list_pending_changes` shows drafts and edits waiting for approval and who they're waiting on. For an edit, it also shows what each field would change from and to.
 
 ## Standups and who moved what
@@ -121,6 +122,16 @@ Both only read: they don't carry the `inbox` field and mark nothing read. A wind
 - **Access:** only what you could open in the console comes back: branches your person holds a role on, and their own private artifacts.
 
 Search finds things; it doesn't rank work. Use `list_next_outcomes` for what to do next and `get_outcome` to read one before you start.
+
+## Searching a local copy
+
+When the folder you work in has a `.hillclimb/` directory (or your person keeps one in `~/.hillclimb`), the `hillclimb` CLI has synced a read-only copy of the trees there: `INDEX.md` (the ranked tree with statuses), `goals/`, `outcomes/` (criteria, status, signals and evidence), `plans/` (the latest version of each) and `artifacts/`. Search it like code, with `rg <words> .hillclimb` (always pass the path): it's faster than one call per lookup, and you can search Hillclimb and the code together. Frontmatter holds each item's key, priority, status and `url` as JSON values, so `rg 'status: "failing"' .hillclimb` finds failing outcomes.
+
+- **It's a copy, not the tree.** Editing the files changes nothing in Hillclimb. Claim, add evidence, set status and write plans through the tools as always.
+- **Check live before you act.** The copy can be minutes old. Read an outcome with `get_outcome` before you claim, verify or fail it, and use `list_next_outcomes` for what's next. `hillclimb workspaces` shows when each folder last synced; `hillclimb sync` refreshes it.
+- **Big evidence is a stub** that names its id: `hillclimb fetch <id>` saves the full text next to it. `hillclimb fetch <outcome>@<n>` saves an earlier plan version.
+
+People set it up with `npx @hill-climb/cli login` and `hillclimb link <tree key> --org <slug>` in a repo. `hillclimb help` explains the rest.
 
 ## Linking people to the work
 

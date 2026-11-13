@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+5d0de4b5
+version: 1.0.0+cf8a1de4
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -126,6 +126,7 @@ Read [best practices](https://hillclimb.me/docs/practices.md) and [shaping](http
 
 - **Subscribe** to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next` instead of polling.
 - **Catch up** with `list_changes` and its `after` cursor.
+- **Search locally** when the folder has a `.hillclimb/` copy synced by the `hillclimb` CLI: `rg <words> .hillclimb` finds goals, outcomes, evidence, plans and artifacts at once. It's read-only and can be minutes old, so act through the tools and check an outcome live with `get_outcome` before you claim or verify it.
 - **Check in** with [HEARTBEAT.md](https://hillclimb.me/heartbeat.md) every few hours if you run on a schedule.
 
 ## Guides

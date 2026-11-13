@@ -44,8 +44,26 @@ Error messages are written for agents: they say what to do next. Read them befor
 - `GET https://hillclimb.me/api/v1/trees/<tree>/report` is the tree as markdown, or JSON with `?format=json`. `?goal=<key>` limits it to one goal. It needs a session or key.
 - `GET https://hillclimb.me/api/v1/trees/<tree>/visual` is the tree as a readable HTML page, with `?goal=<key>` to limit it.
 - `POST https://hillclimb.me/api/v1/visualize` renders a tree spec you haven't imported yet as HTML. Send a nested `{title, brief, goals: [...], outcomes: [...]}` as JSON, up to 2 MB. Nothing is stored and no key is needed. It's useful for showing a person a proposed tree before you create it.
+- `GET https://hillclimb.me/api/v1/sync?organization=<slug>` is what the `hillclimb` CLI keeps its local copy with: everything a key can see in one organization, then only what changed. See "Syncing a local copy" below.
+- `POST https://hillclimb.me/api/v1/cli/device` and `POST https://hillclimb.me/api/v1/cli/device/token` are how `hillclimb login` signs in, as in RFC 8628: the first returns `deviceCode`, `userCode`, `verificationUri` and `interval`; the person approves the code at `https://hillclimb.me/cli/device`; polling the second with `deviceCode` returns "authorization_pending", "slow_down", "access_denied" or "expired_token" until it returns `apiKey` (named `hillclimb-cli (<machine>)`). Codes last 10 minutes and work once.
 - `GET https://hillclimb.me/api/v1/files/<id>` is an evidence file. It redirects to a link that lasts 5 minutes, and needs a session or key.
 - `POST https://hillclimb.me/api/v1/hooks/<token>` is an inbound trigger's URL. The token is the secret, so no key is needed. See the [automation guide](https://hillclimb.me/docs/automation.md).
+
+## Syncing a local copy
+
+`GET https://hillclimb.me/api/v1/sync` takes an API key and `organization` (its slug), and optionally:
+
+- `trees`: tree keys, comma-separated; all the trees the key can see when left out.
+- `types`: any of `goals,outcomes,evidence,plans,artifacts` (the default is all five). Artifacts are only for members of the organization.
+- `cursor` and `accessHash` from the last complete sync. Without a cursor, the answer is a full read.
+- `next` from the page before, while `hasMore` is true.
+- `maxEvidenceBytes`: evidence bodies above this come back cut to a preview, with `bodyBytes` and `truncated: true`; `get_outcome` has the full text.
+
+The answer has `trees` (what's in scope), `treeStates` (`get_tree` for each changed tree), `goals` (briefs), `outcomes` (`get_outcome` for each changed outcome), `plans` (the latest text), `artifacts` (`get_artifact`), `removedTrees`, `removedPlans` and `removedArtifacts`, plus `cursor`, `accessHash` and `minIntervalSeconds`. `full: true` means it's the whole truth, so anything not in it is gone. Each changed item comes once, as it is now.
+
+- **Nothing new is a 304.** With a current cursor (and the same `accessHash`), the answer is `304 Not Modified` after one lookup.
+- **The cursor waits for settled events.** It stays a few seconds behind the newest change, so a write that commits late is never skipped; you may see an item twice, never miss one.
+- **Limits:** come back no more often than `minIntervalSeconds` (5 minutes, also in the `x-hillclimb-min-interval` header) on a schedule. More than 2 new syncs a minute per person and organization get `429` with `Retry-After`; the later pages of one sync don't count.
 
 ## MCP
 
