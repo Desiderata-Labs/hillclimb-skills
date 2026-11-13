@@ -135,7 +135,7 @@ You can set it up for your person when they ask you to sync Hillclimb, or for a 
 
 1. `npm i -g @hill-climb/cli` (or `npx @hill-climb/cli` in place of `hillclimb` everywhere).
 2. `HILLCLIMB_NO_BROWSER=1 hillclimb login` in the background. Give your person the link and code it prints; they approve it in the browser, picking the account under "Connect as", and it prints "Signed in as …". The key goes into the OS keychain without passing through you. Running `login` again adds another of their accounts, and each organization syncs with an account that belongs to it (`hillclimb accounts` shows which).
-3. `hillclimb link <tree key> --org <slug>` in the repo root. Name the trees: without a terminal it can't ask. `--agents-line` and `--claude-hook` add an AGENTS.md section and a session-start sync hook; add them once your person agrees.
+3. `hillclimb link <tree key> --org <slug>` in the repo root. Name the trees: without a terminal it can't ask. The organization's artifacts come too (`--artifacts <space>` narrows them, `--no-artifacts` leaves them out); comments aren't synced. `--agents-line` and `--claude-hook` add an AGENTS.md section and a session-start sync hook; add them once your person agrees.
 4. `hillclimb sync`. Use `--if-stale` from hooks, and don't loop it: the server sets a floor between syncs.
 
 `hillclimb help` explains the rest.
