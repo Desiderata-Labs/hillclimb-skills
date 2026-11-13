@@ -128,7 +128,7 @@ Search finds things; it doesn't rank work. Use `list_next_outcomes` for what to 
 When the folder you work in has a `.hillclimb/` directory (or your person keeps one in `~/.hillclimb`), the `hillclimb` CLI has synced a read-only copy of the trees there: `INDEX.md` (the ranked tree with statuses), `goals/`, `outcomes/` (criteria, status, signals and evidence), `plans/` (the latest version of each) and `artifacts/`. Search it like code, with `rg <words> .hillclimb` (always pass the path): it's faster than one call per lookup, and you can search Hillclimb and the code together. Frontmatter holds each item's key, priority, status and `url` as JSON values, so `rg 'status: "failing"' .hillclimb` finds failing outcomes.
 
 - **It's a copy, not the tree.** Editing the files changes nothing in Hillclimb. Claim, add evidence, set status and write plans through the tools as always.
-- **Check live before you act.** The copy can be minutes old. Read an outcome with `get_outcome` before you claim, verify or fail it, and use `list_next_outcomes` for what's next. `hillclimb workspaces` shows when each folder last synced; `hillclimb sync` refreshes it.
+- **Check live before you act.** The copy can be minutes old. Read an outcome with `get_outcome` before you claim, verify or fail it, and use `list_next_outcomes` for what's next. Background sync refreshes it every 15 minutes by default; `hillclimb sync status` shows the last run, and `hillclimb sync` refreshes it now.
 - **Big evidence is a stub** that names its id: `hillclimb fetch <id>` saves the full text next to it. `hillclimb fetch <outcome>@<n>` saves an earlier plan version.
 
 You can set it up for your person when they ask you to sync Hillclimb, or for a repo you work in:
@@ -136,7 +136,7 @@ You can set it up for your person when they ask you to sync Hillclimb, or for a 
 1. `npm i -g @hill-climb/cli` (or `npx @hill-climb/cli` in place of `hillclimb` everywhere).
 2. `HILLCLIMB_NO_BROWSER=1 hillclimb login` in the background. Give your person the link and code it prints; they approve it in the browser, picking the account under "Connect as", and it prints "Signed in as …". The key goes into the OS keychain without passing through you. Running `login` again adds another of their accounts, and each organization syncs with an account that belongs to it (`hillclimb accounts` shows which).
 3. `hillclimb link <tree key> --org <slug>` in the repo root. Name the trees: without a terminal it can't ask. The organization's artifacts come too (`--artifacts <space>` narrows them, `--no-artifacts` leaves them out); comments aren't synced. `--agents-line` and `--claude-hook` add an AGENTS.md section and a session-start sync hook; add them once your person agrees.
-4. `hillclimb sync`. Use `--if-stale` from hooks, and don't loop it: the server sets a floor between syncs.
+4. `hillclimb sync`. It also turns on background sync every 15 minutes (`hillclimb sync status`, `start --every 30m`, `stop`), so long sessions stay current. Don't loop it or schedule your own; run it when your person wants it fresh now.
 
 `hillclimb help` explains the rest.
 
