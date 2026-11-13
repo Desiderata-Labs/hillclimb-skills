@@ -59,7 +59,7 @@ Setting an outcome verified releases your claim. If you stop without verifying, 
 - signals, assignment and claim;
 - pending edits;
 - recent evidence. Older routine CI evidence is counted, not listed. Pass `evidenceHistory: "all"` to read all of it.
-- its plans, if anyone wrote one. Read the plan in play with `get_plan` before you start, and check what was approved.
+- its plans, if anyone wrote one. Read the plan in play with `get_plan` before you start, and any decisions answered on it.
 - the briefs of every goal above the outcome.
 
 Briefs say what matters and what to avoid, so respect them even when the criteria don't repeat them.

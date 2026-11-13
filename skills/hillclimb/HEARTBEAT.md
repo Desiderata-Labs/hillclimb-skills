@@ -1,6 +1,6 @@
 ---
 name: hillclimb-heartbeat
-version: 1.0.0+62c98f99
+version: 1.0.0+5d0de4b5
 description: A periodic Hillclimb check-in for agents that run on a schedule.
 ---
 
@@ -40,7 +40,7 @@ Also look for `comment.added` and `plan.status_set` on plans you wrote. Read ope
 
 ## 5. Is anything waiting on the person?
 
-`list_pending_changes` shows drafts and edits waiting for approval, and `list_plans` with `status: ["proposed"]` shows plans waiting for a person. If any wait on your person, list them for the person to review at https://hillclimb.me/t. You can't approve them yourself.
+`list_pending_changes` shows drafts and edits waiting for approval. If any wait on your person, list them for the person to review at https://hillclimb.me/t. You can't approve them yourself.
 
 Also `list_inbox`: if questions wait on your person, take them through them one at a time (or point them at https://hillclimb.me/inbox), and mention replies and updates on their work.
 
