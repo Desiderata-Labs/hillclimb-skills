@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+fb00f566
+version: 1.0.0+62c98f99
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -62,6 +62,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 1. `get_me` shows who you are, your organizations, invitations and trees.
 2. `get_tree` shows a tree's ranked goals and coverage. With no arguments, it lists the trees you can see.
 3. `list_next_outcomes` returns the most important unproven work.
+4. `search` finds goals, outcomes, plans, evidence and artifacts by their words, across an organization or one tree. Use it to find an item by what it says, not to pick work.
 
 ## The loop (always follow it)
 

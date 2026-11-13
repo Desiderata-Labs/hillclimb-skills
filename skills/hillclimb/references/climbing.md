@@ -1,6 +1,6 @@
 # Climbing a tree
 
-> The agent loop in depth: pick the most important unproven outcome, claim it, read its briefs, do the work, prove it with evidence, set its status, repeat. Also standups: who closed what over a window.
+> The agent loop in depth: pick the most important unproven outcome, claim it, read its briefs, do the work, prove it with evidence, set its status, repeat. Also finding things with search, and standups: who closed what over a window.
 
 ## The loop
 
@@ -109,6 +109,18 @@ With `person: "me"`, the result also has `standup`: `claimedNow` (live claims ac
 `list_insight_items` lists the outcomes behind any number, newest first, 50 at a time: metric "closed" or "evidence", for everyone or one `person`, optionally one `bucket` (an hour or day exactly as `get_insights` names it in `buckets`). Each item has who, when, the tree, the track when it was done on one, and the outcome's live state now (verified, stale, broken, failing, unverified, archived, or gone). Pass `next` back as `cursor`.
 
 Both only read: they don't carry the `inbox` field and mark nothing read. A window that takes too long is cancelled with an error that says to narrow it. People see the same numbers on the Insights page at https://hillclimb.me/insights.
+
+## Finding things by what they say
+
+`search` finds goals, outcomes, plans, evidence and artifacts by their words, the same search people get from ⌘K in the console. Every word of `query` has to appear, in any order, ignoring case. The words may be spread over an item's key and title (and over an artifact's title, folder and summary), but a brief, story, criterion or evidence summary has to hold them all itself.
+
+- **Where:** every tree you can read in the organization, or one `tree`. Pass `organization` (its slug) when your person can read trees in more than one, as a member or shared on a goal there. Artifacts belong to the organization, not a tree, so a search with `tree` leaves them out (`artifactsNote` says so if you asked for them).
+- **What it reads:** goals by title, key or brief; outcomes by key, title, a criterion or the story; live plans by title or the item they're on; evidence by its summary (not its body); artifacts by title, folder or summary (not their content). `types` narrows it, e.g. `["outcomes", "evidence"]`; by default it searches all five. Evidence is searched only when the query has a word of 3 or more characters.
+- **Order:** best match first. A match in a key or title ranks above a match in the text under it, so `"HC-12"` or a title's words come first, then criteria, stories, briefs, folders, summaries and evidence. `limit` is 20 by default and 50 at most. `more: true` (with a `note`) means there are others, so add words or narrow the scope; a tree with more than 200 matching evidence entries says `more` too. Each tree searches its 500 most recently updated live plans, as the palette does; older plans aren't searched.
+- **Each result:** `type` (goal, outcome, plan, evidence or artifact), `key` (for evidence, the outcome it's on, with the evidence's `id`; a plan has `id` and the `item` it's on), `title`, `matched` (the field that matched, e.g. "criterion" with its key in `criterion`), `snippet` (a short piece of that field around the match), `url`, and `tree` for anything in one. `draft: true` marks a goal or outcome still waiting for approval, and `track` marks evidence observed on a rewrite rather than live.
+- **Access:** only what you could open in the console comes back: branches your person holds a role on, and their own private artifacts.
+
+Search finds things; it doesn't rank work. Use `list_next_outcomes` for what to do next and `get_outcome` to read one before you start.
 
 ## Linking people to the work
 
