@@ -48,6 +48,8 @@ Outcome keys look like `HC-12`: an uppercase prefix, a dash, then letters or dig
 
 Avoid outcomes that only say "build X". Say what's true when X works, and how someone could tell.
 
+The [writing guide](https://hillclimb.me/docs/writing.md) has worked examples and the checks to run on every goal brief, outcome and criterion before you create or edit one, and says where history, test plans and designs go instead.
+
 ## Research, someday and blocked work
 
 Keep the outcome in the tree even when it shouldn't be worked yet, so its thinking isn't lost, and set its availability with `set_outcome_availability` (the [climbing guide](https://hillclimb.me/docs/climbing.md#blocked-and-deferred) has the rules):
@@ -128,7 +130,7 @@ An organization keeps one shared vocabulary of tags, so every tree and agent tag
 ## Reshaping
 
 - `move_goal` and `move_outcome` change where something sits. Status and evidence come along. Moving a tree's root under another tree's goal mounts it into the bigger tree. Both trees must be in the same organization, and you need to be an organization owner or admin.
-- `carry_evidence` copies evidence from one outcome onto another in the same tree, for folding outcomes into another's criteria or splitting one. Each copy keeps its author, recorded and observed dates, links and files, and says where it came from; the source keeps its own. By default it carries what the source's verified status rests on (refused, with what to do, when that status is stale, broken or came from a track). Editors and above. To fold child outcomes into a parent as criteria:
+- `carry_evidence` copies evidence from one outcome onto another in the same tree, for folding outcomes into another's criteria or splitting one. Each copy keeps its author, recorded and observed dates, links and files, and says where it came from; the source keeps its own. The source can already be archived, its goal too. By default it carries what the source's verified status rests on (refused, with what to do, when that status is stale or broken). Evidence from a track the source was cut over from is what's live now, so it's carried as live evidence and can back the target's live status; evidence from a track still open goes onto that track on the target, and the result's `next` says how to set the status there. Evidence from a track archived without cutting the source over never proved anything live, so it's refused. Editors and above. To fold child outcomes into a parent as criteria:
   1. `edit_outcome` the parent once, adding every new criterion. Each edit makes a new version, and the parent goes stale if it was verified.
   2. `carry_evidence` from each child, with `criterion` naming the criterion it became.
   3. `set_outcome_status` the parent verified, citing the copies the last carry's `next` lists. Pass `creditTo: []` when that work already counted, or the people who did it.

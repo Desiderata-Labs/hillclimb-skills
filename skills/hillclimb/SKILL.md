@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+453fea5f
+version: 1.0.0+609d378c
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -120,7 +120,21 @@ Working on a rewrite? If the tree has **tracks** (`get_tree` lists them), pass `
 - **Each outcome is one behavior,** with Given/When/Then criteria a stranger could check. Tag it with where or what the work is, using the organization's names from `list_tags`; tags are optional.
 - **Put imported or unsorted work under a Triage goal ranked last,** and review it regularly.
 
-Read [best practices](https://hillclimb.me/docs/practices.md) and [shaping](https://hillclimb.me/docs/shaping.md) before proposing a tree. You can show the person a draft with `POST https://hillclimb.me/api/v1/visualize` before creating anything.
+## Writing outcomes that last
+
+The tree defines how the product behaves. It is not a ticket queue. Before `create_outcome` or `edit_outcome`:
+- **Search first.** A behavior that refines an existing outcome is a new criterion on it, not a sibling. A bug becomes the behavior it broke, and its debugging trace becomes evidence.
+- **Title:** the behavior as a present-tense fact. Never "Bug: …", and never a task ("Add …", "Measure …", "Decide …", "Migrate …").
+- **Story:** one sentence, one actor, the harm avoided.
+- **One to five criteria,** one case each, with a result someone outside the code could observe, usually under 300 characters. Not "docs updated" or "tests pass": that's how you ship, not what the product does.
+- **No history or internals in the contract:** no rulings, dates, tickets, PRs, commits, file paths, pixel values, test plans or "arrives with" notes. Rulings go in decisions, traces in evidence, test matrices in plans, waiting on another outcome in `dependsOn`.
+- **Keep it true:** when a decision changes a behavior, change every criterion that states the old rule.
+- **Measurements, decisions, documents and one-off chores aren't outcomes.** Record what they established as evidence on the outcome they inform.
+- **Goal briefs are two or three sentences:** the end state, the scope, what to avoid. A root or large area may add a short What matters and Avoid list, each rule with its reason. No dates, steps, designs or decision logs, and no goals named after a technology or vendor.
+
+Asked to review or lint a tree? Follow [writing](https://hillclimb.me/docs/writing.md): flag each problem with its check code, propose the rewrite beside the current text, and apply only the rows your person accepts.
+
+Read [best practices](https://hillclimb.me/docs/practices.md), [shaping](https://hillclimb.me/docs/shaping.md) and [writing](https://hillclimb.me/docs/writing.md) before proposing a tree. You can show the person a draft with `POST https://hillclimb.me/api/v1/visualize` before creating anything.
 
 ## Stay in sync
 
@@ -151,6 +165,7 @@ Read these when you need depth. Over MCP, `read_doc` returns the same text.
 | Climbing a tree | `https://hillclimb.me/docs/climbing.md` | `references/climbing.md` |
 | Best practices | `https://hillclimb.me/docs/practices.md` | `references/practices.md` |
 | Shaping a tree | `https://hillclimb.me/docs/shaping.md` | `references/shaping.md` |
+| Writing goals, outcomes and criteria | `https://hillclimb.me/docs/writing.md` | `references/writing.md` |
 | Evidence, status and CI | `https://hillclimb.me/docs/evidence.md` | `references/evidence.md` |
 | Plans | `https://hillclimb.me/docs/plans.md` | `references/plans.md` |
 | Releases and roadmaps | `https://hillclimb.me/docs/roadmaps.md` | `references/roadmaps.md` |

@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+453fea5f",
+  "version": "1.0.0+609d378c",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
@@ -31,6 +31,11 @@
           "id": "shaping",
           "title": "Shaping a tree",
           "url": "https://hillclimb.me/docs/shaping.md"
+        },
+        {
+          "id": "writing",
+          "title": "Writing goals, outcomes and criteria",
+          "url": "https://hillclimb.me/docs/writing.md"
         },
         {
           "id": "evidence",

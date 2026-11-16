@@ -54,7 +54,7 @@ Staging isn't production. After a cutover, prove the gaps live the ordinary way,
 
 ## Ending a track
 
-`archive_track` ends a track that won't ship: outcomes only it has are archived (not ones another open track also has), and its evidence and history stay. Live is untouched. It's hard to undo, so an agent needs `confirmedWithPerson: true`, and where approvers govern, a person does it. The key stays taken.
+`archive_track` ends a track that won't ship: outcomes only it has are archived (not ones another open track also has), and its evidence and history stay. Live is untouched. Proof recorded on a track an outcome was cut over from stays usable: when you fold that outcome into another, `carry_evidence` carries it as live evidence. It's hard to undo, so an agent needs `confirmedWithPerson: true`, and where approvers govern, a person does it. The key stays taken.
 
 Where approvers govern, marking outcomes `new` or `old` is a person's call too, since it changes what's promised.
 

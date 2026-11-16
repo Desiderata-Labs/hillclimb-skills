@@ -44,7 +44,7 @@ List images, CSS or scripts in `files` with their `path`, `type`, `size` and `sh
 
 ## Who sees it
 
-Every member of the organization sees it, in its space, unless you publish with `visibility: "private"`, which keeps it to you in your Private. Anyone who can see it can read its source. Only its publisher, or an owner, admin or editor, can add versions, move or archive it.
+Every member of the organization sees it, in its space, unless you publish with `visibility: "private"`, which keeps it to you in your Private. Anyone who can see it can read its source. Any member can add versions to a shared artifact and move or rename it; only its publisher, or an owner, admin or editor, can archive it. A private one is only its publisher's.
 
 `lock_artifact` locks a document under control, such as a policy or a compliance record: while it's locked nobody, its publisher included, can add versions, move, rename or archive it, and `get_artifact` shows `locked` with who locked it and when. Members still read it and its links keep working. Its publisher, an owner or an admin locks it, and unlocks it with `unlock: true`. Asked to change a locked artifact, tell the person it's locked and who can unlock it, or publish your changes as a new artifact without `key`.
 
