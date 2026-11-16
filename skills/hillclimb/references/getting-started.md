@@ -63,7 +63,7 @@ To start a new tree, call `create_goal` with no parent. You can base it on a tem
 
 ## The rules that never change
 
-- **Humans own the contract.** Goals, briefs, stories and criteria belong to people. Never rewrite an outcome to make your work pass. If one looks wrong, propose an edit. Under approvers it waits for a person.
+- **Humans own the contract.** Goals, briefs, stories and criteria belong to people. Never rewrite an outcome to make your work pass. If one looks wrong, propose an edit. Under approvers, or as a contributor, it waits for a person.
 - **Green means evidence.** Mark an outcome verified only with "confirms" evidence against its current version. If it doesn't hold, mark it failing.
 - **Confirm before hard-to-undo or access-changing actions.** For these, tell the person exactly what you'll do and wait for a clear yes, then pass `confirmedWithPerson: true`:
   - inviting someone, adding someone to a team, sharing a goal or changing a role

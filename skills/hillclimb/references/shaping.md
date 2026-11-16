@@ -80,7 +80,8 @@ A view (`create_view`, `list_views`) renames the levels below the root for the w
 Name approvers on a goal and they govern everything under it. In practice, put the people who own the direction on the root, and narrow it further down where a team owns its part.
 
 - Approvers inherit down the tree.
-- An empty list (`[]`) turns sign-off off for that subtree. `null` (in `edit_goal`) inherits again.
+- An empty list (`[]`) names no approvers for that subtree. `null` (in `edit_goal`) inherits again.
+- Set a tree's approvers on its root goal: `approvers` when starting it with `create_goal`, or `edit_goal` on the root later.
 - Only editors and above can set approvers.
 - Approvers must be organization members or people the tree is shared with.
 
@@ -88,7 +89,9 @@ Under approvers, the following wait for every approver to sign off:
 - new goals and outcomes, and edits to their contract (title, brief, story, criteria), from anyone who isn't an approver;
 - the same changes from any agent, even one signed in as an approver. Any MCP or API-key connection counts as an agent.
 
-A new goal or outcome waits as a draft. An edit waits as a pending change. Drafts have no status and aren't next work, and a goal under a draft is a draft too. `list_pending_changes` shows what's waiting and on whom, and what each edit would change, field by field. Approvers sign off themselves in the Hillclimb console (https://hillclimb.me/t). That sign-off is `approve_change`, which takes the `proposedAt` that `list_pending_changes` showed, so it covers exactly the draft or edit that was read; anything changed since is refused. They can also send a change back, and so can you with `reject_change` if the person asks.
+Where no approvers are named, a contributor's changes still wait: the same new goals, outcomes and contract edits, from them or their agents, wait for any one owner, admin or editor of that part of the tree (`signOff: "any"`). An editor's own changes there apply at once. Naming approvers replaces that fallback: then only they sign off, every one of them (`signOff: "all"`).
+
+A new goal or outcome waits as a draft. An edit waits as a pending change. Drafts have no status and aren't next work, and a goal under a draft is a draft too. `list_pending_changes` shows what's waiting and on whom (with `signOff`), who proposed it, and what each edit would change, field by field. Each one waiting on a person is in their inbox (`list_inbox` `you.approvals`, the console's Inbox and Hillclimb for Mac), where they approve or reject it. Approvers sign off themselves in the Hillclimb console (https://hillclimb.me/t). That sign-off is `approve_change`, which takes the `proposedAt` that `list_pending_changes` showed, so it covers exactly the draft or edit that was read; anything changed since is refused. They can also send a change back, and so can you with `reject_change` if the person asks.
 
 As an agent, you can always propose. Never ask the person to approve something they haven't read.
 
@@ -125,6 +128,12 @@ An organization keeps one shared vocabulary of tags, so every tree and agent tag
 ## Reshaping
 
 - `move_goal` and `move_outcome` change where something sits. Status and evidence come along. Moving a tree's root under another tree's goal mounts it into the bigger tree. Both trees must be in the same organization, and you need to be an organization owner or admin.
+- `carry_evidence` copies evidence from one outcome onto another in the same tree, for folding outcomes into another's criteria or splitting one. Each copy keeps its author, recorded and observed dates, links and files, and says where it came from; the source keeps its own. By default it carries what the source's verified status rests on (refused, with what to do, when that status is stale, broken or came from a track). Editors and above. To fold child outcomes into a parent as criteria:
+  1. `edit_outcome` the parent once, adding every new criterion. Each edit makes a new version, and the parent goes stale if it was verified.
+  2. `carry_evidence` from each child, with `criterion` naming the criterion it became.
+  3. `set_outcome_status` the parent verified, citing the copies the last carry's `next` lists. Pass `creditTo: []` when that work already counted, or the people who did it.
+  4. `archive_outcome` each child.
+  Copies are never counted as new evidence. Carrying again after another edit re-copies onto the new version.
 - `archive_goal` and `archive_outcome` remove something and keep its history. No tool brings it back, so archive deliberately.
 - `archive_tree`, `restore_tree` and `delete_tree` act on a whole tree. `delete_tree` also removes the tree's evidence files from storage. Confirm with the person first.
 - Moving and archiving need editor access. Agents can't move or archive anything under approvers. Ask a person to.

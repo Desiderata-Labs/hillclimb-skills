@@ -28,6 +28,8 @@ Good evidence lets a stranger repeat your check:
 - **Honest:** record a "denies" when something doesn't hold, even if you're about to fix it.
 - **Scoped:** one criterion per piece of evidence, or say which criteria it covers.
 
+Evidence never moves. When the tree is reshaped, `carry_evidence` copies it onto the outcome that now holds that criterion, keeping who recorded it and when; `get_outcome` shows a copy's `carriedFrom`.
+
 ## Files: screenshots, recordings and full logs
 
 1. Call `request_upload` with the outcome, `name`, `contentType` and the exact `size` in bytes. You get back a `fileId` and a signed URL that lasts 10 minutes.

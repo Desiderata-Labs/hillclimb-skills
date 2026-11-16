@@ -64,7 +64,7 @@ Setting an outcome verified releases your claim. If you stop without verifying, 
 
 Briefs say what matters and what to avoid, so respect them even when the criteria don't repeat them.
 
-If the outcome looks wrong, ambiguous or impossible, don't bend the work to match it, and don't edit it to match your work. Use `edit_outcome` to propose a fix, with `changesMeaning` set honestly. Or tell the person. Under approvers your edit waits for them.
+If the outcome looks wrong, ambiguous or impossible, don't bend the work to match it, and don't edit it to match your work. Use `edit_outcome` to propose a fix, with `changesMeaning` set honestly. Or tell the person. Under approvers your edit waits for them; as a contributor where none are named, for any one editor.
 
 ## Proving it
 
@@ -99,13 +99,13 @@ If the work ships, check the outcome where people use it, after the deploy. Reco
 
 `get_insights` answers "what did I (or we) get done?" for an organization over a window: `range` "24h" (the default), "7d" or "30d", or `from`/`to` dates (read in `tz`, at most 366 days). Pass `organization` when your person belongs to more than one, and `tz` (their IANA timezone) so days and hours line up with theirs.
 
-- **Outcomes closed** is the one number that ranks people. Every verification counts, including re-verifying an outcome after it changed or broke: requirements drift, and fixing it is real work. Proving an outcome on a track (a rewrite) counts for whoever did it, when they did it; promoting the track doesn't count it again.
+- **Outcomes closed** is the one number that ranks people. Every verification counts, including re-verifying an outcome after it changed or broke: requirements drift, and fixing it is real work. Proving an outcome on a track (a rewrite) counts for whoever did it, when they did it; promoting the track doesn't count it again. A verification counts for whoever set it, unless they passed `creditTo` on `set_outcome_status`: then it counts for each person named instead (the people who did the work), or for nobody with `[]`, such as when reshaping the tree carries over work that already counted. It counts on the day you set it, not when they did the work. Crediting anyone but yourself takes editor access; `get_outcome` shows who set it and who's credited (`status.creditedTo`), and `list_insight_items` marks credited closes with `creditedBy`. Use it only on your person's call.
 - **Evidence** added (live or on a track) is shown beside each person and never changes the rank.
 - Your work and your agents' work are one person: results name people, never agents.
 - People with nothing in the window aren't listed. Someone shared on part of a tree sees only the work on what they can see. The example tree a new account starts with never counts: its history is made up.
 - `person` is someone in the organization (a member, on one of its teams, or shared on one of its trees), by email, user id or `me`.
 
-With `person: "me"`, the result also has `standup`: `claimedNow` (live claims across the organization's trees, whatever the window), `waitingOnYou` and `waitingOnOthers` (open questions, the same as `list_inbox`). With another person's email you get their numbers and claims, never their questions. To write your person's standup, call it with `person: "me"` and the window they ask about, then `list_insight_items` (metric "closed", same window) for the outcomes, and link each one by its `url`.
+With `person: "me"`, the result also has `standup`: `claimedNow` (live claims across the organization's trees, whatever the window, each with the `agent` holding it and `since`, when that agent took it), `waitingOnYou` and `waitingOnOthers` (open questions, the same as `list_inbox`). With another person's email you get their numbers and claims, never their questions. To write your person's standup, call it with `person: "me"` and the window they ask about, then `list_insight_items` (metric "closed", same window) for the outcomes, and link each one by its `url`.
 
 `list_insight_items` lists the outcomes behind any number, newest first, 50 at a time: metric "closed" or "evidence", for everyone or one `person`, optionally one `bucket` (an hour or day exactly as `get_insights` names it in `buckets`). Each item has who, when, the tree, the track when it was done on one, and the outcome's live state now (verified, stale, broken, failing, unverified, archived, or gone). Pass `next` back as `cursor`.
 

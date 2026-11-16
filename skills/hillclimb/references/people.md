@@ -29,7 +29,7 @@ Tree keys are random, so a key names one tree wherever it is; `org-slug/` in fro
 | owner | everything, including deleting it | owner |
 | admin | invites people; manages roles, teams, triggers, share links and usage | owner |
 | editor | reads it | editor: shapes the trees (adds, edits, moves, archives, starts trees, sets approvers) |
-| contributor | reads it | contributor: claims, adds evidence, sets status, writes plans and comments; what they create under approvers waits as a draft |
+| contributor | reads it | contributor: claims, adds evidence, sets status, writes plans and comments; new goals and outcomes and contract edits wait for sign-off: by the approvers where they're named, otherwise by any one owner, admin or editor |
 
 The owner role has some fixed rules:
 - Only owners can make someone an owner, change an owner's role or remove an owner.
@@ -68,6 +68,8 @@ Approvers on a goal govern its contract and everything under it:
 - New goals and outcomes, and edits to title, brief, story or criteria, wait for every approver to sign off. This applies to anyone who isn't an approver, and to any agent.
 - An approver signs off in the console, or asks their agent to with `approve_change`. The agent signs off only when its person asks, and the change log records the agent. What an agent creates or edits still waits for sign-off, even when it works for an approver.
 - Only editors and above can set approvers.
+- Where no approvers are named, a contributor's changes wait for any one owner, admin or editor there instead. Name approvers on the tree's root to choose who reviews.
+- What waits on someone reaches their inbox (`list_inbox` `you.approvals`, the console's Inbox, Hillclimb for Mac).
 
 Read the [shaping guide](https://hillclimb.me/docs/shaping.md) for how approvers inherit down the tree.
 

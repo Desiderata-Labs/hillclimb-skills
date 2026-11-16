@@ -39,11 +39,13 @@ Use it to write a daily summary, or to notice what someone else verified.
 - An organization has at most 100 outbound triggers. Inbound hooks aren't limited.
 - `events` filters by type, using the names `list_changes` uses. Empty means all of these:
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
-  - `outcome.claimed`, `outcome.released`, `outcome.status_set`
+  - `outcome.claimed`, `outcome.released`, `outcome.status_set` (data: `from`, `to`, `note`, `evidenceIds`, and `creditTo`, user ids, when the credit went to others or to nobody)
+  - `outcome.credited`: one per person a verification credited (`set_outcome_status` `creditTo`). Its actor is the person credited, not who acted; data: `by` (who set the status, a user id), `byVia` and `note`
   - `outcome.availability_set` (data: `from` and `to`, each `open`, `blocked` or `deferred`, plus `note` and `until` when set). A block lapsing at its `until` writes no event.
   - `outcome.criterion_availability_set` (data: `criterion`, `from` and `to`, each `open` or `deferred`, plus `note` when deferred and `madeStale` when reopening it made a verified outcome stale).
   - `outcome.dependencies_met` (data: `dependency`, the last one it waited on, now verified) and `outcome.dependency_unproven` (data: `dependency` and `to`, on a verified outcome whose dependency stopped being verified), both on the dependent outcome
   - `evidence.added`, `access.changed`
+  - `evidence.carried` (`carry_evidence`, on the outcome it went to; data: `from`, the source outcome's key, `evidenceIds` of the copies, `fromEvidenceIds`, `verdicts`, and `note` when given)
   - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
   - a `comment.added` event names who to tell in `notify` (user ids) and its `thread`; for a question also `needsReply`, `waitingOn`, `options`, `header`, and `answers` (the thread) once it's answered: enough for a chat bridge to reach the right people
   - `share_link.created`, `share_link.revoked`
