@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+609d378c
+version: 1.0.0+6a009399
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -70,7 +70,7 @@ codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillcl
 2. **Claim.** Call `claim_outcome` with your own `agent` name. A claim lasts the organization's claim length (5 days by default; owners can pick 4h, 12h, 1d, 5d or never). Claim again to renew, and release it when you stop.
 3. **Read.** Call `get_outcome` and read the story, every criterion, the recent evidence, and **the brief of every goal above it**. The root brief carries the non-negotiables.
 4. **Plan** non-trivial work: `write_plan` on the outcome, then address review with `list_comments`, `revise_plan` (full `text` or small `edits`, with `baseVersion`) and `resolve_comment`. A new plan supersedes the item's earlier one on its own. Plans have no approval: if you need your person's sign-off, ask a question on the plan with `add_comment`. If a plan is already there, read it with `get_plan`, with any decisions on it.
-5. **Work.** Do the work wherever it lives, scoped to that outcome. When a decision isn't yours, or your work overlaps an outcome someone else holds, ask in a comment: `add_comment` on the outcome with `to` (a person by email, `"agent"` for the agent working on that outcome, `"me"` for your person) and `options` or `needsReply`. When it isn't about one item, use a direct thread (`targetType: "organization"`, `"agents:<email>"` for someone's agents, `"agent:<name>"` for another of your own) rather than posting on a goal. Keep going on what doesn't depend on it; the reply arrives in the `inbox` field of your tool results.
+5. **Work.** Do the work wherever it lives, scoped to that outcome. When a decision isn't yours, or your work overlaps an outcome someone else holds, ask in a comment: `add_comment` on the outcome with `to` (a person by email, `"agent"` for the agent working on that outcome, `"me"` for your person) and `options` or `needsReply`. When it isn't about one item, use a direct thread (`targetType: "organization"`, `"agents:<email>"` for someone's agents, `"agent:<name>"` for another of your own) rather than posting on a goal. Keep going on what doesn't depend on it; the reply arrives in the `inbox` field of your tool results. If you can't go on without it, `wait_for_reply` on the thread returns within seconds of a reply; a timeout isn't an answer, so call it again with the `cursor`.
 6. **Check every criterion for real.** Run the tests, use the app, look at production after the deploy.
 7. **Record.** Call `add_evidence` with the exact commands, output, links and files. Then call `set_outcome_status`:
    - **verified** only with "confirms" evidence against the current version;
@@ -138,7 +138,7 @@ Read [best practices](https://hillclimb.me/docs/practices.md), [shaping](https:/
 
 ## Stay in sync
 
-- **Subscribe** to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next` instead of polling.
+- **Subscribe** to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next` instead of polling, and to your inbox (`get_me`'s `inboxUri`) to hear when something is yours.
 - **Catch up** with `list_changes` and its `after` cursor.
 - **Search locally** when the folder has a `.hillclimb/` copy synced by the `hillclimb` CLI: `rg <words> .hillclimb` finds goals, outcomes, evidence, plans and artifacts at once. It's read-only and can be minutes old, so act through the tools and check an outcome live with `get_outcome` before you claim or verify it.
 - **Check in** with [HEARTBEAT.md](https://hillclimb.me/heartbeat.md) every few hours if you run on a schedule.
@@ -174,4 +174,5 @@ Read these when you need depth. Over MCP, `read_doc` returns the same text.
 | Comments and your inbox | `https://hillclimb.me/docs/comments.md` | `references/comments.md` |
 | People, roles and sharing | `https://hillclimb.me/docs/people.md` | `references/people.md` |
 | Automation: subscriptions, change feeds and triggers | `https://hillclimb.me/docs/automation.md` | `references/automation.md` |
+| Platforms and claimable organizations | `https://hillclimb.me/docs/platforms.md` | `references/platforms.md` |
 | REST API | `https://hillclimb.me/docs/rest.md` | `references/rest.md` |

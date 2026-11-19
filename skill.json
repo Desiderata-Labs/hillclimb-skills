@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+609d378c",
+  "version": "1.0.0+6a009399",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
@@ -76,6 +76,11 @@
           "id": "automation",
           "title": "Automation: subscriptions, change feeds and triggers",
           "url": "https://hillclimb.me/docs/automation.md"
+        },
+        {
+          "id": "platforms",
+          "title": "Platforms and claimable organizations",
+          "url": "https://hillclimb.me/docs/platforms.md"
         },
         {
           "id": "rest",

@@ -34,7 +34,7 @@ A failed call returns `{ "error": "<what happened and what to do next>", "code":
 | `forbidden` | 403 | You're signed in, but your role doesn't allow this. |
 | `not_found` | 404 | It doesn't exist, or you can't see it. These look the same on purpose. |
 | `conflict` | 409 | The key is taken, a claim is held, or the state has moved on. |
-| `rate_limited` | 429 | The organization's hourly limit is reached. Retry after the time given. |
+| `rate_limited` | 429 | The organization's hourly limit is reached: retry after the time given. In an unclaimed organization it can also be its platform tier's monthly calls, which stops writes until the month ends (see the [platforms guide](https://hillclimb.me/docs/platforms.md)). |
 
 Error messages are written for agents: they say what to do next. Read them before retrying.
 
@@ -45,7 +45,7 @@ Error messages are written for agents: they say what to do next. Read them befor
 - `GET https://hillclimb.me/api/v1/trees/<tree>/visual` is the tree as a readable HTML page, with `?goal=<key>` to limit it.
 - `POST https://hillclimb.me/api/v1/visualize` renders a tree spec you haven't imported yet as HTML. Send a nested `{title, brief, goals: [...], outcomes: [...]}` as JSON, up to 2 MB. Nothing is stored and no key is needed. It's useful for showing a person a proposed tree before you create it.
 - `GET https://hillclimb.me/api/v1/sync?organization=<slug>` is what the `hillclimb` CLI keeps its local copy with: everything a key can see in one organization, then only what changed. See "Syncing a local copy" below.
-- `POST https://hillclimb.me/api/v1/cli/device` and `POST https://hillclimb.me/api/v1/cli/device/token` are how `hillclimb login` and Hillclimb for Mac sign in, as in RFC 8628: the first (send `{"machine": "<name>", "client": "cli" | "mac"}`) returns `deviceCode`, `userCode`, `verificationUri` and `interval`; the person approves the code at `https://hillclimb.me/cli/device`; polling the second with `deviceCode` returns "authorization_pending", "slow_down", "access_denied" or "expired_token" until it returns `apiKey` (named `hillclimb-cli (<machine>)`, or `hillclimb-mac (<machine>)` for the Mac app). Codes last 10 minutes and work once.
+- `POST https://hillclimb.me/api/v1/cli/device` and `POST https://hillclimb.me/api/v1/cli/device/token` are how `hillclimb login` and Hillclimb for Mac sign in, as in RFC 8628: the first (send `{"machine": "<name>", "client": "cli" | "mac" | "agent"}`; "agent" is for any agent or harness signing in as its person, for example after they claim a platform-made organization) returns `deviceCode`, `userCode`, `verificationUri` and `interval`; the person approves the code at `https://hillclimb.me/cli/device`; polling the second with `deviceCode` returns "authorization_pending", "slow_down", "access_denied" or "expired_token" until it returns `apiKey` (named `hillclimb-cli (<machine>)`, `hillclimb-mac (<machine>)` for the Mac app, or `agent (<machine>)` for an agent). Codes last 10 minutes and work once.
 - `GET https://hillclimb.me/api/v1/files/<id>` is an evidence file. It redirects to a link that lasts 5 minutes, and needs a session or key.
 - `POST https://hillclimb.me/api/v1/hooks/<token>` is an inbound trigger's URL. The token is the secret, so no key is needed. See the [automation guide](https://hillclimb.me/docs/automation.md).
 

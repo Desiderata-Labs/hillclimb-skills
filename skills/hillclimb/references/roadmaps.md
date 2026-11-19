@@ -21,7 +21,7 @@ Use them for quarterly planning (a roadmap dated by quarter), weekly shipping (a
 - `get_release`: one release in full, including `committed.scopeChange` (added, removed, or revised in meaning since commit), `priorityTension` (unfinished outcomes ranked above the release's lowest that are in no open release: a trade-off to explain, not an error) and `roadmaps` (where it's placed).
 - Outcomes carry their release: `get_outcome` and each `list_next_outcomes` item have `release` (key, title and the teams taking part) when the outcome is in an open release, and the tree viewer shows it on the outcome. Assignment doesn't change: an outcome is still owned by its team or person (directly or through a goal), and `get_release` names each outcome's owners, so a release shared by several teams says whose piece each outcome is.
 
-People see the same thing in the console: a tree's Roadmaps page, and a timeline per roadmap with team lanes, a scenario switch and week, month and quarter zoom.
+People see the same thing in the console under Roadmaps in the sidebar (`/roadmaps`): each tree's roadmaps and releases, and a timeline per roadmap (`/roadmaps/<org>/<roadmap>`) with team lanes, a scenario switch and week, month and quarter zoom. The `url` on a roadmap or release opens it there.
 
 ## Creating
 

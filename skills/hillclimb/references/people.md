@@ -84,13 +84,15 @@ Read the [shaping guide](https://hillclimb.me/docs/shaping.md) for how approvers
 - `get_me` shows who you're signed in as. `update_profile` sets the person's name.
 - `create_api_key` makes a key. It's shown once, so store it like a password. `list_api_keys` shows keys without their secrets.
 - `revoke_api_key` deletes a key, and anything using it stops at once, including your own connection if it's that key.
+- A platform key (`create_api_key` with `scope: "platform"`) is for a platform organization's server and only manages claimable organizations. Read the [platforms guide](https://hillclimb.me/docs/platforms.md).
 
 ## What an agent must confirm first
 
 These tools change access or are hard to undo:
 - `share_goal` and `add_team_member`
 - `invite_to_organization`, `update_member_role` and `accept_invitation`
-- `create_api_key`, `create_share_link` and `share_artifact`
+- `create_api_key` (a platform key included), `create_share_link` and `share_artifact`
+- `set_platform_tiers`, which makes an organization a platform or turns that off, and `revoke_claimable_organization`
 - `create_trigger`
 - `archive_tree` and `delete_tree`
 - `promote_track` with `apply`, and `archive_track`

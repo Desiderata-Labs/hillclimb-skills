@@ -2,7 +2,7 @@
 
 > Keep agents and other systems in sync without polling: MCP subscriptions, the change log, outbound webhooks with signatures, inbound hooks, and the hourly call limit.
 
-## Hear about new work (MCP subscriptions)
+## Hear about new work and your inbox (MCP subscriptions)
 
 The MCP server offers one resource per tree:
 
@@ -17,6 +17,19 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 - After a deploy, new streams get `tools/list_changed`, so clients re-read the tools.
 
 Subscribing beats polling, and reads of the resource don't count against the hourly limit.
+
+It also offers your person's inbox, at the URI `get_me` returns as `inboxUri`:
+
+```
+hillclimb://people/{your account id}/inbox
+```
+
+- Subscribe and your client hears whenever a comment reaches that person: someone asks them, replies in a thread they're in, answers their question or resolves it. Then read it, or call `list_inbox`.
+- Reading it returns what `list_inbox` would, without marking anything read. Unlike next work, reading it counts as a call.
+- Only comments notify. Approvals waiting on you and updates on your outcomes change what it returns without a notification.
+- Only your own inbox: a subscription to anyone else's is refused with yours.
+
+To wait for the answer to one question instead, call `wait_for_reply` with its thread (see the comments guide).
 
 ## See what changed (the change log)
 
@@ -48,6 +61,7 @@ Use it to write a daily summary, or to notice what someone else verified.
   - `evidence.carried` (`carry_evidence`, on the outcome it went to; data: `from`, the source outcome's key, `evidenceIds` of the copies, `fromEvidenceIds`, `verdicts`, and `note` when given)
   - `plan.written`, `plan.revised`, `plan.status_set`, `comment.added`, `comment.resolved`, `comment.reopened` (subject: the outcome or goal; data: `planId` or `commentId`)
   - a `comment.added` event names who to tell in `notify` (user ids) and its `thread`; for a question also `needsReply`, `waitingOn`, `options`, `header`, and `answers` (the thread) once it's answered: enough for a chat bridge to reach the right people
+  - `question.answered`: a question was answered, or its answer changed (`amended: true`). Data: `thread`, `commentId` (the answer), `askedBy` (user id), `askedVia` and `agent` (who asked, when an agent did), `header`, `question` and `answer` (excerpts) and `option`. Subscribe a trigger to just this event to wake a deployed agent when its question is answered; the event's `cursor` tells a retried delivery from a new one, so wake the agent once per cursor. Questions in direct threads aren't sent to webhooks.
   - `share_link.created`, `share_link.revoked`
   - `tree.archived`, `tree.restored`
 - It returns a signing secret (`whsec_…`) once.
