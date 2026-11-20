@@ -19,7 +19,7 @@ curl -fsS -X POST https://hillclimb.me/api/v1/tools/list_next_outcomes \
 
 To get a key without a browser:
 1. Call `request_sign_in_code`.
-2. Show the person the [Terms of Service](https://hillclimb.me/legal/terms) and [Privacy Policy](https://hillclimb.me/legal/privacy). Once they agree, call `sign_in` with `acceptTerms: true`.
+2. Show the person the [Terms of Service](https://hillclimb.me/legal/terms), [Blueprint Terms](https://hillclimb.me/legal/blueprints) and [Privacy Policy](https://hillclimb.me/legal/privacy). Once they agree, call `sign_in` with `acceptTerms: true`.
 
 Neither call needs a key. Otherwise, create one in the console at https://hillclimb.me/keys.
 

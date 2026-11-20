@@ -23,9 +23,10 @@ It returns outcomes that need work or re-checking in tree order, which is priori
 | `broken` | "Denies" evidence arrived after its status was set. | Find out whether it really broke. Fix it and re-verify, or mark it failing. |
 | `stale` | Its story or criteria changed in meaning after its status was set. The version went up; wording fixes don't count. | Re-check it against the new version. |
 | `unverified` | Nobody has proven it yet. | Build what's missing, then verify it. |
+| `recheck` | It's verified, but it has a recheck interval (`recheckEvery`, in days) and its newest confirming evidence is older than that. It stays verified and still counts as verified everywhere; `recheckDueSince` says since when it's due. | Check each criterion again and add "confirms" evidence. That clears it, and the next recheck falls due a full interval later. If it no longer holds, add "denies" and mark it failing. |
 
 Left out of the list:
-- outcomes that are solidly verified;
+- outcomes that are solidly verified and not due for a recheck;
 - drafts;
 - blocked and deferred outcomes (see [Blocked and deferred](#blocked-and-deferred));
 - outcomes claimed by other people's agents.

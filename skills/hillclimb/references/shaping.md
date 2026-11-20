@@ -1,6 +1,6 @@
 # Shaping a tree
 
-> Design a tree people and agents can climb: goals and briefs, priority by position, outcomes with checkable criteria, tags, owners, templates, views, importing user stories, and reshaping safely.
+> Design a tree people and agents can climb: goals and briefs, priority by position, outcomes with checkable criteria, tags, owners, templates, importing user stories, and reshaping safely.
 
 ## What a good tree looks like
 
@@ -71,11 +71,19 @@ For research, write the question as its own open outcome, such as "We know wheth
 
 You can edit or delete everything a template creates.
 
+## Blueprints
+
+`list_templates` also lists **blueprints**: complete, ranked trees for something many teams need, such as SOC 2, HIPAA, GDPR, accessibility, or the behavior of a whole product. Each lists its category, size and public page, where anyone can read every goal, outcome and criterion first ([https://hillclimb.me/blueprints](https://hillclimb.me/blueprints)).
+
+Pass a blueprint's key as `create_goal` `template` with no parent. The title and outcome prefix default to the blueprint's. The new tree gets every goal and outcome in the blueprint's order, unverified, under its own keys (PREFIX-01, PREFIX-02 and so on), with dependencies and recheck intervals kept between its own outcomes. `get_tree` says which blueprint and version it came from. A blueprint's documents (policies, registers, notices) are filed as artifacts in a folder named after the tree, each with `{{Blanks}}` to fill in and a list of the outcomes it helps prove.
+
+Before climbing one, go through it with the person: defer the goals that don't apply to them (a HIPAA tree's covered-entity rules, for a business associate), and fill in the documents from what you find in their systems. Everything is theirs to edit.
+
 Starting a tree takes an organization owner, admin or editor. Contributors can't.
 
-A `level` is a label on a goal, such as "Objective" or "Key result". Without one, goals are shown in OKR terms by depth: Objective, Key result, Initiative.
+Blueprints are free to read, start trees from and build with, under the [Blueprint and Site Content Terms](https://hillclimb.me/legal/blueprints). Read a blueprint for the task your person gave you, at the pace that task needs. Don't crawl the catalog, copy blueprints or blank templates out to publish or share elsewhere, or use them to train or evaluate models. A tree started from one, and the documents you fill in from its templates, are your person's organization's to use and share.
 
-A view (`create_view`, `list_views`) renames the levels below the root for the whole organization, for example `["Theme", "Bet", "Task"]`. The last label repeats for deeper goals. A view never changes structure or order. Organization owners, admins and editors can create views.
+A `level` is a label on a goal, such as "Objective" or "Key result". Without one, goals are shown in OKR terms by depth: Objective, Key result, Initiative.
 
 ## Approvers and drafts
 
@@ -103,7 +111,7 @@ Use `edit_outcome` to change title, story, actors or criteria. You must say whet
 - **`changesMeaning: true`** bumps the version. A verified outcome then becomes stale and needs re-checking. When an agent changes the criteria, it always counts as true.
 - **`changesMeaning: false`** is a wording fix. The status stands.
 
-`assignees` and `criteria` each take the full new list. For tags, `addTags` and `removeTags` change one or two and keep the rest (`tags` still replaces them all); rename one with the old name in `removeTags` and the new one in `addTags`. Tag changes apply at once, without sign-off. Never change an outcome so your work passes. If it's wrong, propose the change and say why.
+`assignees` and `criteria` each take the full new list. For tags, `addTags` and `removeTags` change one or two and keep the rest (`tags` still replaces them all); rename one with the old name in `removeTags` and the new one in `addTags`. Tag changes apply at once, without sign-off. So does `recheckEvery` (days between rechecks, null or 0 to clear; editors and above): it's a schedule for fresh proof, so it never changes meaning, status or the version. Never change an outcome so your work passes. If it's wrong, propose the change and say why.
 
 ## Tagging by area
 

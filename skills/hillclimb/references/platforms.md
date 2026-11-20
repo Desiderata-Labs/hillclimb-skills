@@ -178,13 +178,13 @@ The person opens `https://hillclimb.me/claim/<token>` in a browser:
 
 1. They sign in, or sign up, with a 6-digit code from their email.
 2. They see the organization's name, which platform created it and how many trees it has. There's nothing to set up.
-3. They accept the [Terms of Service](https://hillclimb.me/legal/terms) and [Privacy Policy](https://hillclimb.me/legal/privacy).
+3. They accept the [Terms of Service](https://hillclimb.me/legal/terms) and [Blueprint Terms](https://hillclimb.me/legal/blueprints) and acknowledge the [Privacy Policy](https://hillclimb.me/legal/privacy).
 4. They confirm. They become its owner and the stand-in owner leaves.
 
 | what | after the claim |
 | --- | --- |
 | The agent keys you were given | Stop working. The person's agent signs in as them (OAuth or device sign-in). For a setup that can't sign in, the claim page offers a key of the person's own that works only in that organization, shown once. |
-| Everything else the agent made | Keeps working: trees, plans, evidence, artifacts, triggers, views and share links. What the stand-in wrote or signed keeps its name. |
+| Everything else the agent made | Keeps working: trees, plans, evidence, artifacts, triggers and share links. What the stand-in wrote or signed keeps its name. |
 | Usage | Counts toward their own plan. The platform stops paying and the tier no longer applies. |
 | The platform | Sees only its slug and when it was claimed in `list_claimable_organizations`, and can't retier, reissue or revoke it. Its claim link only says it's already claimed. |
 | An existing account | The organization moves into it beside their other organizations. Nothing is merged. |

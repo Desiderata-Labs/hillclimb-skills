@@ -58,6 +58,11 @@ The computed signals:
 
 Both send the outcome back into `list_next_outcomes`.
 
+Some proof goes out of date on a schedule: a quarterly access review, a yearly restore drill. Give those outcomes a recheck interval in days (`recheckEvery` on `create_outcome` or `edit_outcome`, editors and above). A third signal follows from it:
+- **recheck**: the outcome is verified, but its newest live "confirms" evidence for the current version (or, with none, the moment its status was set) is older than the interval. `get_outcome` shows `recheck` with `every`, `due` and `dueAt`; summaries show `recheckEvery` and `recheckDueSince`.
+
+A recheck is never a failure. The outcome stays verified and counts as verified in coverage, release progress and insights. It comes back in `list_next_outcomes` at its place in the tree with reason `recheck`, and you claim it like any other next work. Add confirming evidence once you've checked it again: the recheck clears, and the next one falls due a full interval after when that evidence was observed. Setting, changing or clearing the interval never changes meaning, status or the version. Only verified outcomes can be due; anything else is already next work for its own reason.
+
 ## Make CI keep the tree honest
 
 Every CI run can add evidence to the outcomes its tests cover. A red test then shows up on the outcome straight away, as broken if it was verified, and green stays current. Status remains a decision. CI only adds evidence unless the trigger was made with `canSetStatus: true`.

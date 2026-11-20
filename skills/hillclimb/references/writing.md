@@ -37,6 +37,7 @@ What they share:
 - **Each result is observable from outside:** a status, what a person sees, what's charged, what's written where someone can look. Two strangers would agree on pass or fail.
 - **Results say what doesn't change, too,** when that's the risk: "it stays verified", "the refusal is the same".
 - **Nothing about who decided it, when, or in which ticket.** That's history, and history lives in evidence and decisions.
+- **"Every quarter" isn't a criterion.** When proof goes out of date on a schedule (an access review, a restore drill, a certificate check), write the promise once and set `recheckEvery` in days instead. The outcome comes back as next work when its confirming evidence gets older than that, and stays verified meanwhile. Leave it unset when proof doesn't age.
 
 ### A goal brief
 

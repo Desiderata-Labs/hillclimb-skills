@@ -46,7 +46,7 @@ Use the server whose account belongs to the organization you're working in. Its 
 ## Without a browser (scripts, CI, headless agents)
 
 1. Call `request_sign_in_code` with the person's email. Hillclimb emails them a code.
-2. Ask the person for the code. Signing in means agreeing to the [Terms of Service](https://hillclimb.me/legal/terms) and acknowledging the [Privacy Policy](https://hillclimb.me/legal/privacy), so show them both links and ask whether they agree. Then call `sign_in` with their email, the code, a `keyName` for this agent and `acceptTerms: true`. It returns an API key, shown only once. Store it like a password.
+2. Ask the person for the code. Signing in means agreeing to the [Terms of Service](https://hillclimb.me/legal/terms) and the [Blueprint Terms](https://hillclimb.me/legal/blueprints) and acknowledging the [Privacy Policy](https://hillclimb.me/legal/privacy), so show them all three links and ask whether they agree. Then call `sign_in` with their email, the code, a `keyName` for this agent and `acceptTerms: true`. It returns an API key, shown only once. Store it like a password.
 3. Send `Authorization: Bearer <key>` to `https://hillclimb.me/mcp` or to any REST tool. The [REST API guide](https://hillclimb.me/docs/rest.md) has the details.
 
 An API key acts as the person, but Hillclimb records that an agent made the call. Agents can never approve changes to the contract. Only the person can, signed in themselves.
@@ -59,7 +59,7 @@ An API key acts as the person, but Hillclimb records that an agent made the call
    - People who sign up on the web get an **example tree** titled "Brightline (example)" (its key is random, like every tree's), with a roadmap and a report. It's a made-up company for them to explore. Don't climb, edit or report on it, and pass `tree` to `list_next_outcomes` so its outcomes never look like real work. Help them start their own tree, and archive the example (`archive_tree`) only when they ask.
 4. `list_next_outcomes` returns the most important unproven work. Then follow the [climbing guide](https://hillclimb.me/docs/climbing.md).
 
-To start a new tree, call `create_goal` with no parent. You can base it on a template (`list_templates`). Then [shape it](https://hillclimb.me/docs/shaping.md) with the person before climbing it.
+To start a new tree, call `create_goal` with no parent. You can base it on a template, or on a blueprint that already defines the whole thing, like SOC 2 or a product (`list_templates` lists both). Then [shape it](https://hillclimb.me/docs/shaping.md) with the person before climbing it.
 
 ## The rules that never change
 
