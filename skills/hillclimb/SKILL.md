@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+ea09c68a
+version: 1.0.0+cfccae15
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://mcp.hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -140,7 +140,7 @@ Read [best practices](https://hillclimb.me/docs/practices.md), [shaping](https:/
 
 - **Subscribe** to the MCP resource `hillclimb://trees/{org-slug}/{tree-key}/next` instead of polling, and to your inbox (`get_me`'s `inboxUri`) to hear when something is yours.
 - **Catch up** with `list_changes` and its `after` cursor.
-- **Search locally** when the folder has a `.hillclimb/` copy synced by the `hillclimb` CLI: `rg <words> .hillclimb` finds goals, outcomes, evidence, plans and artifacts at once. It's read-only and can be minutes old, so act through the tools and check an outcome live with `get_outcome` before you claim or verify it.
+- **Read locally first** when the folder has a `.hillclimb/` copy synced by the `hillclimb` CLI: `INDEX.md` is the ranked tree, and `rg <words> .hillclimb` finds goals, outcomes, evidence, plans and artifacts at once. Don't call `get_tree`, `search`, `get_outcome` or `get_plan` for what it already has. It's read-only and can be minutes old, so act through the tools and check an outcome live with `get_outcome` before you claim or verify it.
 - **Check in** with [HEARTBEAT.md](https://hillclimb.me/heartbeat.md) every few hours if you run on a schedule.
 
 ## Set up a local copy for your person
@@ -151,7 +151,7 @@ When your person asks you to sync Hillclimb, or a repo you work in would be easi
 2. **Sign in:** run `HILLCLIMB_NO_BROWSER=1 hillclimb login` in the background, and give your person the link and code it prints. They open the link, check the code, pick their account under "Connect as" and press Allow; the command then prints "Signed in as …". Codes last 10 minutes. The key goes straight into the OS keychain: you never see it, so never ask for one or paste it.
 3. **More accounts:** if they work in organizations under another email, run `hillclimb login` again and they pick that account. `hillclimb accounts` shows who is signed in and which organizations each one syncs.
 4. **Link the repo:** in the repo root, `hillclimb link <tree key> --org <slug>`. Name the trees (`get_tree` lists them); without a terminal it can't ask. It mirrors those trees and the organization's artifacts into `.hillclimb/` and keeps them out of git; `--artifacts <space>` narrows the artifacts and `--no-artifacts` leaves them out. Comments aren't synced: read them with `list_comments`. Add `--agents-line` (a short Hillclimb section in AGENTS.md) and `--claude-hook` (a Claude Code session-start hook that syncs when the copy is stale) only once your person agrees.
-5. **Sync:** `hillclimb sync`. In a linked folder it syncs that folder's trees, and anywhere else everything. It also turns on background sync, so the copy refreshes every 15 minutes (`hillclimb sync status`; `hillclimb sync start --every 30m` changes it, never under 5 minutes; `hillclimb sync stop` turns it off). So don't loop it or schedule your own; run `hillclimb sync` when your person wants it fresh now. It exits 1 and names any organization that didn't sync.
+5. **Sync:** `hillclimb sync`. In a linked folder it syncs that folder's trees, and anywhere else everything. It also turns on background sync, so the copy refreshes every 30 minutes, waiting longer (up to 2 hours) while nothing changes (`hillclimb sync status`; `hillclimb sync start --every 1h` changes it, never under 5 minutes; `hillclimb sync stop` turns it off). So don't loop it or schedule your own; run `hillclimb sync` when your person wants it fresh now. It exits 1 and names any organization that didn't sync.
 
 In CI or a container, set `HILLCLIMB_API_KEY` instead of signing in. `hillclimb help` covers the rest.
 

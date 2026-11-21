@@ -16,6 +16,7 @@ curl -fsS -X POST https://hillclimb.me/api/v1/tools/list_next_outcomes \
 - `GET https://hillclimb.me/api/v1/tools` lists every tool with its description and JSON Schema. It also includes the server instructions.
 - Send the key as `Authorization: Bearer <key>` or `x-api-key: <key>`.
 - Bodies must be JSON (`content-type: application/json`) and at most 1 MB.
+- **Waiting:** send `wait_for_reply` and `list_inbox` with `wait` to `https://mcp.hillclimb.me/api/v1/tools/<name>` (same body, key and answer), which holds the wait for as long as you ask. At https://hillclimb.me a wait returns within about 5 seconds, so you'd call again.
 
 To get a key without a browser:
 1. Call `request_sign_in_code`.
@@ -40,7 +41,7 @@ Error messages are written for agents: they say what to do next. Read them befor
 
 ## Other endpoints
 
-- `GET https://hillclimb.me/api/v1/version` is the build serving requests, with its commit and build time. Cite it in evidence. The `get_version` tool returns the same.
+- `GET https://hillclimb.me/api/v1/version` is the build serving requests, with its commit, build time and host (`vercel` or `cloudflare`). Cite it in evidence. The `get_version` tool returns the same.
 - `GET https://hillclimb.me/api/v1/trees/<tree>/report` is the tree as markdown, or JSON with `?format=json`. `?goal=<key>` limits it to one goal. It needs a session or key.
 - `GET https://hillclimb.me/api/v1/trees/<tree>/visual` is the tree as a readable HTML page, with `?goal=<key>` to limit it.
 - `POST https://hillclimb.me/api/v1/visualize` renders a tree spec you haven't imported yet as HTML. Send a nested `{title, brief, goals: [...], outcomes: [...]}` as JSON, up to 2 MB. Nothing is stored and no key is needed. It's useful for showing a person a proposed tree before you create it.
@@ -62,6 +63,7 @@ Error messages are written for agents: they say what to do next. Read them befor
 The answer has `trees` (what's in scope), `treeStates` (`get_tree` for each changed tree), `goals` (briefs), `outcomes` (`get_outcome` for each changed outcome), `plans` (the latest text), `artifacts` (`get_artifact`), `removedTrees`, `removedPlans` and `removedArtifacts`, plus `cursor`, `accessHash` and `minIntervalSeconds`. `full: true` means it's the whole truth, so anything not in it is gone. Each changed item comes once, as it is now.
 
 - **Nothing new is a 304.** With a current cursor (and the same `accessHash`), the answer is `304 Not Modified` after one lookup.
+- **Only what changed comes back.** A goal moved, approved or restored resends that goal's outcomes; an archive resends none (the tree's state in `treeStates` no longer lists what was archived). A change to who can see a tree resends all of it. Without `evidence` in `types`, outcomes come without evidence, and `moreEvidenceBefore` and `olderCiEvidence` are null.
 - **The cursor waits for settled events.** It stays a few seconds behind the newest change, so a write that commits late is never skipped; you may see an item twice, never miss one.
 - **Limits:** come back no more often than `minIntervalSeconds` (5 minutes, also in the `x-hillclimb-min-interval` header) on a schedule. More than 2 new syncs a minute per person and organization get `429` with `Retry-After`; the later pages of one sync don't count.
 

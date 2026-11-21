@@ -13,11 +13,11 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 - Reading it returns what `list_next_outcomes` would.
 - Subscribe to it and your client gets `notifications/resources/updated` whenever the tree changes: evidence, statuses, claims, edits, moves and approvals. Then read it again.
 - Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/7f3k2m9q/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
-- Streams at https://mcp.hillclimb.me/mcp last up to an hour (about 13 minutes at https://hillclimb.me/mcp), then end cleanly with the listen request's own result, suggesting a short random wait (SSE `retry`). Clients listen again.
-- After a deploy, every client holding a stream gets `tools/list_changed` within about a minute, spread out so they don't all re-read at once.
+- Streams at https://mcp.hillclimb.me/mcp last up to an hour, then end cleanly with the listen request's own result, suggesting a short random wait (SSE `retry`). Clients listen again. https://hillclimb.me/mcp holds no streams: a listen there is refused with the address to use.
+- After a deploy that changes the tools, every client holding a stream gets `tools/list_changed` within about a minute, spread out so they don't all re-read at once. A deploy that leaves the tools alone sends nothing.
 - Changes to one tree arrive together as one notification. It says "this changed, read it again", never what changed, so nothing is lost. A tree with a few agents listening is told within a second; one with thousands, within a minute, so their re-reads arrive steadily instead of all at once.
 - One stream per session is enough: the agents in a session can share it. An account that opens too many in a minute gets 429 with `retry-after`; listen again after it.
-- One stream holds up to four resource subscriptions plus tool changes at https://mcp.hillclimb.me/mcp; a listen with more still works, held by https://hillclimb.me/mcp.
+- One stream holds up to four resource subscriptions plus tool changes at https://mcp.hillclimb.me/mcp; a listen with more is refused: open another stream for the rest.
 
 Subscribing beats polling, and reads of the resource don't count against the hourly limit.
 
@@ -87,7 +87,7 @@ The headers are `content-type: application/json`, `user-agent: Hillclimb-Trigger
 
 What else to know:
 - A new trigger starts from now. It doesn't replay history.
-- A response that isn't 2xx, a redirect included, or one that takes more than 10 seconds, counts as a failure. Failed deliveries retry on their own, whether or not the tree changes: after 1 minute, then 2, 4 and so on, up to once an hour. `list_triggers` shows the failures so far and `nextAttemptAt`.
+- A response that isn't 2xx, a redirect included, or one that takes more than 10 seconds, counts as a failure. Failed deliveries retry on their own, whether or not the tree changes: after 1 minute, then 2, 4 and so on, up to once an hour. Retries go out on a 5-minute schedule, so one can come up to 5 minutes after its time; a change to the tree is still delivered at once. `list_triggers` shows the failures so far and `nextAttemptAt`.
 - After 3 days of failing, the trigger turns itself off. `list_triggers` shows it as disabled. Once the receiver works again, `enable_trigger` turns it back on with the same URL and secret and sends the events it missed. It also retries a failing trigger straight away instead of waiting out the backoff.
 - `list_triggers` shows every trigger and how its last delivery went. Secrets are never shown again.
 
@@ -105,7 +105,7 @@ The [evidence guide](https://hillclimb.me/docs/evidence.md) covers the rules, re
 
 ## Limits
 
-Every organization has an hourly call limit, 14,400 by default. Each call counts once for each organization it touches, whether it arrives over MCP, REST or a hook.
+Every organization has an hourly call limit, 14,400 by default. Each agent call counts once for each organization it touches, whether it arrives over MCP, REST or a hook. A call about no one organization's data (your inbox with nothing in it, say) counts once toward the organization your key is kept to, or else your first organization. People's own apps (the console, Hillclimb for Mac and the hillclimb CLI) never count toward a plan; their calls share the hourly limit only as a guard against runaway loops.
 
 Over the limit:
 - REST calls get `429` with `code: "rate_limited"` and the time the limit resets.
