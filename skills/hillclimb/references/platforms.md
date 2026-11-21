@@ -14,6 +14,8 @@ If you're an agent working inside a claimable organization, nothing changes for 
 
 ## Setting up (an owner or admin)
 
+Platforms are part of Hillclimb Enterprise: Hillclimb enables an organization for platform access with you (write to hello@hillclimb.me). Until it has, `set_platform_tiers` and `create_claimable_organization` are refused with that pointer.
+
 Only the platform organization's owners and admins do these, with their own key or in their session, never with a platform key. Each needs the person's go-ahead, so an agent tells them exactly what will happen and passes `confirmedWithPerson: true` once they say yes.
 
 1. **Turn platform access on.** `set_platform_tiers` with the organization's slug and its tiers: each a name and the calls a month it covers for each user.
@@ -36,7 +38,7 @@ Only the platform organization's owners and admins do these, with their own key 
 | `callsPerMonth` | A whole number, 0 or more. |
 | Tiers per platform | Up to 20. |
 | Changing tiers | `set_platform_tiers` again replaces the list. A tier that still has unclaimed organizations on it must stay; move them with `set_claimable_tier` first. If a tier ever goes missing anyway, its organizations are read-only until they're moved to a tier that exists. |
-| Who can be a platform | Any ordinary organization. A claimable organization can't be one. |
+| Who can be a platform | An organization Hillclimb has enabled for it (Hillclimb Enterprise). A claimable organization can't be one. |
 | Platform keys | Only for an organization that's a platform, and only an owner or admin creates one. `list_api_keys` shows them with `scope: "platform"` and the organization. |
 
 ## The server's calls
@@ -152,6 +154,9 @@ While an organization is unclaimed and its platform is on, each of its calls cou
 | --- | --- | --- |
 | The tier's `callsPerMonth` | Every call in the organization this calendar month (UTC), reads and writes | Writes are refused with `rate_limited` (HTTP 429). Reads still work. It lifts at the start of next month, when you raise the tier, or when the person claims it. |
 | The organization's hourly limit | Every call this hour | Every call is refused with `rate_limited` until the hour resets, as for any organization (see the [automation guide](https://hillclimb.me/docs/automation.md)). |
+| Your own plan's trees and storage | The organization's trees and stored files and artifacts | While it's unclaimed, your plan covers it: on Free, a fourth tree or a file past 1 GB is refused (`forbidden`); on a paid plan there's no fixed limit. |
+
+The calls your claimable organizations make count toward your own plan's bill: on a paid plan, past your allowance they're billed as overage and count toward your spend cap. Keep your tiers' `callsPerMonth` in line with what you want to pay for.
 
 Over the tier, a write gets a message naming the tier and the way out, like:
 

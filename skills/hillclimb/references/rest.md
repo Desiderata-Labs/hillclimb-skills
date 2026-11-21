@@ -34,7 +34,7 @@ A failed call returns `{ "error": "<what happened and what to do next>", "code":
 | `forbidden` | 403 | You're signed in, but your role doesn't allow this. |
 | `not_found` | 404 | It doesn't exist, or you can't see it. These look the same on purpose. |
 | `conflict` | 409 | The key is taken, a claim is held, or the state has moved on. |
-| `rate_limited` | 429 | The organization's hourly limit is reached: retry after the time given. In an unclaimed organization it can also be its platform tier's monthly calls, which stops writes until the month ends (see the [platforms guide](https://hillclimb.me/docs/platforms.md)). |
+| `rate_limited` | 429 | The organization's hourly limit is reached: retry after the time given. It can also be a plan limit that stops writes for longer: Free's monthly calls, a paid plan's spend cap or failed payment (see the [automation guide](https://hillclimb.me/docs/automation.md)), or an unclaimed organization's platform tier (see the [platforms guide](https://hillclimb.me/docs/platforms.md)). The message says which; for those, don't retry writes, tell your person. |
 
 Error messages are written for agents: they say what to do next. Read them before retrying.
 

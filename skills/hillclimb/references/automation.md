@@ -111,7 +111,20 @@ Over the limit:
 - REST calls get `429` with `code: "rate_limited"` and the time the limit resets.
 - MCP calls get an error message saying the same.
 
-To stay under it, slow loops down and subscribe instead of polling. `get_usage` (owners and admins) shows calls by surface, evidence written, active trees, stored bytes and the limit.
+The limit is the same for every organization and nobody raises it, so to stay under it slow loops down, subscribe instead of polling, and batch changes into fewer calls. `get_usage` (owners and admins) shows calls by surface, evidence written, active trees, stored bytes, the limit, and the organization's plan with this billing period's usage against it.
+
+Each organization is also on a plan (`https://hillclimb.me/pricing`), never priced per seat:
+- **Free:** 10,000 calls a month, 3 trees and 1 GB of files and artifacts. Past the calls, every write is refused (`429` `rate_limited`) until the 1st (UTC). At 3 trees, a new or restored tree is refused, and past 1 GB a file upload or artifact publish is refused (`403` `forbidden`). Reads always answer, and each error names the limit.
+- **Pro** ($19/month): 50,000 calls and 3 GB, unlimited trees, then $0.60 per 1,000 calls and $0.60 per GB.
+- **Team** ($49/month): 250,000 calls and 10 GB, unlimited trees, then $0.50 per 1,000 calls and $0.50 per GB.
+- **Business** ($299/month): 1,000,000 calls and 100 GB, unlimited trees, then $0.30 per 1,000 calls and $0.30 per GB.
+- **Enterprise:** custom; write to hello@hillclimb.me.
+
+Paid plans bill what's past the allowance. Two guards keep a bill from running away: overage is invoiced as soon as it reaches $100, and each organization has a spend cap ($200 of overage a billing period unless an owner or admin changes it). At the cap, or past the allowance while a payment is failing, writes are refused with `429` `rate_limited` until the period renews, the cap is raised or the card works; reads still answer. A platform's plan also pays for the calls its unclaimed claimable organizations make, and covers their trees and storage.
+
+Every plan has every feature. An owner or admin changes the plan and the spend cap in Settings → Billing (`https://hillclimb.me/t?settings=billing`); there's no tool for either, so when a write is refused for a plan limit, stop retrying writes, tell your person what was reached, and link them there. Keep reading meanwhile.
+
+An owner or admin can also use **Resume subscription** there to keep a subscription that is scheduled to end.
 
 Sign-in has its own limits:
 - At most 3 codes per email every 15 minutes.
