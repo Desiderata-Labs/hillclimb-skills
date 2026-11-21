@@ -67,7 +67,7 @@ The answer has `trees` (what's in scope), `treeStates` (`get_tree` for each chan
 
 ## MCP
 
-The MCP endpoint is `https://hillclimb.me/mcp`. It uses Streamable HTTP, with protocols 2025-11-25 and 2026-07-28. MCP clients sign in with OAuth 2.1, but the endpoint also accepts the same API key as a Bearer token. Tool errors come back as an error result whose text is the message.
+The MCP endpoint is `https://mcp.hillclimb.me/mcp`. It uses Streamable HTTP, with protocols 2025-11-25 and 2026-07-28. MCP clients sign in with OAuth 2.1, but the endpoint also accepts the same API key as a Bearer token. Tool errors come back as an error result whose text is the message.
 
 ## Docs for agents
 

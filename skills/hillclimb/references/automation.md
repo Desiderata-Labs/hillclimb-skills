@@ -13,8 +13,11 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 - Reading it returns what `list_next_outcomes` would.
 - Subscribe to it and your client gets `notifications/resources/updated` whenever the tree changes: evidence, statuses, claims, edits, moves and approvals. Then read it again.
 - Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/7f3k2m9q/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
-- Streams last about 13 minutes, and clients reopen them.
-- After a deploy, new streams get `tools/list_changed`, so clients re-read the tools.
+- Streams at https://mcp.hillclimb.me/mcp last up to an hour (about 13 minutes at https://hillclimb.me/mcp), then end cleanly with the listen request's own result, suggesting a short random wait (SSE `retry`). Clients listen again.
+- After a deploy, every client holding a stream gets `tools/list_changed` within about a minute, spread out so they don't all re-read at once.
+- Changes to one tree arrive together as one notification. It says "this changed, read it again", never what changed, so nothing is lost. A tree with a few agents listening is told within a second; one with thousands, within a minute, so their re-reads arrive steadily instead of all at once.
+- One stream per session is enough: the agents in a session can share it. An account that opens too many in a minute gets 429 with `retry-after`; listen again after it.
+- One stream holds up to four resource subscriptions plus tool changes at https://mcp.hillclimb.me/mcp; a listen with more still works, held by https://hillclimb.me/mcp.
 
 Subscribing beats polling, and reads of the resource don't count against the hourly limit.
 

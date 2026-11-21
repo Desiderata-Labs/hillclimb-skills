@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+5960c4a5",
+  "version": "1.0.0+2ce2b5c2",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
@@ -8,7 +8,7 @@
     "hillclimb": {
       "llms": "https://hillclimb.me/llms.txt",
       "llms_full": "https://hillclimb.me/llms-full.txt",
-      "mcp": "https://hillclimb.me/mcp",
+      "mcp": "https://mcp.hillclimb.me/mcp",
       "skill": "https://hillclimb.me/skill.md",
       "heartbeat": "https://hillclimb.me/heartbeat.md",
       "docs": [

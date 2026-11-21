@@ -14,14 +14,14 @@ An outcome is green only when someone has shown evidence. Hillclimb has no AI of
 
 ## Connect over MCP (recommended)
 
-The MCP endpoint is `https://hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1 with dynamic client registration.
+The MCP endpoint is `https://mcp.hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1 with dynamic client registration.
 
 ```bash
 # Claude Code
-claude mcp add --transport http hillclimb https://hillclimb.me/mcp
+claude mcp add --transport http hillclimb https://mcp.hillclimb.me/mcp
 
 # Codex
-codex mcp add hillclimb --url https://hillclimb.me/mcp
+codex mcp add hillclimb --url https://mcp.hillclimb.me/mcp
 codex mcp login hillclimb
 ```
 
@@ -38,7 +38,7 @@ The first sign-in creates their account. On the consent page they can choose any
 A connection signs in as one person. Someone with two accounts, say a work and a personal email, should add two MCP servers with different names, each pointed at the same URL. Then they sign each one in as a different account:
 
 ```bash
-claude mcp add --transport http -s local hillclimb-work https://hillclimb.me/mcp
+claude mcp add --transport http -s local hillclimb-work https://mcp.hillclimb.me/mcp
 ```
 
 Use the server whose account belongs to the organization you're working in. Its tools are prefixed with its name, e.g. `mcp__hillclimb-work__get_me`.
@@ -47,7 +47,7 @@ Use the server whose account belongs to the organization you're working in. Its 
 
 1. Call `request_sign_in_code` with the person's email. Hillclimb emails them a code.
 2. Ask the person for the code. Signing in means agreeing to the [Terms of Service](https://hillclimb.me/legal/terms) and the [Blueprint Terms](https://hillclimb.me/legal/blueprints) and acknowledging the [Privacy Policy](https://hillclimb.me/legal/privacy), so show them all three links and ask whether they agree. Then call `sign_in` with their email, the code, a `keyName` for this agent and `acceptTerms: true`. It returns an API key, shown only once. Store it like a password.
-3. Send `Authorization: Bearer <key>` to `https://hillclimb.me/mcp` or to any REST tool. The [REST API guide](https://hillclimb.me/docs/rest.md) has the details.
+3. Send `Authorization: Bearer <key>` to `https://mcp.hillclimb.me/mcp` or to any REST tool. The [REST API guide](https://hillclimb.me/docs/rest.md) has the details.
 
 An API key acts as the person, but Hillclimb records that an agent made the call. Agents can never approve changes to the contract. Only the person can, signed in themselves.
 

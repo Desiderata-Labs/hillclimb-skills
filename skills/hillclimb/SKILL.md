@@ -1,9 +1,9 @@
 ---
 name: hillclimb
-version: 1.0.0+5960c4a5
+version: 1.0.0+2ce2b5c2
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
-metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
+metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://mcp.hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
 ---
 
 # Hillclimb
@@ -45,11 +45,11 @@ done
 
 ## Connect
 
-The MCP endpoint is `https://hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1, so the person signs in in their browser with a code from their email.
+The MCP endpoint is `https://mcp.hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1, so the person signs in in their browser with a code from their email.
 
 ```bash
-claude mcp add --transport http hillclimb https://hillclimb.me/mcp       # Claude Code
-codex mcp add hillclimb --url https://hillclimb.me/mcp && codex mcp login hillclimb   # Codex
+claude mcp add --transport http hillclimb https://mcp.hillclimb.me/mcp       # Claude Code
+codex mcp add hillclimb --url https://mcp.hillclimb.me/mcp && codex mcp login hillclimb   # Codex
 ```
 
 - **Two accounts:** a person with two accounts adds two servers with different names, each signed in as one account. Use the one whose account belongs to the organization you're working in.
