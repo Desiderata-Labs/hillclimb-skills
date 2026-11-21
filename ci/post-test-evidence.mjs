@@ -60,7 +60,10 @@ export function summarize(report, runUrl, prefixes = prefixesFrom(process.env.HI
   }))
 }
 
-/** The hook's answer when a key names no outcome it can find: worth a warning, not a failed step. */
+/**
+ * The hook's answer when a key names no outcome it can find, or one that's been archived (usually
+ * folded into another outcome): worth a warning naming the test to rename, not a failed step.
+ */
 export function isUnknownOutcome(status, body) {
   let message = body
   try {
@@ -68,7 +71,7 @@ export function isUnknownOutcome(status, body) {
   } catch {
     // Not JSON: match the raw text.
   }
-  return status === 409 && /No outcome "[^"]+" that you can access/.test(message)
+  return status === 409 && /No outcome "[^"]+" that you can access|is archived or under an archived goal/.test(message)
 }
 
 async function main() {
@@ -88,7 +91,7 @@ async function main() {
     const res = await fetch(hook, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(event) })
     const body = await res.text()
     if (!res.ok && isUnknownOutcome(res.status, body)) {
-      console.log(`${event.outcomes[0]}: skipped, no such outcome in the tree (set HILLCLIMB_KEY_PREFIXES to ignore words like it)`)
+      console.log(`${event.outcomes[0]}: skipped, no live outcome in the tree with that key; if it was archived, name the outcome that replaced it in the test (or set HILLCLIMB_KEY_PREFIXES to ignore words like it)`)
       continue
     }
     console.log(`${event.outcomes[0]}: ${event.title.slice(0, 80)} → ${res.status} ${body.slice(0, 200)}`)

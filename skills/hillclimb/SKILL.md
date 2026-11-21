@@ -1,9 +1,9 @@
 ---
 name: hillclimb
-version: 1.0.0+cfccae15
+version: 1.0.0+8a98fd88
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
-metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://mcp.hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
+metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://api.hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
 ---
 
 # Hillclimb
@@ -45,17 +45,17 @@ done
 
 ## Connect
 
-The MCP endpoint is `https://mcp.hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1, so the person signs in in their browser with a code from their email.
+The MCP endpoint is `https://api.hillclimb.me/mcp`. It uses Streamable HTTP and OAuth 2.1, so the person signs in in their browser with a code from their email.
 
 ```bash
-claude mcp add --transport http hillclimb https://mcp.hillclimb.me/mcp       # Claude Code
-codex mcp add hillclimb --url https://mcp.hillclimb.me/mcp && codex mcp login hillclimb   # Codex
+claude mcp add --transport http hillclimb https://api.hillclimb.me/mcp       # Claude Code
+codex mcp add hillclimb --url https://api.hillclimb.me/mcp && codex mcp login hillclimb   # Codex
 ```
 
 - **Two accounts:** a person with two accounts adds two servers with different names, each signed in as one account. Use the one whose account belongs to the organization you're working in.
 - **No browser:** call `request_sign_in_code`, then `sign_in` with `acceptTerms: true` once the person agrees to the [Terms](https://hillclimb.me/legal/terms) and [Blueprint Terms](https://hillclimb.me/legal/blueprints) and acknowledges the [Privacy Policy](https://hillclimb.me/legal/privacy), to get an API key (shown once), and send it as `Authorization: Bearer <key>`. See [getting started](https://hillclimb.me/docs/getting-started.md).
 
-**Security:** send a Hillclimb key only to `https://hillclimb.me`. A key acts as the person.
+**Security:** send a Hillclimb key only to `https://api.hillclimb.me` or `https://hillclimb.me`. A key acts as the person.
 
 ## Start
 
@@ -134,7 +134,7 @@ The tree defines how the product behaves. It is not a ticket queue. Before `crea
 
 Asked to review or lint a tree? Follow [writing](https://hillclimb.me/docs/writing.md): flag each problem with its check code, propose the rewrite beside the current text, and apply only the rows your person accepts.
 
-Read [best practices](https://hillclimb.me/docs/practices.md), [shaping](https://hillclimb.me/docs/shaping.md) and [writing](https://hillclimb.me/docs/writing.md) before proposing a tree. You can show the person a draft with `POST https://hillclimb.me/api/v1/visualize` before creating anything.
+Read [best practices](https://hillclimb.me/docs/practices.md), [shaping](https://hillclimb.me/docs/shaping.md) and [writing](https://hillclimb.me/docs/writing.md) before proposing a tree. You can show the person a draft with `POST https://api.hillclimb.me/api/v1/visualize` before creating anything.
 
 ## Stay in sync
 

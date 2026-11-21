@@ -13,11 +13,11 @@ hillclimb://trees/{org-slug}/{tree-key}/next
 - Reading it returns what `list_next_outcomes` would.
 - Subscribe to it and your client gets `notifications/resources/updated` whenever the tree changes: evidence, statuses, claims, edits, moves and approvals. Then read it again.
 - Use the full `org-slug/tree-key` form, e.g. `hillclimb://trees/acme/7f3k2m9q/next`. Notifications are sent only to that exact URI, so a subscription to any other spelling (a bare tree key, say) is refused with the URI to use.
-- Streams at https://mcp.hillclimb.me/mcp last up to an hour, then end cleanly with the listen request's own result, suggesting a short random wait (SSE `retry`). Clients listen again. https://hillclimb.me/mcp holds no streams: a listen there is refused with the address to use.
+- Streams at https://api.hillclimb.me/mcp last up to an hour, then end cleanly with the listen request's own result, suggesting a short random wait (SSE `retry`). Clients listen again.
 - After a deploy that changes the tools, every client holding a stream gets `tools/list_changed` within about a minute, spread out so they don't all re-read at once. A deploy that leaves the tools alone sends nothing.
 - Changes to one tree arrive together as one notification. It says "this changed, read it again", never what changed, so nothing is lost. A tree with a few agents listening is told within a second; one with thousands, within a minute, so their re-reads arrive steadily instead of all at once.
 - One stream per session is enough: the agents in a session can share it. An account that opens too many in a minute gets 429 with `retry-after`; listen again after it.
-- One stream holds up to four resource subscriptions plus tool changes at https://mcp.hillclimb.me/mcp; a listen with more is refused: open another stream for the rest.
+- One stream holds up to four resource subscriptions plus tool changes at https://api.hillclimb.me/mcp; a listen with more is refused: open another stream for the rest.
 
 Subscribing beats polling, and reads of the resource don't count against the hourly limit.
 
@@ -93,7 +93,7 @@ What else to know:
 
 ## Turn other systems' signals into evidence (inbound triggers)
 
-`create_trigger` with `direction: "inbound"` returns a secret URL, `https://hillclimb.me/api/v1/hooks/hct_…`. Anything POSTed to it becomes evidence on outcomes, following `rules`. Typical sources are CI results, monitoring alerts and customer feedback.
+`create_trigger` with `direction: "inbound"` returns a secret URL, `https://api.hillclimb.me/api/v1/hooks/hct_…`. Anything POSTed to it becomes evidence on outcomes, following `rules`. Typical sources are CI results, monitoring alerts and customer feedback.
 
 - It acts as the person who created it, recorded as `via "trigger:<name>"`.
 - It only adds evidence, unless you set `canSetStatus: true`. Then a confirms sets verified and a denies sets failing.

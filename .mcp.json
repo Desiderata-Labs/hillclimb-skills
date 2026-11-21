@@ -2,7 +2,7 @@
   "mcpServers": {
     "hillclimb": {
       "type": "http",
-      "url": "https://mcp.hillclimb.me/mcp"
+      "url": "https://api.hillclimb.me/mcp"
     }
   }
 }

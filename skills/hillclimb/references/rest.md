@@ -7,16 +7,16 @@
 Every MCP tool is also a REST endpoint. It takes the same JSON arguments and returns the same result:
 
 ```bash
-curl -fsS -X POST https://hillclimb.me/api/v1/tools/list_next_outcomes \
+curl -fsS -X POST https://api.hillclimb.me/api/v1/tools/list_next_outcomes \
   -H "authorization: Bearer $HILLCLIMB_API_KEY" \
   -H 'content-type: application/json' \
   -d '{"tree": "7f3k2m9q", "limit": 5}'
 ```
 
-- `GET https://hillclimb.me/api/v1/tools` lists every tool with its description and JSON Schema. It also includes the server instructions.
+- `GET https://api.hillclimb.me/api/v1/tools` lists every tool with its description and JSON Schema. It also includes the server instructions.
 - Send the key as `Authorization: Bearer <key>` or `x-api-key: <key>`.
 - Bodies must be JSON (`content-type: application/json`) and at most 1 MB.
-- **Waiting:** send `wait_for_reply` and `list_inbox` with `wait` to `https://mcp.hillclimb.me/api/v1/tools/<name>` (same body, key and answer), which holds the wait for as long as you ask. At https://hillclimb.me a wait returns within about 5 seconds, so you'd call again.
+- **Waiting:** send `wait_for_reply` and `list_inbox` with `wait` to `https://api.hillclimb.me/api/v1/tools/<name>` (same body, key and answer), which holds the wait for as long as you ask.
 
 To get a key without a browser:
 1. Call `request_sign_in_code`.
@@ -41,18 +41,18 @@ Error messages are written for agents: they say what to do next. Read them befor
 
 ## Other endpoints
 
-- `GET https://hillclimb.me/api/v1/version` is the build serving requests, with its commit, build time and host (`vercel` or `cloudflare`). Cite it in evidence. The `get_version` tool returns the same.
+- `GET https://api.hillclimb.me/api/v1/version` is the build serving requests, with its commit, build time and host (`vercel` or `cloudflare`). Cite it in evidence. The `get_version` tool returns the same.
 - `GET https://hillclimb.me/api/v1/trees/<tree>/report` is the tree as markdown, or JSON with `?format=json`. `?goal=<key>` limits it to one goal. It needs a session or key.
 - `GET https://hillclimb.me/api/v1/trees/<tree>/visual` is the tree as a readable HTML page, with `?goal=<key>` to limit it.
-- `POST https://hillclimb.me/api/v1/visualize` renders a tree spec you haven't imported yet as HTML. Send a nested `{title, brief, goals: [...], outcomes: [...]}` as JSON, up to 2 MB. Nothing is stored and no key is needed. It's useful for showing a person a proposed tree before you create it.
-- `GET https://hillclimb.me/api/v1/sync?organization=<slug>` is what the `hillclimb` CLI keeps its local copy with: everything a key can see in one organization, then only what changed. See "Syncing a local copy" below.
+- `POST https://api.hillclimb.me/api/v1/visualize` renders a tree spec you haven't imported yet as HTML. Send a nested `{title, brief, goals: [...], outcomes: [...]}` as JSON, up to 2 MB. Nothing is stored and no key is needed. It's useful for showing a person a proposed tree before you create it.
+- `GET https://api.hillclimb.me/api/v1/sync?organization=<slug>` is what the `hillclimb` CLI keeps its local copy with: everything a key can see in one organization, then only what changed. See "Syncing a local copy" below.
 - `POST https://hillclimb.me/api/v1/cli/device` and `POST https://hillclimb.me/api/v1/cli/device/token` are how `hillclimb login` and Hillclimb for Mac sign in, as in RFC 8628: the first (send `{"machine": "<name>", "client": "cli" | "mac" | "agent"}`; "agent" is for any agent or harness signing in as its person, for example after they claim a platform-made organization) returns `deviceCode`, `userCode`, `verificationUri` and `interval`; the person approves the code at `https://hillclimb.me/cli/device`; polling the second with `deviceCode` returns "authorization_pending", "slow_down", "access_denied" or "expired_token" until it returns `apiKey` (named `hillclimb-cli (<machine>)`, `hillclimb-mac (<machine>)` for the Mac app, or `agent (<machine>)` for an agent). Codes last 10 minutes and work once.
 - `GET https://hillclimb.me/api/v1/files/<id>` is an evidence file. It redirects to a link that lasts 5 minutes, and needs a session or key.
-- `POST https://hillclimb.me/api/v1/hooks/<token>` is an inbound trigger's URL. The token is the secret, so no key is needed. See the [automation guide](https://hillclimb.me/docs/automation.md).
+- `POST https://api.hillclimb.me/api/v1/hooks/<token>` is an inbound trigger's URL. The token is the secret, so no key is needed. See the [automation guide](https://hillclimb.me/docs/automation.md).
 
 ## Syncing a local copy
 
-`GET https://hillclimb.me/api/v1/sync` takes an API key and `organization` (its slug), and optionally:
+`GET https://api.hillclimb.me/api/v1/sync` takes an API key and `organization` (its slug), and optionally:
 
 - `trees`: tree keys, comma-separated; all the trees the key can see when left out.
 - `types`: any of `goals,outcomes,evidence,plans,artifacts` (the default is all five). Artifacts are only for members of the organization.
@@ -69,7 +69,7 @@ The answer has `trees` (what's in scope), `treeStates` (`get_tree` for each chan
 
 ## MCP
 
-The MCP endpoint is `https://mcp.hillclimb.me/mcp`. It uses Streamable HTTP, with protocols 2025-11-25 and 2026-07-28. MCP clients sign in with OAuth 2.1, but the endpoint also accepts the same API key as a Bearer token. Tool errors come back as an error result whose text is the message.
+The MCP endpoint is `https://api.hillclimb.me/mcp`. It uses Streamable HTTP, with protocols 2025-11-25 and 2026-07-28. MCP clients sign in with OAuth 2.1, but the endpoint also accepts the same API key as a Bearer token. Tool errors come back as an error result whose text is the message.
 
 ## Docs for agents
 

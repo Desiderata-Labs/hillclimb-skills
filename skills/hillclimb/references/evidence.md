@@ -90,7 +90,7 @@ create_trigger {
 }
 ```
 
-It returns a URL like `https://hillclimb.me/api/v1/hooks/hct_…`, shown only once. Save it as the repository secret `HILLCLIMB_HOOK_URL`.
+It returns a URL like `https://api.hillclimb.me/api/v1/hooks/hct_…`, shown only once. Save it as the repository secret `HILLCLIMB_HOOK_URL`.
 
 Name the outcome each test covers in the test's title, for example `it('HC-12: marks a verified outcome broken when denying evidence arrives', …)`. Then post the results after the tests run:
 
@@ -139,7 +139,7 @@ What the hook answers:
 Use this when CI needs to call any tool. Create a key named after the job, such as `github-ci`, at https://hillclimb.me/keys or with `create_api_key`. Store it as `HILLCLIMB_API_KEY`.
 
 ```bash
-curl -fsS -X POST https://hillclimb.me/api/v1/tools/add_evidence \
+curl -fsS -X POST https://api.hillclimb.me/api/v1/tools/add_evidence \
   -H "authorization: Bearer $HILLCLIMB_API_KEY" -H 'content-type: application/json' \
   -d '{"tree": "7f3k2m9q", "outcome": "HC-16", "verdict": "confirms", "kind": "ci",
        "summary": "Deploy smoke test passed",
