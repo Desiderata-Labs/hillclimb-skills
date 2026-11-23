@@ -1,6 +1,6 @@
 ---
 name: hillclimb
-version: 1.0.0+8a98fd88
+version: 1.0.0+bcab1cf4
 description: Work from a Hillclimb tree, the ranked goals and checkable outcomes that say what a business and its software must do next. Use when the person mentions Hillclimb, outcomes, a goal tree, "climbing", next work, verifying or proving work with evidence, or when a repository's AGENTS.md says to pick work from Hillclimb.
 homepage: https://hillclimb.me
 metadata: {"hillclimb": {"llms": "https://hillclimb.me/llms.txt", "mcp": "https://api.hillclimb.me/mcp", "heartbeat": "https://hillclimb.me/heartbeat.md", "repo": "https://github.com/Desiderata-Labs/hillclimb-skills"}}
@@ -69,7 +69,7 @@ codex mcp add hillclimb --url https://api.hillclimb.me/mcp && codex mcp login hi
 1. **Pick.** Call `list_next_outcomes`, filtered with `tags` (e.g. the service you're in, like `["console"]`), `goal` or `assignedTo: "me"` where it helps. Take the top item. The `reason` tells you why it's there: failing, broken, stale or unverified, or recheck (verified, but its confirming evidence is older than its `recheckEvery` days: check it again and add "confirms" evidence; it stays verified meanwhile).
 2. **Claim.** Call `claim_outcome` with your own `agent` name. A claim lasts the organization's claim length (5 days by default; owners can pick 4h, 12h, 1d, 5d or never). Claim again to renew, and release it when you stop.
 3. **Read.** Call `get_outcome` and read the story, every criterion, the recent evidence, and **the brief of every goal above it**. The root brief carries the non-negotiables.
-4. **Plan** non-trivial work: `write_plan` on the outcome, then address review with `list_comments`, `revise_plan` (full `text` or small `edits`, with `baseVersion`) and `resolve_comment`. A new plan supersedes the item's earlier one on its own. Plans have no approval: if you need your person's sign-off, ask a question on the plan with `add_comment`. If a plan is already there, read it with `get_plan`, with any decisions on it.
+4. **Plan** non-trivial work: `write_plan` on the outcome, then address review with `list_comments`, `revise_plan` (full `text` or small `edits`, with `baseVersion`) and `resolve_comment`. An item can have several live plans; a new plan replaces only the ones you name in `supersedes`. Plans have no approval: if you need your person's sign-off, ask a question on the plan with `add_comment`. If a plan is already there, read it with `get_plan`, with any decisions on it.
 5. **Work.** Do the work wherever it lives, scoped to that outcome. When a decision isn't yours, or your work overlaps an outcome someone else holds, ask in a comment: `add_comment` on the outcome with `to` (a person by email, `"agent"` for the agent working on that outcome, `"me"` for your person) and `options` or `needsReply`. When it isn't about one item, use a direct thread (`targetType: "organization"`, `"agents:<email>"` for someone's agents, `"agent:<name>"` for another of your own) rather than posting on a goal. Keep going on what doesn't depend on it; the reply arrives in the `inbox` field of your tool results. If you can't go on without it, `wait_for_reply` on the thread returns within seconds of a reply; a timeout isn't an answer, so call it again with the `cursor`.
 6. **Check every criterion for real.** Run the tests, use the app, look at production after the deploy.
 7. **Record.** Call `add_evidence` with the exact commands, output, links and files. Then call `set_outcome_status`:
@@ -88,6 +88,8 @@ Is your team focused on a release? `list_next_outcomes` with `assignedTo: "team:
 Asked for a standup, or what you or the team got done? `get_insights` with `person: "me"` and the window they ask about (24h, 7d, 30d, or from/to, in their `tz`) gives outcomes closed, evidence, what they hold now and the questions waiting; `list_insight_items` lists the outcomes behind each number. Link each outcome by its `url`.
 
 Asked for a report, spec, deck or page? Publish it with `publish_artifact` (markdown first, with a `folder` and an `asOf` date; keep the `key` it returns, which adds versions) and give the person its `url`. Read the artifacts guide first.
+
+Changing a screen, page or slide people use? `list_flows` (with the `outcome` or `goal` you're working on) finds the flows that show it, and `get_flow` gives each step's approved frame, an image or an HTML mock: look at them and match your change to them. Read the flows guide first.
 
 Working on a rewrite? If the tree has **tracks** (`get_tree` lists them), pass `track` to `list_next_outcomes`, `claim_outcome`, `add_evidence`, `set_outcome_status` and `release_outcome`: the new implementation is proved on its track without touching what's live. Read the tracks guide first.
 
@@ -170,6 +172,7 @@ Read these when you need depth. Over MCP, `read_doc` returns the same text.
 | Plans | `https://hillclimb.me/docs/plans.md` | `references/plans.md` |
 | Releases and roadmaps | `https://hillclimb.me/docs/roadmaps.md` | `references/roadmaps.md` |
 | Artifacts: reports, specs and pages | `https://hillclimb.me/docs/artifacts.md` | `references/artifacts.md` |
+| Flows | `https://hillclimb.me/docs/flows.md` | `references/flows.md` |
 | Rewrites and tracks | `https://hillclimb.me/docs/tracks.md` | `references/tracks.md` |
 | Comments and your inbox | `https://hillclimb.me/docs/comments.md` | `references/comments.md` |
 | People, roles and sharing | `https://hillclimb.me/docs/people.md` | `references/people.md` |

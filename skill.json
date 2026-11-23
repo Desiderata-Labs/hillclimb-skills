@@ -1,6 +1,6 @@
 {
   "name": "hillclimb",
-  "version": "1.0.0+8a98fd88",
+  "version": "1.0.0+bcab1cf4",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence.",
   "homepage": "https://hillclimb.me",
   "repository": "https://github.com/Desiderata-Labs/hillclimb-skills",
@@ -56,6 +56,11 @@
           "id": "artifacts",
           "title": "Artifacts: reports, specs and pages",
           "url": "https://hillclimb.me/docs/artifacts.md"
+        },
+        {
+          "id": "flows",
+          "title": "Flows",
+          "url": "https://hillclimb.me/docs/flows.md"
         },
         {
           "id": "tracks",

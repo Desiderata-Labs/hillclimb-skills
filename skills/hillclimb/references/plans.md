@@ -18,9 +18,9 @@ Plans are working notes, not requests for approval. People read them and comment
 - risks, and what you'll do if one happens;
 - how you'll check each criterion, and where (locally, in production).
 
-It starts at version 1 with status `active`: the plan in play. Pass `status: "draft"` while you're still writing.
+It starts at version 1 with status `active`. Pass `status: "draft"` while you're still writing.
 
-An item has one active plan. When you write a new active plan on an outcome or goal that already has one, the earlier plan is marked `superseded` on its own and stays readable with its whole history; the result lists it under `superseded`. Rewrite the plan when the approach changes, or revise it (below) when it's the same approach with changes.
+An outcome or goal can carry several live plans at once: a goal often has a design plan beside a plan for each workstream, and an outcome with many criteria can have one plan per part. Writing a plan supersedes nothing on its own. When your plan replaces earlier ones on the same item, name their ids in `supersedes`: those are marked `superseded` and stay readable with their whole history, the result lists them under `superseded`, and every other plan stays live. The result lists the item's other live plans under `otherPlans`, so check whether yours replaces any of them. Write a new plan when the approach changes, or revise the plan (below) when it's the same approach with changes.
 
 ## Who can do what
 
@@ -45,7 +45,7 @@ Pass the version you read as `baseVersion`. If someone revised the plan since, t
 
 ## Reading and history
 
-- `get_plan` with `plan` (an id), or with `outcome` or `goal` for the plan in play there: the latest one that isn't superseded. Others are listed in `otherPlans`.
+- `get_plan` with `plan` (an id), or with `outcome` or `goal` for the latest live plan there. The item's other live plans are listed in `otherPlans`.
 - It returns `status`, `version`, `statusHistory` (every status change: from, to, version, who, via, when, and `supersededBy` when a newer plan replaced it; approvals from before plans stopped being approved show here too), and every revision oldest first: version, `full` or `patch`, summary, who, via which agent, and when. A patch's edits show inline when they're small (up to 2,000 characters); larger ones show `editCount`, and `revision: N` returns that revision's edits in full.
 - The text comes a page at a time, so a long plan never floods your context: up to 800 lines (or about 40,000 characters), with `lines` (`from`, `to`, `total`) and `nextOffset`. A plan that doesn't fit in one page also returns an `outline`: each heading with its line number. Pass `offset` (and `limit`, up to 5,000 lines) to read on, or to jump straight to the section you need. A plan that fits in one page comes back whole, exactly as written.
 - `version` returns the text as it stood then, paged the same way.
@@ -57,11 +57,11 @@ Pass the version you read as `baseVersion`. If someone revised the plan since, t
 
 | status | meaning |
 | --- | --- |
-| `draft` | Still being written. It supersedes nothing. |
-| `active` | The plan in play on its outcome or goal. There's one per item. |
-| `superseded` | Replaced by a newer plan, or abandoned. |
+| `draft` | Still being written. It can't supersede anything. |
+| `active` | Live on its outcome or goal. An item can have several. |
+| `superseded` | Replaced by a plan that named it in `supersedes`, or abandoned. |
 
-Plans have no approval. `set_plan_status` moves a plan between these three, which you rarely need: writing a new plan supersedes the old one, and making a draft `active` does the same. Mark a plan `superseded` yourself when you abandon it without a replacement.
+Plans have no approval. `set_plan_status` moves a plan between these three. Making a draft `active` supersedes nothing unless you pass `supersedes` with the plans it replaces. Mark a plan `superseded` yourself when you abandon it, or when a plan you already wrote replaces it.
 
 ## When you need a person's sign-off
 

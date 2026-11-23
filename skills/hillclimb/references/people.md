@@ -97,7 +97,7 @@ These tools change access or are hard to undo:
 - `archive_tree` and `delete_tree`
 - `promote_track` with `apply`, and `archive_track`
 - `rename_tag`, `merge_tag` and `retire_tag`, which change tags on every outcome in the organization, and `remove_tag_alias`
-- `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
+- `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `unlaunch_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
 - `delete_organization`
 - `add_comment`, only when replying to a question marked `humanOnly`: the answer must be your person's
 - `set_outcome_availability`, only when deferring an outcome or one of its criteria, or reopening a deferred one (what to set aside is your person's decision), or when blocking an outcome another person has claimed, which frees their claim
