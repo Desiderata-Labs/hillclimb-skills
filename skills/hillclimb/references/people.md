@@ -95,6 +95,7 @@ These tools change access or are hard to undo:
 - `set_platform_tiers`, which makes an organization a platform or turns that off, and `revoke_claimable_organization`
 - `create_trigger`
 - `archive_tree` and `delete_tree`
+- `archive_flow` (not when restoring) and `delete_flow`
 - `promote_track` with `apply`, and `archive_track`
 - `rename_tag`, `merge_tag` and `retire_tag`, which change tags on every outcome in the organization, and `remove_tag_alias`
 - `revise_roadmap` with `apply`, `create_release` with outcomes, `commit_release`, `unlaunch_release`, `promote_scenario`, `archive_release` and `archive_roadmap`
