@@ -19,6 +19,7 @@ To add it, call `add_evidence` with:
 | `files` | Up to 10 uploaded files. See below. |
 | `source` | Who observed it. By default, you. |
 | `observedAt` | When it happened, if not now |
+| `idempotencyKey` | Your own key for this record, unique in the tree, so a retry is safe. See "Many records at once" below. |
 
 Adding evidence takes contributor access. It never changes status by itself. But a "denies" that arrives after the status was set marks the outcome **broken** until someone re-checks, unless it's already failing.
 
@@ -146,6 +147,44 @@ curl -fsS -X POST https://api.hillclimb.me/api/v1/tools/add_evidence \
        "source": {"type": "system", "name": "github-actions"},
        "links": ["https://…/runs/123"]}'
 ```
+
+### Many records at once: `add_evidence_batch`
+
+When CI reports per criterion or per test suite, send up to 100 records in one call instead of one call each. Every record is what `add_evidence` takes, plus its own `outcome` and an optional `idempotencyKey`. All of them belong to the tree named in `tree`.
+
+```bash
+curl -fsS -X POST https://api.hillclimb.me/api/v1/tools/add_evidence_batch \
+  -H "authorization: Bearer $HILLCLIMB_API_KEY" -H 'content-type: application/json' \
+  -d '{"tree": "7f3k2m9q", "records": [
+        {"outcome": "HC-12", "criterion": "ac1", "verdict": "confirms", "kind": "ci",
+         "summary": "api suite: 14 of 14 passed", "links": ["https://…/runs/881"],
+         "idempotencyKey": "3f9c2e1:api:HC-12:ac1"},
+        {"outcome": "HC-14", "verdict": "denies", "kind": "ci",
+         "summary": "checkout suite: 2 of 9 failed", "body": "- declined card shows no reason\n- …",
+         "idempotencyKey": "3f9c2e1:checkout:HC-14"}
+      ]}'
+```
+
+It answers 200 with one result per record, in the order sent:
+
+```json
+{
+  "tree": "acme/7f3k2m9q",
+  "recorded": 2, "duplicates": 0, "failed": 0,
+  "results": [
+    {"index": 0, "ok": true, "id": "cmwu0z35g0008psp7yvsvctnf", "outcome": "HC-12", "criterion": "ac1",
+     "verdict": "confirms", "againstVersion": 3, "idempotencyKey": "3f9c2e1:api:HC-12:ac1", "duplicate": false},
+    {"index": 1, "ok": true, "id": "cmwu0z35g0009psp7k2b1xq0d", "outcome": "HC-14",
+     "verdict": "denies", "againstVersion": 1, "idempotencyKey": "3f9c2e1:checkout:HC-14", "duplicate": false}
+  ]
+}
+```
+
+- **The result says what was recorded:** the evidence `id` and `againstVersion` (the outcome version it counts against), so there's nothing to read back.
+- **One bad record fails alone.** It comes back as `{"index": 1, "ok": false, "error": {"code": "not_found", "message": "…"}}` and the others are still recorded. That includes a record that doesn't fit the schema, such as a verdict of `"pass"`. The whole call is refused only when `tree` is missing or unknown, there are no records or more than 100, or the body is over 1 MB.
+- **Retries are safe with `idempotencyKey`.** Make it from what identifies the observation, such as commit, suite, outcome and criterion. Sending a key already used in the tree returns that evidence with `duplicate: true` and records nothing. The same key with a different outcome, criterion, verdict, kind, summary, body, links or track is refused for that record with code `idempotency_conflict`. `observedAt`, `source` and `files` aren't compared, so a retry that stamps a new time still matches. `add_evidence` takes `idempotencyKey` too.
+- **Each record behaves as if added alone:** it never changes status, a "denies" after the status was set marks the outcome broken, webhooks and inboxes hear about each piece, and access is checked per record.
+- **Usage:** each record recorded counts as one call, the same as `add_evidence`. A retry that records nothing counts as one call.
 
 ### Keeping evidence lean
 
