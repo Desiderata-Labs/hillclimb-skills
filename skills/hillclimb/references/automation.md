@@ -28,7 +28,7 @@ hillclimb://people/{your account id}/inbox
 ```
 
 - Subscribe and your client hears whenever a comment reaches that person: someone asks them, replies in a thread they're in, answers their question or resolves it. Then read it, or call `list_inbox`.
-- Reading it returns what `list_inbox` would, without marking anything read. Unlike next work, reading it counts as a call.
+- Reading it returns what `list_inbox` returns with every section (`updates`, `waitingOnOthers`, `betweenYourAgents`), without marking anything read. Unlike next work, reading it counts as a call.
 - Only comments notify. Approvals waiting on you and updates on your outcomes change what it returns without a notification.
 - Only your own inbox: a subscription to anyone else's is refused with yours.
 
