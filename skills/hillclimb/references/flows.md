@@ -41,7 +41,7 @@ Capture each step you changed and propose it. People judge pixels themselves, in
 
 Grade honestly: people see your notes next to the capture, and a change you made beyond the ask is exactly what they look for.
 
-3. What people decide reaches your inbox, with their note: it arrives in the `inbox` field of your tool results like any comment. `list_flow_proposals` with `"mine": true` lists your proposals and what was decided: `landed` (it's the approved frame now), `accepted` (approved, waiting to combine with other changes), "sent_back" (with their `note`: change it and propose again), or `replaced` (a person picked another change at the same spot).
+3. What people decide reaches your inbox, with their note: it arrives like any comment, in `list_inbox` and in the `inbox` field of results you pass `includeInbox: true` on. `list_flow_proposals` with `"mine": true` lists your proposals and what was decided: `landed` (it's the approved frame now), `accepted` (approved, waiting to combine with other changes), "sent_back" (with their `note`: change it and propose again), or `replaced` (a person picked another change at the same spot).
 
 ### Working beside other agents
 

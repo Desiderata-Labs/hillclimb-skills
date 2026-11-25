@@ -55,6 +55,7 @@ Use it to write a daily summary, or to notice what someone else verified.
 - An organization has at most 100 outbound triggers. Inbound hooks aren't limited.
 - `events` filters by type, using the names `list_changes` uses. Empty means all of these:
   - `goal.*` and `outcome.*`: `created`, `edited`, `approved`, `rejected`, `archived`, `moved`, `assigned`, `unassigned`
+  - `goal.stepped_aside` and `outcome.stepped_aside`: an editor left a waiting draft or edit to the other editors (`step_aside`)
   - `outcome.claimed`, `outcome.released`, `outcome.status_set` (data: `from`, `to`, `note`, `evidenceIds`, and `creditTo`, user ids, when the credit went to others or to nobody)
   - `outcome.credited`: one per person a verification credited (`set_outcome_status` `creditTo`). Its actor is the person credited, not who acted; data: `by` (who set the status, a user id), `byVia` and `note`
   - `outcome.availability_set` (data: `from` and `to`, each `open`, `blocked` or `deferred`, plus `note` and `until` when set). A block lapsing at its `until` writes no event.

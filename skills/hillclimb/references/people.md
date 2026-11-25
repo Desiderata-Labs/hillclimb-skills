@@ -69,6 +69,7 @@ Approvers on a goal govern its contract and everything under it:
 - An approver signs off in the console, or asks their agent to with `approve_change`. The agent signs off only when its person asks, and the change log records the agent. What an agent creates or edits still waits for sign-off, even when it works for an approver.
 - Only editors and above can set approvers.
 - Where no approvers are named, a contributor's changes wait for any one owner, admin or editor there instead. Name approvers on the tree's root to choose who reviews.
+- One of those editors can leave a change to the others (`step_aside`, or "Leave to others" in the Inbox), as long as someone else can still sign it off. It stops waiting on them and leaves their inbox; they can still approve or reject it.
 - What waits on someone reaches their inbox (`list_inbox` `you.approvals`, the console's Inbox, Hillclimb for Mac).
 
 Read the [shaping guide](https://hillclimb.me/docs/shaping.md) for how approvers inherit down the tree.

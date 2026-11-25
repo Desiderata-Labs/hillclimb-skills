@@ -1,7 +1,7 @@
 {
   "name": "hillclimb",
   "description": "Work from a Hillclimb tree: pick the most important unproven outcome, do the work, prove it with evidence. Includes the Hillclimb MCP server.",
-  "version": "1.0.0+c9e89498",
+  "version": "1.0.0+2284309c",
   "author": {
     "name": "Desiderata Labs",
     "url": "https://github.com/Desiderata-Labs"

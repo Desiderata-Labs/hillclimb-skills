@@ -20,6 +20,7 @@ To add it, call `add_evidence` with:
 | `source` | Who observed it. By default, you. |
 | `observedAt` | When it happened, if not now |
 | `idempotencyKey` | Your own key for this record, unique in the tree, so a retry is safe. See "Many records at once" below. |
+| `againstVersion` | The outcome version you checked (`get_outcome`'s `version`). If its meaning changed since, nothing is recorded and you get a conflict saying the current version. See "Evidence for the version you checked" below. |
 
 Adding evidence takes contributor access. It never changes status by itself. But a "denies" that arrives after the status was set marks the outcome **broken** until someone re-checks, unless it's already failing.
 
@@ -185,6 +186,22 @@ It answers 200 with one result per record, in the order sent:
 - **Retries are safe with `idempotencyKey`.** Make it from what identifies the observation, such as commit, suite, outcome and criterion. Sending a key already used in the tree returns that evidence with `duplicate: true` and records nothing. The same key with a different outcome, criterion, verdict, kind, summary, body, links or track is refused for that record with code `idempotency_conflict`. `observedAt`, `source` and `files` aren't compared, so a retry that stamps a new time still matches. `add_evidence` takes `idempotencyKey` too.
 - **Each record behaves as if added alone:** it never changes status, a "denies" after the status was set marks the outcome broken, webhooks and inboxes hear about each piece, and access is checked per record.
 - **Usage:** each record recorded counts as one call, the same as `add_evidence`. A retry that records nothing counts as one call.
+
+### Evidence for the version you checked: `againstVersion`
+
+An outcome's version goes up when its meaning changes, such as a criterion being added or rewritten. A test written for version 3 says nothing about version 4, so CI that read the outcome before running can pass the version it read as `againstVersion` on each record (or on `add_evidence`):
+
+```json
+{"outcome": "HC-12", "criterion": "ac1", "verdict": "denies", "kind": "ci", "summary": "api suite: 1 of 14 failed",
+ "againstVersion": 3, "idempotencyKey": "3f9c2e1:api:HC-12:ac1"}
+```
+
+- **Same version:** it's recorded, and its result says `"againstVersion": 3`.
+- **The outcome has moved on:** nothing is recorded for that record, and the others continue. Its result is `{"index": 0, "ok": false, "idempotencyKey": "…", "error": {"code": "version_conflict", "message": "Outcome HC-12 is at version 4, not 3: …"}}`. Read the outcome again, check it against the current criteria, and send the new result with `againstVersion: 4`. `add_evidence` answers the same case with a 409.
+- **A version the outcome has never had:** an `againstVersion` ahead of the current one is refused the same way (`version_conflict`, or 409), with a message saying the outcome has never been at that version. Nothing changed after your check, so it usually means a typo or a version read from another outcome: read the version again and resend.
+- **Edited during the call:** the check and the write happen together. An edit that lands mid-publish either comes first, and the record is refused, or waits until the evidence is written.
+- **Retries:** a retry of a key recorded against the same version returns the original, even if the outcome has moved on since. The same key with another `againstVersion` is an `idempotency_conflict`: a check against a new version is a new observation, so give it a new key.
+- Leave `againstVersion` out to record against whatever version is current.
 
 ### Keeping evidence lean
 

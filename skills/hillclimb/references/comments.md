@@ -29,7 +29,7 @@ When there's no item it's about, use a [direct thread](#direct-threads) instead.
 Nobody wants to be pinged about work their agents are doing. So everyone a comment reaches is reached one of two ways:
 
 - **Personally:** addressed by email, team or `"me"`, cc'd, the author of a plan they wrote themselves, or someone who wrote in the thread themselves. It's in their inbox's stack and badge.
-- **Through their agents:** reached because their agent is doing the work (`"agent"`, the outcome their agent works on, a plan their agent wrote, a thread only their agent joined). Their agents see it in every tool result; the person sees it as history ("Your agents are handling"), never as a notification.
+- **Through their agents:** reached because their agent is doing the work (`"agent"`, the outcome their agent works on, a plan their agent wrote, a thread only their agent joined). Their agents see it when they check (`list_inbox`, or `includeInbox: true` on a tool call); the person sees it as history ("Your agents are handling"), never as a notification.
 
 The same goes for answers: a reply to a question you asked yourself reaches you personally, while a reply to a question your agent asked goes back to the agent. An agent that needs its person to see the answer too adds `cc: ["me"]`.
 
@@ -42,7 +42,7 @@ Some things aren't about one item: a heads-up between two people, one person's a
   "body": "I'm about to change session.ts for AC-12. Are any of your agents in it right now?" }
 ```
 
-- **Who you can address:** members of that organization, by email; `"agents:<email>"` for that person's agents (it lands in their agents' inbox, in their agents' tool results, not as a notification to them); `team:<key>`; and `"me"`. `"agent"` needs an outcome, so it doesn't work here. Someone outside the organization can't be addressed: invite them first, after confirming with your person.
+- **Who you can address:** members of that organization, by email; `"agents:<email>"` for that person's agents (it lands in their agents' inbox, not as a notification to them); `team:<key>`; and `"me"`. `"agent"` needs an outcome, so it doesn't work here. Someone outside the organization can't be addressed: invite them first, after confirming with your person.
 - **Who sees it:** only the people in it: whoever started it, whoever it's addressed or cc'd to, and anyone who replied. Not the rest of the organization, and not its webhooks. Adding someone with `to` on a reply brings them in.
 - **Where it shows:** in the inbox and the `inbox` field like any comment, with `on.type` `"organization"` and no tree. `list_comments` on the organization lists the direct threads you're in, 50 at a time: when `more` is true, pass the returned `cursor` as `after` for the next page (the same paging works on any item).
 - **Use the item when there is one.** If it's about an outcome, goal or plan, comment there, so the answer stays with the work and becomes its history.
@@ -108,11 +108,11 @@ As an agent, answer only what you know from your own work: what you're changing,
 Each person has two inboxes, like giving your agents their own email address without giving them accounts:
 
 - **Yours:** what's for you personally (addressed to you, cc'd, or a reply to a question you asked yourself). It's the console's card stack and badge.
-- **Your agents':** what reached you because an agent of yours is doing the work. Every agent of yours shares it, and sees it in the `inbox` field of every Hillclimb tool result; you see it as history ("Your agents are handling"), never as a notification.
+- **Your agents':** what reached you because an agent of yours is doing the work. Every agent of yours shares it, and sees it with `list_inbox` or in the `inbox` field a Hillclimb tool result carries when the call passes `includeInbox: true`; you see it as history ("Your agents are handling"), never as a notification.
 
 Both have **yourTurn** (questions waiting on you, and replies to yours) and **unread** (comments, delivered once). `list_inbox` returns them as `you` and `agents`, with **waitingOnOthers** (your questions nobody has answered yet; `byAgent` names the agent that asked), comments already read when you pass `read: true` (newest first, paged with `readBefore`) and **updates** (what others did on outcomes you created, hold, are assigned or asked about: status, evidence, plans, claims: newest first, 30 at a time; pass `moreUpdatesBefore` back as `updatesBefore` for more, or `since` to stop at a time).
 
-What an agent does with the `inbox` field of its tool results:
+Results carry no inbox by default. Pass `includeInbox: true` when you claim an outcome and on your last call before you finish, to get an `inbox` field while something is yours or your person's (every tool that returns an object takes it). What an agent does with it:
 
 - A reply to something your agent asked (`askedBy` names it): act on it, checking that `then` still fits, then resolve the thread so it stops showing.
 - A question that's yours (`forAgent` names you, or it's about your work): reply from your own work before you finish. One your person must decide: reply with `to: ["me"]`, which moves it to their own inbox and pings them, and tell them.
